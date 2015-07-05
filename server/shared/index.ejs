@@ -1,0 +1,373 @@
+﻿
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+
+        
+        <% include ../inc/head %>
+        
+
+
+    </head>
+    <body >
+
+        <div class="body">
+            
+            <% include ../inc/header %>
+
+            <div role="main" class="main" ng-controller="HomeController" >
+
+                <div class="slider-container">
+                    <div class="slider" id="revolutionSlider" data-plugin-revolution-slider>
+                        <ul>
+                            <li data-transition="fade" data-slotamount="13" data-masterspeed="300" >
+
+                                <img src="img/custom-header-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" alt="">
+
+                                <div class="tp-caption sft stb visible-lg"
+                                     data-x="177"
+                                     data-y="180"
+                                     data-speed="300"
+                                     data-start="1000"
+                                     data-easing="easeOutExpo"><img src="img/slides/slide-title-border.png" alt=""></div>
+
+                                <div class="tp-caption top-label lfl stl"
+                                     data-x="157"
+                                     data-y="180"
+                                     data-speed="300"
+                                     data-start="500"
+                                     data-easing="easeOutExpo">DO YOU WANT TO SELL OR BUY</div>
+
+                                <div class="tp-caption sft stb visible-lg"
+                                     data-x="477"
+                                     data-y="180"
+                                     data-speed="300"
+                                     data-start="1000"
+                                     data-easing="easeOutExpo"><img src="img/slides/slide-title-border.png" alt=""></div>
+
+                                <div class="tp-caption main-label sft stb"
+                                     data-x="135"
+                                     data-y="210"
+                                     data-speed="300"
+                                     data-start="1500"
+                                     data-easing="easeOutExpo">GIFT CARDS?</div>
+
+                                <div class="tp-caption bottom-label sft stb"
+                                     data-x="175"
+                                     data-y="280"
+                                     data-speed="500"
+                                     data-start="2000"
+                                     data-easing="easeOutExpo">Check out our stores and providers.</div>
+
+                                <div class="tp-caption customin customout"
+                                    data-x="right" data-hoffset="0"
+                                    data-y="bottom" data-voffset="0"
+                                    data-customin="x:50;y:150;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.5;scaleY:0.5;skewX:0;skewY:0;opacity:0;transformPerspective:0;transformOrigin:50% 50%;"
+                                    data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                                    data-speed="800"
+                                    data-start="700"
+                                    data-easing="Power4.easeOut"
+                                    data-endspeed="500"
+                                    data-endeasing="Power4.easeIn"
+                                    style="z-index: 3"><img src="img/slides/giftcard1.png" alt="">
+                                </div>
+                            </li>
+                            <li data-transition="fade" data-slotamount="13" data-masterspeed="300" >
+
+                                <img src="img/custom-header-bg.jpg" data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat" alt="">
+
+                                <div class="tp-caption customin customout"
+                                    data-x="center" data-hoffset="0"
+                                    data-y="center" data-voffset="0"
+                                    data-customin="x:50;y:150;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.5;scaleY:0.5;skewX:0;skewY:0;opacity:0;transformPerspective:0;transformOrigin:50% 50%;"
+                                    data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                                    data-speed="800"
+                                    data-start="700"
+                                    data-easing="Power4.easeOut"
+                                    data-endspeed="500"
+                                    data-endeasing="Power4.easeIn"
+                                    style="z-index: 3"><img src="img/slides/slide-concept-draft.png" alt="">
+                                </div>
+
+                                <div class="tp-caption customin customout"
+                                    data-x="center" data-hoffset="0"
+                                    data-y="center" data-voffset="-6"
+                                    data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:5;scaleY:5;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                                    data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                                    data-speed="600"
+                                    data-start="100"
+                                    data-easing="Power4.easeOut"
+                                    data-endspeed="500"
+                                    data-endeasing="Power4.easeOut"
+                                    data-autoplay="false"
+                                    data-autoplayonlyfirsttime="false"
+                                    style="z-index: 8"><img src="img/slides/giftcard2.png" alt="">
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="home-intro">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>
+                                    The fastest way to find the best deal in selling and buying </br><em>GIFT CARDS</em>
+                                    <span>Check out our stores and prices.</span>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="get-started">
+                                    <a href="/stores/" class="btn btn-lg btn-primary">View all merchants now!</a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="container">
+                    <h2> Featured Stores</h2>
+                    
+                    <div class="row" ng-cloak>
+
+                        <ul class="portfolio-list sort-destination" data-sort-id="portfolio" >
+                            <li ng-repeat="store in featuredStores" class="col-md-4 col-sm-6 col-xs-12 isotope-item websites"  >
+                                <div class="portfolio-item">
+                                    <a href="/stores/#/{{store.name}}">
+                                        <span class="thumb-info">
+                                            <span class="thumb-info-wrapper">
+                                                <img src="img/cards/{{store.name.toLowerCase().replace(' ','-')}}.jpg" class="img-responsive" alt="">
+                                                <span class="thumb-info-title">
+                                                    <span class="thumb-info-inner">{{store.discount}}% Off</span>
+                                                    <span class="thumb-info-type">{{store.name}}</span>
+                                                </span>
+                                                <span class="thumb-info-action">
+                                                    <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                    </div>
+
+
+                    <!-- SITE FEATURED -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-group"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-xs">Customer Support</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing <span class="alternative-font">metus.</span> elit. Quisque rutrum pellentesque imperdiet.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-truck"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-xs">FREE SHIPPING</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia iaculis nulla.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-box feature-box-style-2">
+                                <div class="feature-box-icon">
+                                    <i class="fa fa-thumbs-o-up"></i>
+                                </div>
+                                <div class="feature-box-info">
+                                    <h4 class="mb-xs">100% GUARANTEED</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia iaculis nulla.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>              
+
+                <section class="section section-primary mb-none">
+                    <div class="container">
+                        <div class="row">
+                            <div class="counters counters-text-light">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="counter">
+                                        <strong data-to="1234" data-append="+">0</strong>
+                                        <label>Happy Clients</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="counter">
+                                        <strong data-to="52">0</strong>
+                                        <label>Stores</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="counter">
+                                        <strong data-to="175">0</strong>
+                                        <label>Gift cards</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="counter">
+                                        <strong data-to="87">0</strong>
+                                        <label>Sold cards</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section style="background-image: url('img/slides/homepage-slide.jpg');background-size: cover;background-position-y: -150px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="owl-carousel nav-bottom rounded-nav mt-lg mb-none" data-plugin-options='{"items": 1, "loop": false}'>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="testimonial testimonial-style-6 testimonial-with-quotes mb-none">
+                                                <blockquote>
+                                                    <p>Hello, I want to say thanks for having a great site of selling and buying cards</p>
+                                                </blockquote>
+                                                <div class="testimonial-author">
+                                                    <p><strong>Ho Thai</strong><span>Customer</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-md-12">
+                                            <div class="testimonial testimonial-style-6 testimonial-with-quotes mb-none">
+                                                <blockquote>
+                                                    <p>Awesome site with great functionality. The price is great.</p>
+                                                </blockquote>
+                                                <div class="testimonial-author">
+                                                    <p><strong>Jack Jacob</strong><span>Founder</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="container">
+                    <div class="row mt-xlg">
+                        <div class="col-md-5">
+                            <h2><strong>Who</strong> We Are</h2>
+                            <p> Clients love out site. They have given us great feedbakcs </p>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="progress-bars">
+                                <div class="progress-label">
+                                    <span>Satisfaction</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary" data-appear-progress-animation="96%">
+                                        <span class="progress-bar-tooltip">96%</span>
+                                    </div>
+                                </div>
+                                <div class="progress-label">
+                                    <span>Good support</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary" data-appear-progress-animation="90%" data-appear-animation-delay="300">
+                                        <span class="progress-bar-tooltip">90%</span>
+                                    </div>
+                                </div>
+                                <div class="progress-label">
+                                    <span>Good deal</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary" data-appear-progress-animation="94%" data-appear-animation-delay="600">
+                                        <span class="progress-bar-tooltip">94%</span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr class="tall">
+                        </div>
+                    </div>
+
+                    <h2> Best Selling Stores</h2>
+                    <div class="row" ng-cloak>
+                        <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="store in bestsellingStores">
+                            <span class="thumb-info thumb-info-hide-wrapper-bg">
+                                <span class="thumb-info-wrapper">
+                                    <a href="/stores/#/{{store.name}}">
+                                        <img src="img/cards/{{store.name.toLowerCase().replace(' ','-')}}.jpg" class="img-responsive" alt="">
+                                        <span class="thumb-info-title">
+                                            <span class="thumb-info-inner">{{store.discount}}% Off</span>
+                                            <span class="thumb-info-type">{{store.name}}</span>
+                                        </span>
+                                    </a>
+                                </span>
+                                <span class="thumb-info-caption">
+                                    <span class="thumb-info-caption-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac ligula mi, non suscipitaccumsan</span>
+                                    <span class="thumb-info-social-icons">
+                                        <a target="_blank" href="http://www.facebook.com"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                                        <a href="http://www.twitter.com"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+                                        <a href="http://www.linkedin.com"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <section class="call-to-action call-to-action-default with-button-arrow call-to-action-in-footer call-to-action-in-footer-margin-top">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="call-to-action-content">
+                                    <h3>This website is <strong>everything</strong> you need to sell  
+
+                                    <strong class="inverted">
+                                        <span class="word-rotate" data-plugin-options='{"delay": 2000, "animDelay": 300}'>
+                                            <span class="word-rotate-items">
+                                                <span>awesome</span>
+                                                <span>wonderful</span>
+                                                <span>amazing</span>
+                                            </span>
+                                        </span> 
+                                    </strong>
+                                         cards!</h3>
+                                    <p>The <strong>#1 selling</strong> gift-card site on the internet</p>
+                                </div>
+                                <div class="call-to-action-btn">
+                                    <a href="/" target="_blank" class="btn btn-lg btn-primary">Sell Now!</a><span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -12px;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <% include ../inc/footer %>
+        </div>
+        
+        <% include ../inc/scripts %>
+    
+    </body>
+</html>

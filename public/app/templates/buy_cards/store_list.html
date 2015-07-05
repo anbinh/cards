@@ -1,0 +1,86 @@
+<div role="main" class="main">
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> Buy gift cards with discount <span>Please select your stores</span></h1>
+
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                                    <li><a href="/">Home</a></li>
+                                    <li class="active">All stores</li>
+                                </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <aside class="sidebar">
+                    <h4 class="heading-primary text-center">FILTER BY</h4>
+                    <accordion close-others="oneAtATime" class="panel-group panel-group-primary">
+                        <accordion-group heading="Categories" is-open="true" is-disabled="status.isFirstDisabled" >
+                            <ul class="nav nav-list mb-xlg">
+                                <li >
+                                    <input type="checkbox" ng-click="includeCategory('B')"  /> &nbsp; Big box <span class='pull-right' style="color: #08C;">({{bCount}})</span>
+                                </li>
+                                <li >
+                                    <input type="checkbox" ng-click="includeCategory('C')" /> &nbsp; Clothing <span class='pull-right' style="color: #08C;">({{cCount}})</span>
+                                </li>
+                                <li >
+                                    <input type="checkbox" ng-click="includeCategory('E')" /> &nbsp; Entertainment <span class='pull-right' style="color: #08C;">({{eCount}})</span>
+                                </li>
+                                <li >
+                                    <input type="checkbox" ng-click="includeCategory('F')" /> &nbsp; Food <span class='pull-right' style="color: #08C;">({{fCount}})</span>
+                                </li>
+                                <li >
+                                    <input type="checkbox" ng-click="includeCategory('H')" /> &nbsp; Home <span class='pull-right' style="color: #08C;">({{hCount}})</span>
+                                </li>
+                            </ul>
+                        </accordion-group>
+                        <accordion-group heading="Discount" is-open="true">
+                            </br>
+                            <div style="padding-left: 10px;padding-right : 10px" slider ng-from="discount.from" ng-to="discount.to"  start={{minDiscount}} end={{maxDiscount}} ></div>
+                            </br>
+                            <h4 class="text-center" >{{discount.from}}% - {{discount.to}}% </h4>
+                            <input type="hidden" ng-model='discount.from'>
+                            <input type="hidden" ng-model='discount.to'>
+                        </accordion-group>
+                    </accordion>
+                </aside>
+            </div>
+            <div class="col-md-9">
+                <h2 style="margin-left : 15px">Available Stores ({{filteredStores.length}})</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p><input type="text" ng-model="search.name" placeholder="Filter by store's name" style="width : 50%; margin-left : 15px; height : 40px;padding-left: 10px;"></p>
+
+                        <ul class="portfolio-list sort-destination" data-sort-id="portfolio" >
+                            <li ng-repeat="store in filteredStores = (stores | filter:search.name | filter:categoryFilter | discount:discount.from:discount.to  )" class="col-md-4 col-sm-6 col-xs-12 isotope-item websites" style="height : 164px"  >
+                                <div class="portfolio-item">
+                                    <a href="/stores/#/{{store.name}}">
+                                        <span class="thumb-info">
+                                            <span class="thumb-info-wrapper">
+                                                <img src="/img/cards/home-depot.jpg" class="img-responsive" alt="">
+                                                <span class="thumb-info-title">
+                                                    <span class="thumb-info-inner">{{store.discount}}% Off</span>
+                                                    <span class="thumb-info-type">{{store.name}}</span>
+                                                </span>
+                                                <span class="thumb-info-action">
+                                                    <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <hr class="tall">
+               
+            </div>
+        </div>
+    </div>
+</div>

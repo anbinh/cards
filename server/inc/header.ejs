@@ -1,0 +1,106 @@
+<header id="header" class="flat-menu clean-top" ng-controller="HeaderController">
+    <div class="header-top">
+        <div class="container">
+            <p>
+                <span>MON-SAT 8AM-4:00PM (EST)</span> | <i class="fa fa-phone"></i><a href="#">124-GIFTCARDS</a>
+            </p>
+            <p class="pull-right" ng-show="!loggedIn">
+            	<a href="/login/"> LOGIN </a> | <a href="/register/"> SIGN UP </a>
+            </p>
+
+            <p class="pull-right" ng-show="loggedIn">
+            	<a href="/profile/#/"> MY PROFILE </a>  | <a style="cursor : pointer" ng-click="signOut()"> SIGN OUT </a>
+            </p>
+           
+        </div>
+    </div>
+    <div class="container">
+        <div class="logo">
+            <a href="/">
+                <img alt="Porto" width="270" height="54" data-sticky-width="200" data-sticky-height="40" src="/img/logos/slogo.png" style="display: inline-block; width: 300px; height: 54px; top: 0px;">
+            </a>
+        </div>
+        <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div class="navbar-collapse nav-main-collapse collapse">
+        <div class="container">
+            <nav class="nav-main mega-menu">
+                <ul class="nav nav-pills nav-main" id="mainMenu">
+                    <li class="dropdown active">
+                        <a class="" href="/">
+							Home
+						</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a class="" href="/stores/#/">
+							Buy cards
+						</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a class="" href="/sell_cards/">
+							Sell cards
+						</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a class="" href="/about-us">
+							About us
+						</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a class="" href="/values">
+							Our Values
+						</a>
+                    </li>
+
+                    <li class="dropdown mega-menu-item mega-menu-shop" >
+							<a class="dropdown-toggle mobile-redirect" href="/shopping-cart/#/" >
+								<i class="fa fa-shopping-cart"></i>  <span ng-bind="cartStat">Cart (0) - $0</span>
+							</a>
+							<ul class="dropdown-menu" style="margin-right: -10px;">
+										<li>
+											<div class="mega-menu-content">
+												<div class="row">
+													<div class="col-md-12" style="max-height:320px;overflow : scroll">
+			
+														<table class="cart" >
+															<tbody>
+																<tr ng-repeat="card in selectedCards track by $index">
+																	<td class="product-thumbnail">
+																		<a >
+																			<img  height="60px" alt="" class="img-responsive" src="/img/cards/home-depot.jpg" style="height:60px;padding-bottom: 10px">
+																		</a>
+																	</td>
+																	<td class="product-name">
+																		<a >{{$index + 1}}. {{card.name}}<br><span class="amount"><strong>${{card.pay}}</strong></span></a>
+																	</td>
+																	<td class="product-actions">
+																		<a ng-click="removeCard($index)" title="Remove this item" class="remove" style="cursor : pointer">
+																			<i class="fa fa-times"></i>
+																		</a>
+																	</td>
+																</tr>
+																<tr>
+																	<td class="actions" colspan="6">
+																		<div class="actions-continue">
+																			<input type="submit" value="View All" class="btn btn-default" ng-click="viewShoppingCart()">
+
+																			<input ng-show="showCheckout" type="submit" value="Proceed to Checkout →" name="proceed" class="btn pull-right btn-primary" ng-click="checkout()">
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+			
+													</div>
+												</div>
+											</div>
+										</li>
+							</ul>
+					</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,198 @@
+<div role="main" class="main">
+
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> Order Detail 
+                        <span>
+                            <a href="/profile/#/">Profile</a> |
+                            <a href="/profile/#/edit">Edit</a> | 
+                            <a href="/profile/#/orders" >Orders History</a> 
+                        </span>
+                    </h1>
+
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/profile/#/">Profile</a></li>
+                        <li><a href="/profile/#/orders">Orders History</a></li>
+                        <li class="active">Order #{{order.id}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-2">
+            </div>
+            
+            <div class="col-md-8">
+
+                <h2 class="text-center"><strong>CARD ORDER</strong></h2>
+
+                <p class="pull-right">Paid on {{order.created_date | date: 'MM/dd/yyyy ' }}</p>
+
+                </br>
+                </br>
+            
+                <hr class="solid">
+
+
+                <h4 class="heading-primary"> <strong>User Info</strong></h4>
+
+                <ul class="list ">
+                
+                    <li><strong>Username:</strong> {{order.billingUser.username}}</li>
+                    <li><strong>Email:</strong> {{order.billingUser.email}}</li>
+                
+                </ul>
+
+               
+                <hr>
+                
+
+                <h4 class="heading-primary"> <strong>Billing Address</strong></h4>
+                <ul class="list  mt-xlg">
+                    <li><strong>Address:</strong> {{ (order.billingUser.address ? order.billingUser.address : 'NOT SET')}}</li>
+                    <li><strong>City</strong> {{ (order.billingUser.city ? order.billingUser.city : 'NOT SET')}}</li>
+                    <li><strong>State:</strong> {{ (order.billingUser.state ? order.billingUser.state : 'NOT SET')}}</li>
+
+                    <li><strong>Zipcode:</strong> {{ (order.billingUser.zipcode ? order.billingUser.zipcode : 'NOT SET')}}</li>
+                </ul>
+
+                <hr>
+
+                <h4 class="heading-primary"> <strong>Cards review</strong></h4>
+                
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                
+                            </th>
+                            <th>
+                                Merchant
+                            </th>
+                            <th>
+                                Card Value
+                            </th>
+                            <th>
+                                Qty
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+                                Percentage
+                            </th>
+                            <th>
+                                Sell Price
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="card in order.cards track by $index">
+                            <td style="vertical-align: middle">
+                                <img height="30px" src="/img/cards/home-depot.jpg" alt="">    
+                            </td>
+                            <td>
+                                {{card.name}}
+                            </td>
+                            <td>
+                                ${{card.value}}
+                            </td>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                ${{card.value}}
+                            </td>
+                            <td>
+                                {{card.pay/card.value*100 | number : 2}}%
+                            </td>
+                            <td>
+                                ${{card.pay}}
+                            </td>
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+
+                <hr>
+
+                <h4 class="heading-primary"> <strong>Cart totals</strong></h4>
+
+                <table class="table">
+                   
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Face Value  </strong>
+                            </td>
+                            <td>
+                                ${{totalFaceValue | number:2}}
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Cards In Shipment  </strong>
+                            </td>
+                            <td>
+                                {{order.cards.length}}
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong> Average Percentage </strong>
+                            </td>
+                            <td>
+                                ${{averagePercentage | number : 2}}
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Shipping </strong>
+                            </td>
+                            <td>
+                                Free Shipping
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Sell Price  </strong>
+                            </td>
+                            <td>
+                                 <h4 style="color : #08C">${{total}}</h4>
+                            </td>
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <div class="col-md-2">
+            </div>
+        </div>
+      
+    </div>
+
+    
+
+</div>

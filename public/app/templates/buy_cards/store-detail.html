@@ -1,0 +1,94 @@
+<div role="main" class="main">
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> {{storeName.replace('-',' ') | titlecase}} <span>Visit <a href="http://{{storeName}}.com" target="_blank">{{storeName}}.com</a></span></h1>
+
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/stores/#/">All stores</a></li>
+                                    <li class="active">{{storeName.replace('-',' ') | titlecase}}</li>
+                                </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <aside class="sidebar">
+                    <h4 class="heading-primary text-center">FILTER BY</h4>
+                    <accordion close-others="oneAtATime" class="panel-group panel-group-primary">
+                        <accordion-group heading="Card Value" is-open="true" is-disabled="status.isFirstDisabled" >
+                            </br>
+                            <div style="padding-left: 10px;padding-right : 10px" slider ng-from="priceRange.from" ng-to="priceRange.to"  start={{minPrice}} end={{maxPrice}} ></div>
+                            </br>
+                            <h4 class="text-center" >${{priceRange.from}} - ${{priceRange.to}} </h4>
+                            <input type="hidden" ng-model='priceRange.from'>
+                            <input type="hidden" ng-model='priceRange.to'>
+                        </accordion-group>
+                      
+                    </accordion>
+                </aside>
+            </div>
+            <div class="col-md-9">
+            <h2 style="margin-left : 15px">Available Cards ({{filteredCards.length}})</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                    	<hr class="short">
+                        <table class="table table-striped">
+										<thead>
+											<tr>
+												<th>
+													Merchant
+												</th>
+												<th>
+													Type
+												</th>
+												<th>
+													Value
+												</th>
+												<th>
+													You Pay
+												</th>
+												<th>
+													You Save
+												</th>
+												<th>
+													
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="card in filteredCards = (cards | cardvalue:priceRange.from:priceRange.to)">
+												<td style="vertical-align: middle">
+													<img height="30px" src="/img/cards/home-depot.jpg" alt="">    {{card.name}}
+												</td>
+												<td>
+													{{card.type}}
+												</td>
+												<td>
+													${{card.value}}
+												</td>
+												<td>
+													${{card.pay}}
+												</td>
+												<td>
+													{{card.save}}%
+												</td>
+												<td>
+													<a  class="btn btn-primary pull-right" ng-click="addToCart(card)">Add to Cart</a>
+												</td>
+											</tr>
+											
+										</tbody>
+									</table>
+                    </div>
+                </div>
+                <hr class="tall">
+               
+            </div>
+        </div>
+    </div>
+</div>

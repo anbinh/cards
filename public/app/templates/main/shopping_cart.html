@@ -1,0 +1,117 @@
+<div role="main" class="main shop">
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> Shoppping Cart <span>Buy the cards with best deal</span></h1>
+
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                                    <li><a href="/">Home</a></li>
+                                    <li class="active">Shopping Cart</li>
+                                </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="featured-boxes">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="featured-box featured-box-primary align-left mt-sm" style="">
+                                <div class="box-content">
+                                    <h3 class="text-center" ng-show='selectedCards.length === 0'>You have no items in your cart</h3>
+                                    <form method="post" action="" ng-show='selectedCards.length !== 0'>
+                                        <table class="shop_table cart">
+                                            <thead>
+                                                <tr>
+                                                    <th class="product-remove">
+                                                        &nbsp;
+                                                    </th>
+                                                    <th class="product-thumbnail">
+                                                        &nbsp;
+                                                    </th>
+                                                    <th class="product-name" style="width : 30%">
+                                                        CARD
+                                                    </th>
+                                                    <th class="product-price">
+                                                        VALUE
+                                                    </th>
+                                                    <th class="product-quantity">
+                                                        YOU SAVE
+                                                    </th>
+                                                    <th class="product-subtotal">
+                                                        YOU PAY
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="cart_table_item" ng-repeat="card in selectedCards track by $index">
+                                                    <td class="product-remove">
+                                                        <a ng-click="removeCard($index)" title="Remove this item" class="remove" style="cursor : pointer">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-thumbnail">
+                                                        <a href="shop-product-sidebar.html">
+                                                            <img width="100" height="100" alt="" class="img-responsive" src="/img/cards/home-depot.jpg">
+                                                        </a>
+                                                    </td>
+                                                    <td class="product-name"  style="width : 30%">
+                                                        <a href="shop-product-sidebar.html">{{card.name}}</a>
+                                                    </td>
+                                                    <td class="product-price">
+                                                        <span class="amount">${{card.value}}</span>
+                                                    </td>
+                                                    <td class="product-quantity">
+                                                        <span class="amount">{{card.save}}%</span>
+                                                    </td>
+                                                    <td class="product-subtotal">
+                                                        <span class="amount">${{card.pay}}</span>
+                                                    </td>
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="featured-boxes">
+                    <div class="row">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+                            <table class="cart-totals">
+                                        <tbody>
+                                            
+                                            <tr class="total">
+                                                <th>
+                                                    <strong>Order Total</strong>
+                                                </th>
+                                                <td>
+                                                    <strong><span class="amount">${{total}}</span></strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                        </div>
+                        
+                    </div>
+                </div>
+                </br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="actions-continue" ng-show="total > 0 ">
+                            <input type="submit" ng-click="checkout()" value="Proceed to Checkout →" name="proceed" class="btn btn-lg btn-primary">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

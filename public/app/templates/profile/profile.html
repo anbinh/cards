@@ -1,0 +1,64 @@
+<div role="main" class="main">
+
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> My Profile 
+                        <span>
+                            <a href="/profile/#/" class="text-muted">Profile</a> |
+                            <a href="/profile/#/edit">Edit</a> | 
+                            <a href="/profile/#/orders"  >Orders History</a> 
+                        </span>
+                    </h1>
+
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                                    <li><a href="/">Home</a></li>
+                                    <li class="active">Profile</li>
+                                </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-2">
+            </div>
+            
+            <div class="col-md-8">
+
+                <h2 class="mb-none"> <strong>{{user.username}}</strong></h2>
+                <h4 class="heading-primary">{{user.email}}</h4>
+
+                <hr class="solid">
+                
+
+                <h4 class="heading-primary mt-lg">Your <strong>Fullname</strong></h4>
+                <p>{{ ( (user.first_name !== null) && (user.last_name !== null) ? user.first_name + ' ' + user.last_name : 'NOT SET' )}}</p>
+
+                <hr>
+
+                <h4 class="heading-primary">Basic <strong>Info</strong></h4>
+                <ul class="list list-icons list-icons-style-3 mt-xlg">
+                    <li><i class="fa fa-map-marker"></i> <strong>Address:</strong> {{ (user.address ? user.address : 'NOT SET')}}</li>
+                    <li><i class="fa fa-home"></i> <strong>City</strong> {{ (user.city ? user.city : 'NOT SET')}}</li>
+                    <li><i class="fa fa-globe"></i> <strong>State:</strong> {{ (user.state ? user.state : 'NOT SET')}}</li>
+
+                    <li><i class="fa fa-barcode"></i> <strong>Zipcode:</strong> {{ (user.zipcode ? user.zipcode : 'NOT SET')}}</li>
+                </ul>
+
+                <hr>
+   
+            </div>
+
+            <div class="col-md-2">
+            </div>
+        </div>
+      
+    </div>
+
+    
+
+</div>
