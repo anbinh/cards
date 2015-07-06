@@ -1,0 +1,183 @@
+<div role="main" class="main">
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> Your Selling Cards <span>Please take a final look before you sell the cards and receive payment</span></h1>
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/sell-cards/#/">Offers</a></li>
+                        <li><a href="/sell-cards/#/card-info">Card Info</a></li>
+                        <li class="active">Customer info</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8 text-center">
+                <ol class="breadcrumb offer">
+                    <li>
+                        <div class="thumbnail sell-cards-thumb">
+                            <p style="margin-bottom : 5px">
+                                <i class="fa fa-check fa-3x sell-cards-step-icon"></i></p>
+                            <div class="caption offer">
+                                <p class="sell-cards-step-txt">1.Get Offer</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="offer ">
+                        <div class="thumbnail sell-cards-thumb">
+                            <p style="margin-bottom : 5px">
+                                <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                                <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                            </p>
+                            <div class="caption offer">
+                                <p class="sell-cards-step-txt">&nbsp;</p>
+                            </div>
+                        </div>
+                    </li class="">
+                    <li class="offer">
+                        <div class="thumbnail sell-cards-thumb">
+                            <p style="margin-bottom : 5px">
+                                <i class="fa fa-check fa-3x sell-cards-step-icon"></i></p>
+                            <div class="caption offer">
+                                <p class="sell-cards-step-txt">2.Card Info</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="offer ">
+                        <div class="thumbnail sell-cards-thumb">
+                            <p style="margin-bottom : 5px">
+                                <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                                <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                            </p>
+                            <div class="caption offer">
+                                <p class="sell-cards-step-txt">&nbsp;</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="offer " style="margin-left: -20px;">
+                        <div class="thumbnail sell-cards-thumb">
+                            <p style="margin-bottom : 5px">
+                                <i class="fa fa-users fa-3x sell-cards-step-icon"></i></p>
+                            <div class="caption offer">
+                                <p class="sell-cards-step-txt">3.Customer Info</p>
+                            </div>
+                        </div>
+                    </li>
+                </ol </div>
+            </div>
+            <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <h2 class="text-center"><strong>YOUR SELLING CARDS</strong></h2>
+                <hr class="solid">
+                <h4 class="heading-primary"> <strong>Customer Info</strong></h4>
+                <ul class="list ">
+                    <li><strong>Username:</strong> {{sellingCards.billingUser.username}}</li>
+                    <li><strong>Email:</strong> {{sellingCards.billingUser.email}}</li>
+                </ul>
+                <hr>
+                <h4 class="heading-primary"> <strong>Billing Address</strong></h4>
+                <ul class="list  mt-xlg">
+                    <li><strong>Address:</strong> {{ (sellingCards.billingUser.address ? sellingCards.billingUser.address : 'NOT SET')}}</li>
+                    <li><strong>City</strong> {{ (sellingCards.billingUser.city ? sellingCards.billingUser.city : 'NOT SET')}}</li>
+                    <li><strong>State:</strong> {{ (sellingCards.billingUser.state ? sellingCards.billingUser.state : 'NOT SET')}}</li>
+                    <li><strong>Zipcode:</strong> {{ (sellingCards.billingUser.zipcode ? order.billingUser.zipcode : 'NOT SET')}}</li>
+                </ul>
+                <hr>
+                <h4 class="heading-primary"> <strong>Cards review</strong></h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                                Merchant
+                            </th>
+                            <th>
+                                Card Number
+                            </th>
+                            <th>
+                                Card Pin
+                            </th>
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="card in sellingCards.cards track by $index">
+                            <td>{{$index + 1}}</td>
+                            <td style="vertical-align: middle">
+                                <img height="30px" src="/img/cards/home-depot.jpg" alt="">
+                            </td>
+                            <td>
+                                {{card.name}} (${{card.value}})
+                            </td>
+                            <td>
+                                {{card.number}}
+                            </td>
+                            <td>
+                                {{card.pin}}
+                            </td>
+                            
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h4 class="heading-primary"> <strong>Cart totals</strong></h4>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Face Value  </strong>
+                            </td>
+                            <td>
+                                ${{totalFaceValue | number : 2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Cards For Sell  </strong>
+                            </td>
+                            <td>
+                                {{sellingCards.cards.length}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong> Average Percentage </strong>
+                            </td>
+                            <td>
+                                {{averagePercentage | number : 2}}%
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Sell Price  </strong>
+                            </td>
+                            <td>
+                                <h4 style="color : #08C">${{total}}</h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a ng-click='pay()' class="btn btn-primary btn-lg pull-right">Pay the order</a>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+</div>

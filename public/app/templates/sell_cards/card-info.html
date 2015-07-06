@@ -1,0 +1,138 @@
+<script type="text/ng-template" id="customTemplate.html">
+    <a style="height : 40px;line-height:30px">
+        <img ng-src="/img/cards/home-depot.jpg" width="16">
+        <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+    </a>
+</script>
+<div role="main" class="main">
+    <section class="page-header page-header-light page-header-more-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> Enter Your Card Info  <span>Please enter correct infomation for your cards</span></h1>
+                    <ul class="breadcrumb breadcrumb-valign-mid">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/sell-cards/#/">Offers</a></li>
+                        <li class="active">Card Info</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="featured-boxes">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                        </div>
+                        <div class="col-md-8 col-sm-12 col-xs-12 col-lg-8 text-center">
+                            <ol class="breadcrumb offer">
+                                <li>
+                                    <div class="thumbnail sell-cards-thumb">
+                                        <p style="margin-bottom : 5px">
+                                            <i class="fa fa-check fa-3x sell-cards-step-icon"></i></p>
+                                        <div class="caption offer">
+                                            <p class="sell-cards-step-txt">1.Get Offer</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="offer">
+                                    <div class="thumbnail sell-cards-thumb">
+                                        <p style="margin-bottom : 5px">
+                                            <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                                            <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                                        </p>
+                                        <div class="caption offer">
+                                            <p class="sell-cards-step-txt">&nbsp;</p>
+                                        </div>
+                                    </div>
+                                </li class="">
+                                <li class="offer">
+                                    <div class="thumbnail sell-cards-thumb">
+                                        <p style="margin-bottom : 5px">
+                                            <i class="fa fa-credit-card fa-3x sell-cards-step-icon"></i></p>
+                                        <div class="caption offer">
+                                            <p class="sell-cards-step-txt">2.Card Info</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="offer inactive">
+                                    <div class="thumbnail sell-cards-thumb">
+                                        <p style="margin-bottom : 5px">
+                                            <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                                            <i class="fa fa-ellipsis-h fa-3x sell-cards-step-dot"></i>
+                                        </p>
+                                        <div class="caption offer">
+                                            <p class="sell-cards-step-txt">&nbsp;</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="offer inactive" style="margin-left: -20px;">
+                                    <div class="thumbnail sell-cards-thumb">
+                                        <p style="margin-bottom : 5px">
+                                            <i class="fa fa-users fa-3x sell-cards-step-icon"></i></p>
+                                        <div class="caption offer">
+                                            <p class="sell-cards-step-txt">3.Customer Info</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="alert alert-tertiary">
+                            <strong>Notifications!</strong> Entering card information helps us process your order faster and pay you more quickly.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        
+                                    </th>
+                                    <th class="card-info-header">
+                                        Merchant
+                                    </th>
+                                    <th class="card-info-header">
+                                        Card Number
+                                    </th>
+                                    <th class="card-info-header">
+                                        Card Pin
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="active" ng-repeat="card in allSellingCards track by $index">
+                                    <th scope="row">
+                                        <img width="100" height="100" alt="" class="img-responsive" src="/img/cards/home-depot.jpg">
+                                    </th>
+                                    <td class="card-info-input">
+                                        {{card.name }} (${{card.value}})
+                                    </td>
+                                    <td class="card-info-input">
+                                        
+                                        <input type="text" ng-model="card.number" class="input-lg card-number" placeholder="Card Number">
+                                    </td>
+                                    <td class="card-info-input">
+                                        <input type="text" ng-model="card.pin" class="input-lg card-number" placeholder="Card Pin">
+
+                                    </td>
+                                </tr>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row pull-right">
+                        <button ng-click="goBack()" type="input" class="btn btn-danger btn-add-card btn-lg">Back</button>
+                        <button ng-click="goNext()" type="input" class="btn btn-primary btn-lg">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

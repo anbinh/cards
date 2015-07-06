@@ -10,7 +10,7 @@ angular.module('app')
                         storeList: ['storeService',
                             function(storeSerivce) {
                                 return storeSerivce.get().$promise.then(function(stores) {
-                                    return stores
+                                    return stores;
                                 });
                             }
                         ]
@@ -28,7 +28,7 @@ angular.module('app')
                             return storeSerivce.get({
                                 id: id
                             }).$promise.then(function(cards) {
-                                return cards
+                                return cards;
                             });
                         }
                     ]

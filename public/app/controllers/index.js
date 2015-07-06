@@ -5,6 +5,9 @@ var m = angular.module('ht.controllers', []);
 // controllers
 require('./lib/home')(m);
 require('./lib/store-list')(m);
+require('./lib/sell-cards')(m);
+require('./lib/sell-cards-card-info')(m);
+require('./lib/sell-cards-customer-info')(m);
 require('./lib/checkout')(m);
 require('./lib/review_order')(m);
 require('./lib/login')(m);

@@ -12,9 +12,16 @@ router.get('/', function(req, res) {
 
 
 /* GET project page. */
+// for buying cards
 router.get('/stores', function(req, res) {
     res.render('main', {
         route: "stores"
+    });
+});
+
+router.get('/sell-cards', function(req, res) {
+    res.render('main', {
+        route: "sell-cards"
     });
 });
 
