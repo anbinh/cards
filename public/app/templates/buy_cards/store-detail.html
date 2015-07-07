@@ -63,7 +63,7 @@
 										<tbody>
 											<tr ng-repeat="card in filteredCards = (cards | cardvalue:priceRange.from:priceRange.to)">
 												<td style="vertical-align: middle">
-													<img height="30px" src="/img/cards/home-depot.jpg" alt="">    {{card.name}}
+													<img height="30px" src="/img/cards/{{card.name}}.jpg" alt="">    {{card.name | storename | titlecase}}
 												</td>
 												<td>
 													{{card.type}}

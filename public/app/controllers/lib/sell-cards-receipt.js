@@ -42,7 +42,7 @@ module.exports = function(m) {
 
             $scope.viewSellingHistory = function() {
                 window.location = '/profile/#/sold-cards-history';
-            }
+            };
 
 
         }

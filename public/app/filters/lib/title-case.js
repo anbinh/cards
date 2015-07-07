@@ -20,5 +20,9 @@ module.exports = function(m) {
                 return match.charAt(0).toUpperCase() + match.substr(1);
             });
         };
+    }).filter('storename', function() {
+        return function(input) {
+            return input.split('-').join(' ');
+        };
     });
 };

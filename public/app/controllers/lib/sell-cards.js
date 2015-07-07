@@ -6,8 +6,10 @@ module.exports = function(m) {
         function($scope, $location, $routeParams, authService, store, userService, storeList) {
 
 
-            function capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
+            function capitalizeFirstLetter(str) {
+                return str.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
             }
 
             var calculateTotalOfferMailCard = function(stores) {
@@ -39,7 +41,8 @@ module.exports = function(m) {
             $scope.allStores = storeList;
 
             for (var i = 0; i < $scope.allStores.length; i = i + 1) {
-                $scope.allStores[i].name = capitalizeFirstLetter($scope.allStores[i].name.replace('-', ' '));
+                $scope.allStores[i].originalName = $scope.allStores[i].name;
+                $scope.allStores[i].name = capitalizeFirstLetter($scope.allStores[i].name.split('-').join(' '));
             }
 
 
@@ -89,7 +92,8 @@ module.exports = function(m) {
                     value: parseInt($scope.store.balance),
                     amount: parseInt($scope.store.amount),
                     discount: $scope.store.brand.discount,
-                    name: $scope.store.brand.name
+                    name: $scope.store.brand.name,
+                    originalName: $scope.store.brand.originalName
                 };
 
                 $scope.store = {
