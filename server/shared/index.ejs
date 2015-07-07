@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
     <head>
-
+        <% var myRoute="";%>
         
         <% include ../inc/head %>
         
@@ -13,7 +13,7 @@
 
         <div class="body">
 
-            <%var myRoute='';%>
+            
             
             <% include ../inc/header %>
 
@@ -123,7 +123,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="get-started">
-                                    <a href="/stores/" class="btn btn-lg btn-primary">View all merchants now!</a>
+                                    <a href="/sell-cards/" class="btn btn-lg btn-primary">Sell cards, get paid!</a>
                                     
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                 </div>
 
                 <div class="container">
-                    <h2> Featured Stores</h2>
+                    <h2> Our Promise</h2>
                     
                     <div class="row" ng-cloak>
 
@@ -206,26 +206,26 @@
                             <div class="counters counters-text-light">
                                 <div class="col-md-3 col-sm-6">
                                     <div class="counter">
-                                        <strong data-to="1234" data-append="+">0</strong>
-                                        <label>Happy Clients</label>
+                                        <strong data-to="1234" data-append="">0</strong>
+                                        <label>Average Card Amount,</label>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6">
                                     <div class="counter">
-                                        <strong data-to="52">0</strong>
-                                        <label>Stores</label>
+                                        <strong data-to="52"  data-append="%">0</strong>
+                                        <label>Average Discount Percentage</label>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6">
                                     <div class="counter">
-                                        <strong data-to="175">0</strong>
-                                        <label>Gift cards</label>
+                                        <strong data-to="175"  data-prepend="$">0</strong>
+                                        <label>Average Dollar Amount Saved</label>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6">
                                     <div class="counter">
-                                        <strong data-to="87">0</strong>
-                                        <label>Sold cards</label>
+                                        <strong data-to="87"  data-prepend="$">0</strong>
+                                        <label>Average Saved Per Month</label>
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +310,7 @@
                         </div>
                     </div>
 
-                    <h2> Best Selling Stores</h2>
+                    <h2> Highest Payouts</h2>
                     <div class="row" ng-cloak>
                         <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="store in bestsellingStores">
                             <span class="thumb-info thumb-info-hide-wrapper-bg">
@@ -337,12 +337,12 @@
                     </div>
                 </div>
 
-                <section class="call-to-action call-to-action-default with-button-arrow call-to-action-in-footer call-to-action-in-footer-margin-top">
+                <section class="call-to-action call-to-action-default with-button-arrow call-to-action-in-footer call-to-action-in-footer-margin-top " style="background-color: #08C !important;">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="call-to-action-content">
-                                    <h3>This website is <strong>everything</strong> you need to sell  
+                                    <h3 style="color: white;">This website is <strong>everything</strong> you need to sell  
 
                                     <strong class="inverted">
                                         <span class="word-rotate" data-plugin-options='{"delay": 2000, "animDelay": 300}'>
@@ -354,10 +354,10 @@
                                         </span> 
                                     </strong>
                                          cards!</h3>
-                                    <p>The <strong>#1 selling</strong> gift-card site on the internet</p>
+                                    <p  style="color: white;">The <strong>#1 selling</strong> gift-card site on the internet</p>
                                 </div>
                                 <div class="call-to-action-btn">
-                                    <a href="/" target="_blank" class="btn btn-lg btn-primary">Sell Now!</a><span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -12px;"></span>
+                                    <a href="/sell-cards/" target="_blank" class="btn btn-lg btn-primary" style='background-color: #f2f2f2;color: black;'>Sell Now!</a><span class="arrow hlb hidden-xs hidden-sm hidden-md" data-appear-animation="rotateInUpLeft" style="top: -12px;"></span>
                                 </div>
                             </div>
                         </div>

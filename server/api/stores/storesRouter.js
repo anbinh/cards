@@ -487,16 +487,16 @@ router.get('/featured', function(req, res, next) {
 
 router.get('/best-selling', function(req, res, next) {
     var data = [{
-        name: "Gamestop",
+        name: "target",
         discount: 10
     }, {
-        name: "AMC",
+        name: "walmart",
         discount: 20,
     }, {
-        name: "Bestbuy",
+        name: "bestbuy",
         discount: 14
     }, {
-        name: "Apple",
+        name: "starbucks",
         discount: 18
     }];
     res.json(data);
