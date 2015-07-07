@@ -1,11 +1,17 @@
 'use strict';
 
 module.exports = function(m) {
-    m.controller('HeaderController', ['$scope', '$rootScope', 'store', '$location', 'authService', '$routeParams',
-        function($scope, $rootScope, store, $location, authService, $routeParams) {
+    m.controller('HeaderController', ['$scope', '$rootScope', 'store', '$location', 'authService', '$routeParams', 'storeService',
+        function($scope, $rootScope, store, $location, authService, $routeParams, storeService) {
 
 
-        console.log('HEADER Route PARAM', $routeParams);
+            console.log('HEADER Route PARAM', $routeParams);
+
+            function capitalizeFirstLetter(str) {
+                return str.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+            }
 
             var getTotal = function(cards) {
                 var total = 0;
@@ -16,6 +22,16 @@ module.exports = function(m) {
             };
 
             var m, n;
+
+            storeService.get().$promise.then(function(stores) {
+                $scope.allStores = stores;
+                for (var i = 0; i < $scope.allStores.length; i = i + 1) {
+                    $scope.allStores[i].originalName = $scope.allStores[i].name;
+                    $scope.allStores[i].name = capitalizeFirstLetter($scope.allStores[i].name.split('-').join(' '));
+                }
+
+            });
+
 
             if (authService.isAuthenticated()) {
                 $scope.loggedIn = true;
@@ -76,6 +92,14 @@ module.exports = function(m) {
             $scope.signOut = function() {
                 store.remove('user');
                 window.location = '/';
+            };
+
+            $scope.searchStore = function() {
+                if ($scope.searchedStore.originalName) {
+                    window.location = '/stores/#/' + $scope.searchedStore.originalName;
+                } else {
+                    swal('Invalid Store', 'The store you are looking is not available', 'error');
+                }
             };
         }
     ]);

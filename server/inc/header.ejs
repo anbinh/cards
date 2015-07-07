@@ -1,3 +1,10 @@
+
+<script type="text/ng-template" id="searchBarTemplate.html">
+    <a style="height : 40px;line-height:30px">
+        <img ng-src="/img/cards/{{match.model.originalName}}.jpg" width="42">
+        <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+    </a>
+</script>
 <header id="header" class="flat-menu clean-top" ng-controller="HeaderController">
     <div class="header-top">
         <div class="container">
@@ -5,9 +12,9 @@
                 <span style="color:black">MON-SAT 8AM-4:00PM (EST)</span> | <i class="fa fa-phone"></i><a href="#">124-GIFTCARDS</a>
             </p>
             <div class="search">
-							<form id="searchForm" method="get" novalidate="novalidate">
+							<form id="searchForm" method="get" novalidate="novalidate" ng-submit="searchStore()">
 								<div class="input-group">
-									<input type="text" class="form-control search" name="q" id="q" placeholder="Search..." required="" aria-required="true">
+									<input type="text" class="form-control search" name="q" id="q" placeholder="Search..." required="" aria-required="true" ng-model="searchedStore" typeahead="store as store.name for store in allStores | filter:{name:$viewValue}" typeahead-template-url="searchBarTemplate.html">
 									<span class="input-group-btn">
 										<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
 									</span>
@@ -82,7 +89,7 @@
 																<tr ng-repeat="card in selectedCards track by $index">
 																	<td class="product-thumbnail">
 																		<a >
-																			<img  height="60px" alt="" class="img-responsive" src="/img/cards/{{card.name}}.jpg" style="height:60px;padding-bottom: 10px">
+																			<img  height="60px" alt="" class="img-responsive" ng-src="/img/cards/{{card.name}}.jpg" style="height:60px;padding-bottom: 10px">
 																		</a>
 																	</td>
 																	<td class="product-name">

@@ -98,7 +98,7 @@
                     <tbody>
                         <tr ng-repeat="card in order.cards track by $index">
                             <td style="vertical-align: middle">
-                                <img height="30px" src="/img/cards/{{card.name}}.jpg" alt="">    
+                                <img height="30px" ng-src="/img/cards/{{card.name}}.jpg" alt="">    
                             </td>
                             <td>
                                 {{card.name | storename | titlecase}}
