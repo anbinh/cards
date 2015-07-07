@@ -92,27 +92,6 @@ module.exports = function(m) {
                     return;
                 }
 
-                if ($scope.store.balance.match(/^[0-9]+$/) == null) {
-                    $scope.store = {
-                        balance: null,
-                        amount: 1,
-                        brand: null
-                    };
-                    swal('Invalid Balance', 'The balance you entered is not valid', 'error');
-                    return;
-                }
-
-                if ($scope.store.amount.match(/^[0-9]+$/) == null) {
-                    $scope.store = {
-                        balance: null,
-                        amount: 1,
-                        brand: null
-                    };
-                    swal('Invalid Amount', 'The amount you entered is not valid', 'error');
-                    return;
-                }
-
-
                 // remove selling_cards saving
                 store.remove('selling_cards');
                 console.log('store', $scope.store);
