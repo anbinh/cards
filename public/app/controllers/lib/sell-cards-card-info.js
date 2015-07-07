@@ -31,6 +31,7 @@ module.exports = function(m) {
 
             console.log('selling cards', $scope.allSellingCards);
             $scope.goBack = function() {
+
                 $location.url('');
             };
 

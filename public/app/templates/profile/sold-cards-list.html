@@ -4,19 +4,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1> Orders History 
+                    <h1> Sold Cards History 
                         <span>
                             <a href="/profile/#/">Profile</a> |
                             <a href="/profile/#/edit">Edit</a> | 
-                            <a href="/profile/#/orders" class="text-muted" >Orders History</a> |
-                            <a href="/profile/#/sold-cards-history"  >Sold Cards History</a> 
+                            <a href="/profile/#/orders"  >Orders History</a> |
+                            <a href="/profile/#/sold-cards-history" class="text-muted" >Sold Cards History</a> 
                         </span>
                     </h1>
 
                     <ul class="breadcrumb breadcrumb-valign-mid">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="/profile/#/">Profile</a></li>
-                                    <li class="active">Orders History</li>
+                                    <li class="active">Sold Cards History</li>
                                 </ul>
                 </div>
             </div>
@@ -50,31 +50,31 @@
                                 #Cards
                             </th>
                             <th>
-                                Payment Date
+                                Selling Date
                             </th>
                             
                             
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="order in orders track by $index" ng-click="orderDetail(order.id)" style="cursor : pointer">
+                        <tr ng-repeat="soldCards in soldCardsList track by $index" ng-click="soldCardsDetail(soldCards.id)" style="cursor : pointer">
                             <td style="vertical-align: middle">
                                 {{$index + 1}}  
                             </td>
                             <td>
-                                ${{order.total_face_value}}
+                                ${{soldCards.total_face_value}}
                             </td>
                             <td>
-                                ${{order.average_percentage}}
+                                ${{soldCards.average_percentage}}
                             </td>
                             <td>
-                                ${{order.total_amount}}
+                                ${{soldCards.total_amount}}
                             </td>
                             <td>
-                                {{order.total_cards}}
+                                {{soldCards.total_cards}}
                             </td>
                             <td>
-                                {{order.created_date | date: 'MM/dd/yyyy h:mma' }}
+                                {{soldCards.created_date | date: 'MM/dd/yyyy h:mma' }}
                             </td>
                            
                             

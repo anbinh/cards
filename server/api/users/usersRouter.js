@@ -44,6 +44,20 @@ router.get('/orders/:id', function(req, res, next) {
 
 });
 
+/* GET /users/sold-cards/:id listing. */
+router.get('/sold-cards-list/:id', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_percentage,created_date from selling_cards where user_id = ?', [req.params.id], function(err, rows) {
+            if (err) return next(err);
+
+            res.json(rows)
+        });
+
+    });
+
+});
+
 /* POST /users */
 router.post('/', function(req, res, next) {
 
@@ -354,6 +368,54 @@ router.post('/pay-order', function(req, res, next) {
             if (result.affectedRows === 1) {
                 var orderId = result.insertId;
                 connection.query('Select * from orders where id = ' + orderId, [], function(err, rows) {
+                    if (err) return next(err);
+
+                    var order = {
+                        id: rows[0].id,
+                        user_id: rows[0].user_id,
+                        total_amount: rows[0].total_amount,
+                        total_cards: rows[0].total_cards,
+                        billingUser: JSON.parse(rows[0].billing_user),
+                        cards: JSON.parse(rows[0].cards),
+                        total_face_value: rows[0].total_face_value,
+                        average_percentage: rows[0].average_percentage
+                    };
+
+
+                    res.json(order);
+                })
+            }
+
+        });
+
+
+
+    });
+
+});
+
+/* POST /users/sell-cards */
+router.post('/sell-cards', function(req, res, next) {
+
+    var dat = req.body;
+
+
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+
+
+        // console.log("find this info", dat);
+
+        dat.billing_user = JSON.stringify(dat.billing_user);
+        dat.cards = JSON.stringify(dat.cards);
+
+        connection.query('INSERT INTO selling_cards SET ?', dat, function(err, result) {
+
+            if (err) return next(err);
+
+            if (result.affectedRows === 1) {
+                var orderId = result.insertId;
+                connection.query('Select * from selling_cards where id = ' + orderId, [], function(err, rows) {
                     if (err) return next(err);
 
                     var order = {

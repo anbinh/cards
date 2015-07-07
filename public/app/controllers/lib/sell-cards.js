@@ -25,7 +25,7 @@ module.exports = function(m) {
                     total += (100 - stores[i].discount) * stores[i].value * stores[i].amount / 100;
                 }
 
-                return (total - 10);
+                return (total > 10) ? (total - 10) : 0;
             };
 
             $scope.payBy = {

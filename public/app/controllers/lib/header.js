@@ -1,8 +1,11 @@
 'use strict';
 
 module.exports = function(m) {
-    m.controller('HeaderController', ['$scope', '$rootScope', 'store', '$location', 'authService',
-        function($scope, $rootScope, store, $location, authService) {
+    m.controller('HeaderController', ['$scope', '$rootScope', 'store', '$location', 'authService', '$routeParams',
+        function($scope, $rootScope, store, $location, authService, $routeParams) {
+
+
+        console.log('HEADER Route PARAM', $routeParams);
 
             var getTotal = function(cards) {
                 var total = 0;

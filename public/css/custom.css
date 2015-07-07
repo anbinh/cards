@@ -215,3 +215,8 @@ th.card-info-header {
 .payment-option.enabled {
     border: 3px solid #046291;
 }
+
+#header.flat-menu nav ul.nav-main>li>a.enabled{
+    color: #FFF!important;
+  background-color: #33A0D6 !important;
+}

@@ -29,27 +29,27 @@
             <nav class="nav-main mega-menu">
                 <ul class="nav nav-pills nav-main" id="mainMenu">
                     <li class="dropdown active">
-                        <a class="" href="/">
+                        <a class="<% if (myRoute == '') { %> enabled <% } %>" href="/">
 							Home
 						</a>
                     </li>
                     <li class="dropdown active">
-                        <a class="" href="/stores/#/">
+                        <a class="<% if (myRoute == 'stores') { %> enabled <% } %>" href="/stores/#/">
 							Buy cards
 						</a>
                     </li>
                     <li class="dropdown active">
-                        <a class="" href="/sell-cards/#/">
+                        <a class="<% if (myRoute == 'sell-cards') { %> enabled <% } %>" href="/sell-cards/#/">
 							Sell cards
 						</a>
                     </li>
                     <li class="dropdown active">
-                        <a class="" href="/about-us">
+                        <a class="<% if (myRoute == 'about-us') { %> enabled <% } %>" href="/about-us">
 							About us
 						</a>
                     </li>
                     <li class="dropdown active">
-                        <a class="" href="/values">
+                        <a class="<% if (myRoute == 'values') { %> enabled <% } %>" href="/values">
 							Our Values
 						</a>
                     </li>

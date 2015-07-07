@@ -1,199 +1,137 @@
 <div role="main" class="main">
-
     <section class="page-header page-header-light page-header-more-padding">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1> Order Detail 
+                    <h1> Your Receipt 
                         <span>
                             <a href="/profile/#/">Profile</a> |
                             <a href="/profile/#/edit">Edit</a> | 
                             <a href="/profile/#/orders"  >Orders History</a> |
-                            <a href="/profile/#/sold-cards-history"  >Sold Cards History</a> 
+                            <a href="/profile/#/sold-cards-history" >Sold Cards History</a> 
                         </span>
                     </h1>
-
                     <ul class="breadcrumb breadcrumb-valign-mid">
                         <li><a href="/">Home</a></li>
                         <li><a href="/profile/#/">Profile</a></li>
-                        <li><a href="/profile/#/orders">Orders History</a></li>
-                        <li class="active">Order #{{order.id}}</li>
+                        <li><a href="/profile/#/sold-cards-history">Sold Cards History</a></li>
+                        <li class="active">Receipt #{{sellingCards.id}}</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
-
     <div class="container">
+        
         <div class="row">
-
             <div class="col-md-2">
             </div>
-            
             <div class="col-md-8">
-
-                <h2 class="text-center"><strong>CARD ORDER</strong></h2>
-
-                <p class="pull-right">Paid on {{order.created_date | date: 'MM/dd/yyyy ' }}</p>
+                <h2 class="text-center"><strong>CARDS RECEIPT</strong></h2>
+                <p class="pull-right">Sold on {{sellingCards.created_date | date: 'MM/dd/yyyy ' }}</p>
 
                 </br>
                 </br>
-            
+
                 <hr class="solid">
-
-
-                <h4 class="heading-primary"> <strong>User Info</strong></h4>
-
+                <h4 class="heading-primary"> <strong>Customer's Information</strong></h4>
                 <ul class="list ">
-                
-                    <li><strong>Username:</strong> {{order.billingUser.username}}</li>
-                    <li><strong>Email:</strong> {{order.billingUser.email}}</li>
-                
+                    <li><strong>Username:</strong> {{sellingCards.billingUser.username}}</li>
+                    <li><strong>Email:</strong> {{sellingCards.billingUser.email}}</li>
                 </ul>
-
-               
                 <hr>
-                
-
-                <h4 class="heading-primary"> <strong>Billing Address</strong></h4>
+                <h4 class="heading-primary"> <strong>Customer's Address</strong></h4>
                 <ul class="list  mt-xlg">
-                    <li><strong>Address:</strong> {{ (order.billingUser.address ? order.billingUser.address : 'NOT SET')}}</li>
-                    <li><strong>City</strong> {{ (order.billingUser.city ? order.billingUser.city : 'NOT SET')}}</li>
-                    <li><strong>State:</strong> {{ (order.billingUser.state ? order.billingUser.state : 'NOT SET')}}</li>
-
-                    <li><strong>Zipcode:</strong> {{ (order.billingUser.zipcode ? order.billingUser.zipcode : 'NOT SET')}}</li>
+                    <li><strong>Address:</strong> {{ (sellingCards.billingUser.address ? sellingCards.billingUser.address : 'NOT SET')}}</li>
+                    <li><strong>City</strong> {{ (sellingCards.billingUser.city ? sellingCards.billingUser.city : 'NOT SET')}}</li>
+                    <li><strong>State:</strong> {{ (sellingCards.billingUser.state ? sellingCards.billingUser.state : 'NOT SET')}}</li>
+                    <li><strong>Zipcode:</strong> {{ (sellingCards.billingUser.zipcode ? order.billingUser.zipcode : 'NOT SET')}}</li>
                 </ul>
-
                 <hr>
-
                 <h4 class="heading-primary"> <strong>Cards review</strong></h4>
-                
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>
-                                
+                            </th>
+                            <th>
                             </th>
                             <th>
                                 Merchant
                             </th>
                             <th>
-                                Card Value
+                                Card Number
                             </th>
                             <th>
-                                Qty
+                                Card Pin
                             </th>
-                            <th>
-                                Total
-                            </th>
-                            <th>
-                                Percentage
-                            </th>
-                            <th>
-                                Sell Price
-                            </th>
+                            
                             
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="card in order.cards track by $index">
+                        <tr ng-repeat="card in sellingCards.cards track by $index">
+                            <td>{{$index + 1}}</td>
                             <td style="vertical-align: middle">
-                                <img height="30px" src="/img/cards/home-depot.jpg" alt="">    
+                                <img height="30px" src="/img/cards/home-depot.jpg" alt="">
                             </td>
                             <td>
-                                {{card.name}}
+                                {{card.name}} (${{card.value}})
                             </td>
                             <td>
-                                ${{card.value}}
+                                {{card.number}}
                             </td>
                             <td>
-                                1
-                            </td>
-                            <td>
-                                ${{card.value}}
-                            </td>
-                            <td>
-                                {{card.pay/card.value*100 | number : 2}}%
-                            </td>
-                            <td>
-                                ${{card.pay}}
+                                {{card.pin}}
                             </td>
                             
+                            
                         </tr>
-                        
                     </tbody>
                 </table>
-
-
                 <hr>
-
-                <h4 class="heading-primary"> <strong>Cart totals</strong></h4>
-
+                <h4 class="heading-primary"> <strong>Total Cards</strong></h4>
                 <table class="table">
-                   
                     <tbody>
                         <tr>
                             <td style="vertical-align: middle">
                                 <strong>Total Face Value  </strong>
                             </td>
                             <td>
-                                ${{totalFaceValue | number:2}}
+                                ${{totalFaceValue | number : 2}}
                             </td>
-                            
                         </tr>
-
                         <tr>
                             <td style="vertical-align: middle">
-                                <strong>Total Cards In Shipment  </strong>
+                                <strong>Total Cards For Sell  </strong>
                             </td>
                             <td>
-                                {{order.cards.length}}
+                                {{sellingCards.cards.length}}
                             </td>
-                            
                         </tr>
-
                         <tr>
                             <td style="vertical-align: middle">
                                 <strong> Average Percentage </strong>
                             </td>
                             <td>
-                                ${{averagePercentage | number : 2}}
+                                {{averagePercentage | number : 2}}%
                             </td>
-                            
                         </tr>
-
-                        <tr>
-                            <td style="vertical-align: middle">
-                                <strong>Shipping </strong>
-                            </td>
-                            <td>
-                                Free Shipping
-                            </td>
-                            
-                        </tr>
-
+                        
                         <tr>
                             <td style="vertical-align: middle">
                                 <strong>Total Sell Price  </strong>
                             </td>
                             <td>
-                                 <h4 style="color : #08C">${{total}}</h4>
+                                <h4 style="color : #08C">${{total}}</h4>
                             </td>
-                            
                         </tr>
-                        
                     </tbody>
                 </table>
-
-
+                
             </div>
-
             <div class="col-md-2">
             </div>
         </div>
-      
     </div>
-
-    
-
 </div>

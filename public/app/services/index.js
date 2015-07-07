@@ -7,7 +7,7 @@ require('./lib/store')(m);
 require('./lib/user')(m);
 require('./lib/auth')(m);
 require('./lib/order')(m);
-
+require('./lib/selling_cards')(m);
 
 
 module.exports = m;

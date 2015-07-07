@@ -28,11 +28,20 @@ module.exports = function(m) {
                     method: 'POST',
                     'url': '/api/users/pay-order',
                 },
+                'sellCards': {
+                    method: 'POST',
+                    'url': '/api/users/sell-cards',
+                },
                 'getOrdersByUserId': {
                     method: 'GET',
                     'url': '/api/users/orders/:id',
                     isArray: true
                 },
+                'getSoldCardsByUserId': {
+                    method: 'GET',
+                    'url': '/api/users/sold-cards-list/:id',
+                    isArray: true
+                }
             });
         }
     ]);

@@ -43,6 +43,35 @@ module.exports = function(m) {
 
             $scope.averagePercentage = calculateAveragePercentage($scope.sellingCards.cards);
 
+
+            $scope.sellCards = function() {
+
+                var user = store.get('user');
+                var selling_cards = {
+                    user_id: user.id,
+                    billing_user: $scope.sellingCards.billingUser,
+                    cards: $scope.sellingCards.cards,
+                    total_amount: $scope.total,
+                    total_cards: $scope.sellingCards.cards.length,
+                    total_face_value: $scope.totalFaceValue,
+                    average_percentage: $scope.averagePercentage
+                };
+
+                userService.sellCards(selling_cards, function(result) {
+
+                    store.set('selling_cards', []);
+                    store.set('selling_stores', []);
+
+                    $location.url('receipt/' + result.id);
+
+                    console.log('RECEIPT', result);
+                }, function(err) {
+                    // console.log("ERRR", err);
+                    swal('Error', err.data.message, 'error');
+                });
+
+            };
+
         }
     ]);
 };

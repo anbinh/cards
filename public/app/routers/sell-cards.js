@@ -25,6 +25,23 @@ angular.module('app')
                     controller: 'SellCardCustomerInfoController'
 
 
+                }).when('/receipt/:id', {
+                    templateUrl: 'sell_cards/receipt.html',
+                    controller: 'SellCardReceiptController',
+                    resolve: {
+                        SellingCardList: ['sellingCardsService', '$route',
+                            function(sellingCardsService, $route) {
+                                var id = $route.current.params.id;
+
+                                return sellingCardsService.get({
+                                    id: id
+                                }).$promise.then(function(cards) {
+                                    return cards;
+                                });
+                            }
+                        ]
+                    }
+
                 });
         }
     ]);
