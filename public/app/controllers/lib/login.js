@@ -14,7 +14,6 @@ module.exports = function(m) {
                     store.set('user', ret);
 
 
-
                     if ($routeParams.forward_url !== '' && $routeParams.forward_url != undefined) {
                         console.log('$routeParams.forward_url', atob($routeParams.forward_url));
                         window.location = atob($routeParams.forward_url);
