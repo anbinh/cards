@@ -62,13 +62,13 @@
                                 {{$index + 1}}  
                             </td>
                             <td>
-                                ${{order.total_face_value}}
+                                ${{order.total_face_value | number:2}}
                             </td>
                             <td>
-                                ${{order.average_percentage}}
+                                ${{order.average_percentage | number:2}}
                             </td>
                             <td>
-                                ${{order.total_amount}}
+                                ${{order.total_amount | number:2}}
                             </td>
                             <td>
                                 {{order.total_cards}}

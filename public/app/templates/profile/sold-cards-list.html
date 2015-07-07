@@ -62,13 +62,13 @@
                                 {{$index + 1}}  
                             </td>
                             <td>
-                                ${{soldCards.total_face_value}}
+                                ${{soldCards.total_face_value | number:2}}
                             </td>
                             <td>
-                                ${{soldCards.average_percentage}}
+                                ${{soldCards.average_percentage | number:2}}
                             </td>
                             <td>
-                                ${{soldCards.total_amount}}
+                                ${{soldCards.total_amount | number:2}}
                             </td>
                             <td>
                                 {{soldCards.total_cards}}

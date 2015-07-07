@@ -72,10 +72,10 @@
 													${{card.value}}
 												</td>
 												<td>
-													${{card.pay}}
+													${{card.pay | number:2}}
 												</td>
 												<td>
-													{{card.save}}%
+													{{card.save | number:2}}%
 												</td>
 												<td>
 													<a  class="btn btn-primary pull-right" ng-click="addToCart(card)">Add to Cart</a>

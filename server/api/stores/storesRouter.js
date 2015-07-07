@@ -211,24 +211,108 @@ router.get('/:name', function(req, res, next) {
 
     console.log("mewerwer");
 
-    var cardNo = Math.random() * 100 | 0;
-    var data = [];
-    for (var i = cardNo - 1; i >= 0; i--) {
-        var val = (Math.random() * 10000 | 0) / 100;
-        var discount = (Math.random() * 2000 | 0) / 100;
-        var pay = (val - discount) | 0;
-        var item = {
-            "name": storeName,
-            "type": "Physical",
-            "value": val,
-            "pay": pay,
-            "save": (((val - pay) / val) * 1000 | 0) / 10
-        }
 
-        data.push(item)
-    };
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select * from stores where name = ?', [storeName], function(err, rows) {
+            if (err) return next(err);
 
-    res.json(data);
+
+
+            // var storeId = rows[0].id
+            // 
+            // res.json(rows);
+
+
+            if (rows.length == 0) {
+                res.statusCode = 400;
+                res.json({
+                    message: 'No store found'
+                });
+
+                return;
+            }
+
+            var storeId = rows[0].id;
+
+            connection.query('select max(id) as id from cards where store_id = ?', [storeId], function(err, rows) {
+                if (err) return next(err);
+
+                var cardId = rows[0].id;
+                connection.query('select stores.id, stores.name as name, cards.discount, stats.gcg_buy,stats.gogo_discount_extra, stats.fixed_discount from cards LEFT JOIN stores ON stores.id = cards.store_id   LEFT JOIN stats ON stats.id=cards.store_id where cards.id = ? order by store_id DESC', [cardId], function(err, rows) {
+                    if (err) return next(err);
+
+                    var stores = [];
+                    for (var i = 0; i < rows.length; i++) {
+                        var store = rows[i];
+                        if (store.fixed_discount > 0) {
+                            store.discount = store.fixed_discount;
+                        }
+
+                        store.name = store.name.trim();
+
+
+                        if (StoresCat[store.name] != undefined) {
+                            store.category = StoresCat[store.name];
+                        }
+
+
+
+
+                        store.gogo_discount = (parseFloat(store.discount)) + parseFloat(store.gogo_discount_extra);
+
+
+                        if (parseFloat(store.gcg_buy) != 0) {
+                            store.gogo_buy = parseFloat(store.gcg_buy) + 1;
+                            var t = Math.floor((100 - store.gogo_discount - parseFloat(store.gogo_buy)) * 100) / 100;
+                            store.spread = Math.floor(t / (100 - store.gogo_discount) * 100000) / 1000;
+
+                            // console.log("t init",store.gogo_discount,store.gogo_buy ,t);
+                        } else {
+                            store.gogo_buy = 1;
+                            store.spread = "";
+                        }
+
+
+                        stores.push(store);
+
+
+                    };
+
+                    var store = stores[0];
+
+
+                    // generate fake cards
+                    var cardNo = Math.random() * 100 | 0;
+                    var data = [];
+                    for (var i = cardNo - 1; i >= 0; i--) {
+                        var val = ((Math.random() * 50000 | 0) / 100) | 0;
+                        var discount = store.gogo_discount;
+                        var pay = (100 - discount) * val / 100;
+                        var item = {
+                            "store_id": store.id,
+                            "name": store.name,
+                            "type": "Physical",
+                            "value": val,
+                            "pay": pay,
+                            "save": discount
+                        }
+
+                        data.push(item)
+                    };
+
+
+                    res.json(data);
+                });
+            });
+
+            // console.log(ids);
+
+
+
+        });
+
+    });
 });
 
 

@@ -93,7 +93,7 @@
 																		</a>
 																	</td>
 																	<td class="product-name">
-																		<a >{{$index + 1}}. {{card.name | storename | titlecase}}<br><span class="amount"><strong>${{card.pay}}</strong></span></a>
+																		<a >{{$index + 1}}. {{card.name | storename | titlecase}}<br><span class="amount"><strong>${{card.pay | number:2}}</strong></span></a>
 																	</td>
 																	<td class="product-actions">
 																		<a ng-click="removeCard($index)" title="Remove this item" class="remove" style="cursor : pointer">

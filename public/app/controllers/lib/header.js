@@ -18,7 +18,9 @@ module.exports = function(m) {
                 for (var i = cards.length - 1; i >= 0; i = i - 1) {
                     total += cards[i].pay;
                 }
-                return total;
+                // return total;
+
+                return Math.round(total * 100) / 100;
             };
 
             var m, n;

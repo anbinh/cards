@@ -10,7 +10,9 @@ module.exports = function(m) {
                 for (var i = cards.length - 1; i >= 0; i = i - 1) {
                     total += cards[i].pay;
                 }
-                return total;
+                // return total;
+
+                return Math.round(total * 100) / 100
             };
 
             $scope.selectedCards = store.get('cart');
@@ -19,7 +21,7 @@ module.exports = function(m) {
             for (var i = $scope.selectedCards.length - 1; i >= 0; i = i - 1) {
                 total += $scope.selectedCards[i].pay;
             }
-            $scope.total = total;
+            $scope.total = Math.round(total * 100) / 100;
 
             $scope.checkout = function() {
                 window.location = '/checkout';

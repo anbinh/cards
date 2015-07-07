@@ -122,7 +122,7 @@
                                                         <span class="amount">{{card.pay/card.value*100 | number: 2}}%</span>
                                                     </td>
                                                     <td class="product-subtotal">
-                                                        <span class="amount">${{card.pay}}</span>
+                                                        <span class="amount">${{card.pay | number:2}}</span>
                                                     </td>
                                                 </tr>
                                                
@@ -175,7 +175,7 @@
                                                 <strong>Total Sell Price</strong>
                                             </th>
                                             <td>
-                                                <strong><span class="amount">${{total}}</span></strong>
+                                                <strong><span class="amount">${{total | number:2}}</span></strong>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -221,7 +221,7 @@
                                 <strong>Cart Subtotal</strong>
                             </th>
                             <td>
-                                <strong><span class="amount">${{total}}</span></strong>
+                                <strong><span class="amount">${{total | number:2}}</span></strong>
                             </td>
                         </tr>
                         <tr class="shipping">
@@ -238,7 +238,7 @@
                                 <strong>Order Total</strong>
                             </th>
                             <td>
-                                <strong><span class="amount">${{total}}</span></strong>
+                                <strong><span class="amount">${{total | number:2}}</span></strong>
                             </td>
                         </tr>
                     </tbody>

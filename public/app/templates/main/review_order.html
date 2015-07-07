@@ -104,7 +104,7 @@
                                 {{card.pay/card.value*100 | number : 2}}%
                             </td>
                             <td>
-                                ${{card.pay}}
+                                ${{card.pay | number:2}}
                             </td>
                             
                         </tr>
@@ -165,7 +165,7 @@
                                 <strong>Total Sell Price  </strong>
                             </td>
                             <td>
-                                 <h4 style="color : #08C">${{total}}</h4>
+                                 <h4 style="color : #08C">${{total | number:2}}</h4>
                             </td>
                             
                         </tr>

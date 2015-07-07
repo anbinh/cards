@@ -66,10 +66,10 @@
                                                         <span class="amount">${{card.value}}</span>
                                                     </td>
                                                     <td class="product-quantity">
-                                                        <span class="amount">{{card.save}}%</span>
+                                                        <span class="amount">{{card.save | number:2}}%</span>
                                                     </td>
                                                     <td class="product-subtotal">
-                                                        <span class="amount">${{card.pay}}</span>
+                                                        <span class="amount">${{card.pay | number:2}}</span>
                                                     </td>
                                                 </tr>
                                                
