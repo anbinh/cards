@@ -5,17 +5,48 @@ var router = express.Router();
 
 
 
-// /orders
+// /selling-cards
 router.get('/:id', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT * from selling_cards where id = ?', [req.params.id], function(err, rows) {
+        connection.query('SELECT receipts.*,sold_cards.*, receipts.id as receipt_id from receipts LEFT JOIN sold_cards ON sold_cards.receipt_id = receipts.id  where receipts.id =  ?', [req.params.id], function(err, rows) {
             if (err) return next(err);
-
             rows[0].billingUser = JSON.parse(rows[0].billing_user);
-            rows[0].cards = JSON.parse(rows[0].cards);
             delete rows[0].billing_user;
-            res.json(rows[0])
+
+            var receipt = {
+                id: rows[0].id,
+                user_id: rows[0].user_id,
+                total_amount: rows[0].total_amount,
+                total_cards: rows[0].total_cards,
+                total_face_value: rows[0].total_face_value,
+                average_payout: rows[0].average_payout,
+                store_list: rows[0].store_list,
+                created_date: rows[0].created_date,
+                billingUser: rows[0].billingUser
+            };
+
+            var cards = [];
+            for (var i = 0; i < rows.length; i++) {
+                var item = rows[i];
+                var card = {
+                    id: rows[i].id,
+                    receipt_id: rows[i].receipt_id,
+                    value: rows[i].value,
+                    gogo_buy: rows[i].gogo_buy,
+                    number: rows[i].number,
+                    pin: rows[i].pin,
+                    store_id: rows[i].store_id,
+                    store_name: rows[i].store_name,
+
+                };
+                cards.push(card);
+            };
+            receipt.cards = cards;
+
+
+
+            res.json(receipt);
         });
 
     });

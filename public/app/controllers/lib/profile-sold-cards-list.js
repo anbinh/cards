@@ -17,6 +17,29 @@ module.exports = function(m) {
             $scope.soldCardsDetail = function(id) {
                 window.location = '/profile/#/sold-cards/' + id;
             };
+
+
+
+
+            for (var i = 0; i < $scope.soldCardsList.length; i = i + 1) {
+
+                var slides = [];
+                var storeList = $scope.soldCardsList[i].store_list.split(',');
+
+                console.log('store', storeList);
+                for (var j = 0; j < storeList.length; j = j + 1) {
+
+                    slides.push({
+                        image: storeList[i],
+                        text: ''
+                    });
+
+                }
+                $scope.soldCardsList[i].slides = slides;
+
+            }
+
+
         }
     ]);
 };

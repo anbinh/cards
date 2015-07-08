@@ -256,11 +256,7 @@ router.get('/:name', function(req, res, next) {
                             store.category = StoresCat[store.name];
                         }
 
-
-
-
                         store.gogo_discount = (parseFloat(store.discount)) + parseFloat(store.gogo_discount_extra);
-
 
                         if (parseFloat(store.gcg_buy) != 0) {
                             store.gogo_buy = parseFloat(store.gcg_buy) + 1;
@@ -273,36 +269,39 @@ router.get('/:name', function(req, res, next) {
                             store.spread = "";
                         }
 
-
                         stores.push(store);
-
-
                     };
 
                     var store = stores[0];
 
 
-                    // generate fake cards
-                    var cardNo = Math.random() * 100 | 0;
-                    var data = [];
-                    for (var i = cardNo - 1; i >= 0; i--) {
-                        var val = ((Math.random() * 50000 | 0) / 100) | 0;
-                        var discount = store.gogo_discount;
-                        var pay = (100 - discount) * val / 100;
-                        var item = {
-                            "store_id": store.id,
-                            "name": store.name,
-                            "type": "Physical",
-                            "value": val,
-                            "pay": pay,
-                            "save": discount
-                        }
+                    connection.query('select * from sold_cards where store_id = ? and sold = 0', [storeId], function(err, rows) {
+                        if (err) return next(err);
 
-                        data.push(item)
-                    };
+                        var data = [];
+
+                        for (var i = rows.length - 1; i >= 0; i--) {
+                            var val = rows[i].value;
+                            var discount = store.gogo_discount;
+                            var pay = (100 - discount) * val / 100;
+                            var item = {
+                                "id": rows[i].id,
+                                "store_id": store.id,
+                                "name": store.name,
+                                "type": "Physical",
+                                "value": val,
+                                "pay": pay,
+                                "save": discount
+                            }
+
+                            data.push(item)
+                        };
+
+                        res.json(data);
+
+                    });
 
 
-                    res.json(data);
                 });
             });
 

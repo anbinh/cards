@@ -2,43 +2,20 @@
 
 
 module.exports = function(m) {
-    m.controller('SellCardReceiptController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'SellingCardList',
-        function($scope, $location, $routeParams, authService, store, userService, SellingCardList) {
+    m.controller('SellCardReceiptController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'SellingCardList', 'utilService',
+        function($scope, $location, $routeParams, authService, store, userService, SellingCardList, utilService) {
 
-            var calculateTotalOffer = function(cards) {
-                var total = 0;
-                for (var i = 0; i < cards.length; i = i + 1) {
-                    total += (100 - cards[i].discount) * cards[i].value / 100;
-                }
 
-                return total;
-            };
-
-            var calculateTotalFaceValue = function(cards) {
-                var total = 0;
-                for (var i = 0; i < cards.length; i = i + 1) {
-                    total += cards[i].value;
-                }
-
-                return total;
-            };
-
-            var calculateAveragePercentage = function(cards) {
-                var total = 0;
-                for (var i = 0; i < cards.length; i = i + 1) {
-                    total += cards[i].discount;
-                }
-
-                return total / cards.length;
-            };
 
             $scope.sellingCards = SellingCardList;
 
-            $scope.total = calculateTotalOffer($scope.sellingCards.cards);
+            // console.log('elling cards', $scope.sellingCards);
 
-            $scope.totalFaceValue = calculateTotalFaceValue($scope.sellingCards.cards);
+            $scope.total = $scope.sellingCards.total_amount;
 
-            $scope.averagePercentage = calculateAveragePercentage($scope.sellingCards.cards);
+            $scope.totalFaceValue = $scope.sellingCards.total_face_value;
+
+            $scope.averagePayout = $scope.sellingCards.average_payout;
 
             $scope.viewSellingHistory = function() {
                 window.location = '/profile/#/sold-cards-history';

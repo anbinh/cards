@@ -19,7 +19,8 @@ var dbOptions = {
     password: 'root',
     port: 3306,
     socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    database: "gift_cards"
+    database: "gift_cards",
+    multipleStatements: true
 };
 
 

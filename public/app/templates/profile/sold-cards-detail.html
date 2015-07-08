@@ -65,6 +65,15 @@
                             <th>
                                 Card Pin
                             </th>
+
+                            <th>
+                                Your Offer
+                            </th>
+                            
+                            <th>
+                                Payout
+                            </th>
+                            
                             
                             
                         </tr>
@@ -73,16 +82,23 @@
                         <tr ng-repeat="card in sellingCards.cards track by $index">
                             <td>{{$index + 1}}</td>
                             <td style="vertical-align: middle">
-                                <img height="30px" ng-src="/img/cards/{{card.name.toLowerCase().split(' ').join('-')}}.jpg" alt="">
+                                <img height="30px" ng-src="/img/cards/{{card.store_name}}.jpg" alt="">
                             </td>
                             <td>
-                                {{card.name}} (${{card.value}})
+                                {{card.store_name | storename | titlecase}} (${{card.value}})
                             </td>
                             <td>
                                 {{card.number}}
                             </td>
                             <td>
                                 {{card.pin}}
+                            </td>
+
+                            <td>
+                                {{card.gogo_buy*card.value/100 | number:2}}
+                            </td>
+                            <td>
+                                {{card.gogo_buy}}%
                             </td>
                             
                             
@@ -114,7 +130,7 @@
                                 <strong> Average Percentage </strong>
                             </td>
                             <td>
-                                {{averagePercentage | number : 2}}%
+                                {{averagePayout | number : 2}}%
                             </td>
                         </tr>
                         

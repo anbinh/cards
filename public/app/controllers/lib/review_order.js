@@ -48,15 +48,16 @@ module.exports = function(m) {
                     average_percentage: $scope.averagePercentage
                 };
 
+                console.log('order', order);
+
 
 
                 userService.pay(order, function(result) {
-
+                    // 
+                    console.log('PAYMENT', result);
                     store.set('cart', []);
-
                     window.location = '/profile/#/orders/' + result.id;
 
-                    console.log('PAYMENT', result);
                 }, function(err) {
                     // console.log("ERRR", err);
                     swal('Error', err.data.message, 'error');

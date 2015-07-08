@@ -12,11 +12,15 @@ module.exports = function(m) {
                 $scope.stores = store.get('selling_stores');
                 for (var i = 0; i < $scope.stores.length; i = i + 1) {
                     var currentStore = $scope.stores[i];
+
+                    // console.log('current store', currentStore);
                     for (var j = 0; j < currentStore.amount; j = j + 1) {
                         var card = {
-                            discount: currentStore.discount,
-                            name: currentStore.name,
-                            value: currentStore.value
+                            gogo_buy: currentStore.gogo_buy,
+                            store_name: currentStore.originalName,
+                            store_id: currentStore.id,
+                            value: currentStore.value,
+                            amount: 1
                         };
 
                         allCards.push(card);
@@ -29,7 +33,7 @@ module.exports = function(m) {
 
 
 
-            console.log('selling cards', $scope.allSellingCards);
+            // console.log('selling stores', store.get('selling_cards'));
             $scope.goBack = function() {
 
                 $location.url('');

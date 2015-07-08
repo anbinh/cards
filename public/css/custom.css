@@ -265,3 +265,50 @@ th.card-info-header {
 }
 
 /*END OF CUSTOM HEADER*/
+
+/*CUSTOM CAROUSEL*/
+/.layerEffect {
+ position: relative; 
+ z-index: 10; 
+}
+.layerEffect:before, .layerEffect:after { content: ""; border-radius: 3px; width:323px; height: 243px; position: absolute; border: 10px solid #fff; left: 0;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+ box-sizing: border-box; 
+ box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+ -webkit-transition: 0.3s all ease-out;
+ -moz-transition: 0.3s all ease-out;
+ transition: 0.3s all ease-out;
+ -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+ -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+
+.layerEffect.rotateMe:before { 
+ transform-origin: bottom left;
+ -webkit-transform: rotate(2deg);
+ -moz-transform: rotate(2deg); 
+ transform: rotate(2deg);
+ -webkit-transform-origin: bottom left;
+ -moz-transform-origin: bottom left;
+
+}
+
+// reset to original position
+.layerEffect:hover:before, .layerEffect:hover:after {
+ -webkit-transform: rotate(0deg);
+ -moz-transform: rotate(0deg);
+ transform: rotate(0deg);
+}
+
+.layerEffect.rotateMe:after { 
+ -webkit-transform-origin: bottom left;
+ -moz-transform-origin: bottom left;
+ transform-origin: bottom left;
+ -webkit-transform: rotate(4deg);
+ -moz-transform: rotate(4deg);
+ transform: rotate(4deg);
+} 
+
+.layerEffect:before { top: 4px; z-index: -10; }
+.layerEffect:after { top: 8px; z-index: -20; }

@@ -2,34 +2,13 @@
 
 
 module.exports = function(m) {
-    m.controller('SellCardController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'storeList',
-        function($scope, $location, $routeParams, authService, store, userService, storeList) {
+    m.controller('SellCardController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'storeList', 'utilService',
+        function($scope, $location, $routeParams, authService, store, userService, storeList, utilService) {
 
 
-            function capitalizeFirstLetter(str) {
-                return str.replace(/\w\S*/g, function(txt) {
-                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                });
-            }
 
-            var calculateTotalOfferMailCard = function(stores) {
-                var total = 0;
-                for (var i = 0; i < stores.length; i = i + 1) {
-                    total += (100 - stores[i].discount) * stores[i].value * stores[i].amount / 100;
-                }
 
-                return total;
-            };
-
-            var calculateTotalOfferOnline = function(stores) {
-                var total = 0;
-                for (var i = 0; i < stores.length; i = i + 1) {
-                    total += (100 - stores[i].discount) * stores[i].value * stores[i].amount / 100;
-                }
-
-                return (total > 10) ? (total - 10) : 0;
-            };
-
+            console.log('util service', utilService);
             $scope.payBy = {
                 mail: true,
                 online: false
@@ -42,7 +21,7 @@ module.exports = function(m) {
 
             for (var i = 0; i < $scope.allStores.length; i = i + 1) {
                 $scope.allStores[i].originalName = $scope.allStores[i].name;
-                $scope.allStores[i].name = capitalizeFirstLetter($scope.allStores[i].name.split('-').join(' '));
+                $scope.allStores[i].name = utilService.titleCase($scope.allStores[i].name.split('-').join(' '));
             }
 
 
@@ -70,8 +49,8 @@ module.exports = function(m) {
             } else {
                 $scope.showIntruction = false;
                 $scope.stores = store.get('selling_stores');
-                $scope.totalOfferMailCard = calculateTotalOfferMailCard($scope.stores);
-                $scope.totalOfferOnline = calculateTotalOfferOnline($scope.stores);
+                $scope.totalOfferMailCard = utilService.totalOfferMailCard($scope.stores);
+                $scope.totalOfferOnline = utilService.totalOfferOnline($scope.stores);
             }
 
             // store.set('selling_stores', []);
@@ -101,9 +80,10 @@ module.exports = function(m) {
                 var currentStore = {
                     value: parseInt($scope.store.balance),
                     amount: parseInt($scope.store.amount),
-                    discount: $scope.store.brand.discount,
+                    gogo_buy: $scope.store.brand.gogo_buy,
                     name: $scope.store.brand.name,
-                    originalName: $scope.store.brand.originalName
+                    originalName: $scope.store.brand.originalName,
+                    id: $scope.store.brand.id
                 };
 
                 $scope.store = {
@@ -115,8 +95,8 @@ module.exports = function(m) {
                 stores.push(currentStore);
 
 
-                $scope.totalOfferMailCard = calculateTotalOfferMailCard(stores);
-                $scope.totalOfferOnline = calculateTotalOfferOnline(stores);
+                $scope.totalOfferMailCard = utilService.totalOfferMailCard(stores);
+                $scope.totalOfferOnline = utilService.totalOfferOnline(stores);
 
                 $scope.stores = stores;
                 store.set('selling_stores', stores);
@@ -128,8 +108,8 @@ module.exports = function(m) {
                 store.remove('selling_cards');
                 $scope.stores.splice(index, 1);
                 store.set('selling_stores', $scope.stores);
-                $scope.totalOfferMailCard = calculateTotalOfferMailCard($scope.stores);
-                $scope.totalOfferOnline = calculateTotalOfferOnline($scope.stores);
+                $scope.totalOfferMailCard = utilService.totalOfferMailCard($scope.stores);
+                $scope.totalOfferOnline = utilService.totalOfferOnline($scope.stores);
             };
 
             $scope.mailBoxCLick = function() {

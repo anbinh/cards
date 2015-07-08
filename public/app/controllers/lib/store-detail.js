@@ -19,8 +19,15 @@ module.exports = function(m) {
 
             $scope.cards = cardList;
 
-            var minD = 10000000000;
-            var maxD = 0;
+            var minD, maxD;
+            if ($scope.cards.length > 0) {
+                minD = 10000000000;
+                maxD = 0;
+            } else {
+                minD = 0;
+                maxD = 100;
+            }
+
             angular.forEach($scope.cards, function(s) {
 
                 // console.log(s);
@@ -36,6 +43,10 @@ module.exports = function(m) {
 
             var minValue = parseInt(minD);
             var maxValue = parseInt(maxD);
+
+            if (minValue === maxValue) {
+                maxValue = minValue + 1;
+            }
 
             // console.log('SCOPE', $scope);
 
@@ -59,13 +70,13 @@ module.exports = function(m) {
 
                 var currentCart = store.get('cart');
 
-                // console.log("BEFORE", currentCart);
+                console.log("BEFORE", currentCart);
                 if (currentCart) {
 
                     // check if the card is duplicated
                     var exist = false;
                     for (var i = currentCart.length - 1; i >= 0; i = i - 1) {
-                        if ((currentCart[i].name === card.name) && (currentCart[i].pay === card.pay) && (currentCart[i].value === card.value)) {
+                        if (currentCart[i].id === card.id) {
                             exist = true;
                         }
                     }

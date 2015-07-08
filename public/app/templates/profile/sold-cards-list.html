@@ -1,5 +1,4 @@
 <div role="main" class="main">
-
     <section class="page-header page-header-light page-header-more-padding">
         <div class="container">
             <div class="row">
@@ -12,39 +11,35 @@
                             <a href="/profile/#/sold-cards-history" class="text-muted" >Sold Cards History</a> 
                         </span>
                     </h1>
-
                     <ul class="breadcrumb breadcrumb-valign-mid">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="/profile/#/">Profile</a></li>
-                                    <li class="active">Sold Cards History</li>
-                                </ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/profile/#/">Profile</a></li>
+                        <li class="active">Sold Cards History</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
-
     <div class="container">
         <div class="row">
-
             <div class="col-md-2">
             </div>
-            
             <div class="col-md-8">
-
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>
                                 No.
                             </th>
+                            
                             <th>
                                 Total Face Value
                             </th>
                             <th>
-                                Average Percentage
+                                Average Payout
                             </th>
                             <th>
-                                Total Amount
+                                Total Offer
                             </th>
                             <th>
                                 #Cards
@@ -52,45 +47,35 @@
                             <th>
                                 Selling Date
                             </th>
-                            
-                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="soldCards in soldCardsList track by $index" ng-click="soldCardsDetail(soldCards.id)" style="cursor : pointer">
-                            <td style="vertical-align: middle">
-                                {{$index + 1}}  
+                        <tr ng-repeat="soldCards in soldCardsList track by $index" style="cursor : pointer">
+                            <td style="vertical-align: middle" ng-click="soldCardsDetail(soldCards.id)">
+                                {{$index + 1}}
                             </td>
-                            <td>
+                            
+                            <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 ${{soldCards.total_face_value | number:2}}
                             </td>
-                            <td>
-                                ${{soldCards.average_percentage | number:2}}
+                            <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
+                                {{soldCards.average_payout | number:2}}%
                             </td>
-                            <td>
+                            <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 ${{soldCards.total_amount | number:2}}
                             </td>
-                            <td>
+                            <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 {{soldCards.total_cards}}
                             </td>
-                            <td>
+                            <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 {{soldCards.created_date | date: 'MM/dd/yyyy h:mma' }}
                             </td>
-                           
-                            
                         </tr>
-                        
                     </tbody>
                 </table>
-   
             </div>
-
             <div class="col-md-2">
             </div>
         </div>
-      
     </div>
-
-    
-
 </div>

@@ -12,7 +12,7 @@ module.exports = function(m) {
                 }
                 // return total;
 
-                return Math.round(total * 100) / 100
+                return Math.round(total * 100) / 100;
             };
 
             $scope.selectedCards = store.get('cart');

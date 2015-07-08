@@ -48,7 +48,7 @@ router.get('/orders/:id', function(req, res, next) {
 router.get('/sold-cards-list/:id', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_percentage,created_date from selling_cards where user_id = ?', [req.params.id], function(err, rows) {
+        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_payout,created_date, store_list from receipts where user_id = ?', [req.params.id], function(err, rows) {
             if (err) return next(err);
 
             res.json(rows)
@@ -129,6 +129,7 @@ router.post('/login', function(req, res, next) {
             if (rows.length === 1) {
 
                 delete rows[0].password;
+                delete rows[0].reset_token;
 
                 res.json(rows[0]);
 
@@ -253,11 +254,6 @@ router.post('/forget-password', function(req, res, next) {
 
                 });
 
-
-
-
-
-
             } else {
                 res.statusCode = 400;
                 res.json({
@@ -357,36 +353,90 @@ router.post('/pay-order', function(req, res, next) {
 
 
         // console.log("find this info", dat);
+        // 
 
-        dat.billing_user = JSON.stringify(dat.billing_user);
-        dat.cards = JSON.stringify(dat.cards);
 
-        connection.query('INSERT INTO orders SET ?', dat, function(err, result) {
+        var myCards = [];
+        for (var i = 0; i < dat.cards.length; i++) {
+            myCards.push(dat.cards[i].id);
+        };
+
+        console.log(myCards);
+
+        var sql = "SELECT count(*) as count from sold_cards where id in ( " + myCards.join(',') + " ) and sold = 0";
+
+        // checking if all the buying cards are valid
+        connection.query(sql, [], function(err, result) {
 
             if (err) return next(err);
 
-            if (result.affectedRows === 1) {
-                var orderId = result.insertId;
-                connection.query('Select * from orders where id = ' + orderId, [], function(err, rows) {
-                    if (err) return next(err);
+            console.log('result', result);
 
-                    var order = {
-                        id: rows[0].id,
-                        user_id: rows[0].user_id,
-                        total_amount: rows[0].total_amount,
-                        total_cards: rows[0].total_cards,
-                        billingUser: JSON.parse(rows[0].billing_user),
-                        cards: JSON.parse(rows[0].cards),
-                        total_face_value: rows[0].total_face_value,
-                        average_percentage: rows[0].average_percentage
-                    };
+            // check if all the card can be bought by user
+            if (result[0].count !== dat.cards.length) {
+                res.statusCode = 400;
+                res.json({
+                    message: 'Invalid order, please clear your cart and make a new purchase'
+                });
+
+                return;
+            };
 
 
-                    res.json(order);
-                })
-            }
+
+            var myLocalCards = JSON.parse(JSON.stringify(dat.cards));
+
+            dat.billing_user = JSON.stringify(dat.billing_user);
+            dat.cards = JSON.stringify(dat.cards);
+
+            connection.query('INSERT INTO orders SET ?', dat, function(err, result) {
+
+                if (err) return next(err);
+
+                if (result.affectedRows === 1) {
+                    var orderId = result.insertId;
+                    connection.query('Select * from orders where id = ' + orderId, [], function(err, rows) {
+                        if (err) return next(err);
+
+                        var order = {
+                            id: rows[0].id,
+                            user_id: rows[0].user_id,
+                            total_amount: rows[0].total_amount,
+                            total_cards: rows[0].total_cards,
+                            billingUser: JSON.parse(rows[0].billing_user),
+                            cards: JSON.parse(rows[0].cards),
+                            total_face_value: rows[0].total_face_value,
+                            average_percentage: rows[0].average_percentage
+                        };
+
+                        var cardSql = '';
+
+                        for (var i = 0; i < myLocalCards.length; i++) {
+                            var cardId = myLocalCards[i].id;
+                            var sql = "Update sold_cards set sold = 1, sold_to_user = " + dat.user_id + " , order_id = " + orderId + " WHERE id = " + cardId + ";";
+                            cardSql += sql;
+                        };
+
+                        // console.log(cardSql);
+
+
+                        connection.query(cardSql, [], function(err, rows) {
+                            if (err) return next(err);
+
+                            res.json(order);
+                        });
+
+
+
+
+                    })
+                }
+
+            });
 
         });
+
+
 
 
 
@@ -407,30 +457,54 @@ router.post('/sell-cards', function(req, res, next) {
         // console.log("find this info", dat);
 
         dat.billing_user = JSON.stringify(dat.billing_user);
-        dat.cards = JSON.stringify(dat.cards);
 
-        connection.query('INSERT INTO selling_cards SET ?', dat, function(err, result) {
+
+        var tempCards = JSON.parse(JSON.stringify(dat.cards));
+
+        delete dat.cards;
+
+        connection.query('INSERT INTO receipts SET ?', dat, function(err, result) {
 
             if (err) return next(err);
 
             if (result.affectedRows === 1) {
                 var orderId = result.insertId;
-                connection.query('Select * from selling_cards where id = ' + orderId, [], function(err, rows) {
+                connection.query('Select * from receipts where id = ' + orderId, [], function(err, rows) {
                     if (err) return next(err);
 
-                    var order = {
+                    var receipt = {
                         id: rows[0].id,
                         user_id: rows[0].user_id,
                         total_amount: rows[0].total_amount,
                         total_cards: rows[0].total_cards,
                         billingUser: JSON.parse(rows[0].billing_user),
-                        cards: JSON.parse(rows[0].cards),
+                        cards: tempCards,
                         total_face_value: rows[0].total_face_value,
                         average_percentage: rows[0].average_percentage
                     };
+                    // 
+                    var receiptId = rows[0].id;
 
 
-                    res.json(order);
+                    var insertedCard = [];
+                    for (var i = 0; i < receipt.cards.length; i++) {
+                        receipt.cards[i].receipt_id = receiptId;
+                        var card = receipt.cards[i];
+                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null];
+                        insertedCard.push(item);
+
+                    };
+
+                    // console.log('inserted cards', insertedCard);
+
+                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,store_id,store_name,value,user_id,sold,sold_to_user,order_id) VALUES ?', [insertedCard], function(err, ret) {
+                        if (err) return next(err);
+                        res.json(receipt);
+
+                    });
+
+
+
                 })
             }
 

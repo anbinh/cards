@@ -8,6 +8,6 @@ require('./lib/user')(m);
 require('./lib/auth')(m);
 require('./lib/order')(m);
 require('./lib/selling_cards')(m);
-
+require('./lib/utils')(m);
 
 module.exports = m;
