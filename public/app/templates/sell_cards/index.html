@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1> Sell Your Cards  <span>Please enter correct info</span></h1>
+                    <h1> Sell Gift Cards  <span>Easy as 1, 2, 3 </span></h1>
                     <ul class="breadcrumb breadcrumb-valign-mid">
                         <li><a href="/">Home</a></li>
                         <li class="active">Get Offer</li>
@@ -86,7 +86,7 @@
                             <form class="form-inline" ng-submit="addStore()">
                                 <div class="input-group">
                                     <span class="input-group-addon" id="brand"><i class="fa fa-gift fa-2x n" style='color : grey'></i></span>
-                                    <input type="text" class="form-control input-lg" placeholder="Type Brand Gift Card" aria-describedby="brand" ng-model="store.brand" typeahead="store as store.name for store in allStores | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html">
+                                    <input type="text" class="form-control input-lg" placeholder="Gift Card Brand" aria-describedby="brand" ng-model="store.brand" typeahead="store as store.name for store in allStores | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon" id="balance"><i class="fa fa-usd fa-2x"  style='color : grey'></i></span>
@@ -193,12 +193,12 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <h6>You can get more percentage by trading your card </br> The MAIL CARD option must be selected</h6>
+                            
                         </div>
                         <div class="col-md-6">
                             </br>
                             <accordion class="optionAccor" close-others="oneAtATime" class="panel-group panel-group-primary">
-                                <accordion-group heading="CHANGE THE OPTION OF YOUR OFFER" is-open="true">
+                                <accordion-group heading="ADJUST YOUR OFFER BELOW" is-open="true">
                                     <h3 class="text-center">STEP 1</h3>
                                     <table class="table table-bordered">
                                         <tbody>
@@ -217,7 +217,7 @@
                                                             <i ng-show="!payBy.mail" class="fa fa-square-o fa-2x"></i>
                                                             </br>
                                                             <strong>MAIL CARDS</strong>
-                                                            <p class="txt"><small>More Payment Options</small></p>
+                                                            <p class="txt"><small>5-10 Day Payout</small></p>
                                                             <p class="offer-txt"><strong>OFFER: ${{totalOfferMailCard | number:2}}</strong></p>
                                                         </div>
                                                         <div class="col-md-2 or-txt text-center"><strong>OR</strong></div>
@@ -228,7 +228,7 @@
                                                             <i ng-show="!payBy.online" class="fa fa-square-o fa-2x"></i>
                                                             </br>
                                                             <strong>ENTER ONLINE</strong>
-                                                            <p class="txt"><small>Get Pay Faster</small></p>
+                                                            <p class="txt"><small>1-3 Day Payout</small></p>
                                                             <p class="offer-txt"><strong>OFFER: ${{totalOfferOnline | number:2}}</strong></p>
                                                         </div>
                                                     </div>
@@ -244,7 +244,8 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-center">
-                                                    <strong>HOW WOULD YOU LIKE TO SUBMIT YOUR CARDS?</strong>
+                                                    <strong>HOW WOULD YOU LIKE TO GET PAID?
+                                                    </strong>
                                                 </td>
                                             </tr>
                                             <tr>

@@ -191,16 +191,16 @@ router.get('/featured', function(req, res, next) {
 router.get('/best-selling', function(req, res, next) {
     var data = [{
         name: "target",
-        discount: 10
+        discount: 86.50
     }, {
         name: "walmart",
-        discount: 20,
+        discount: 90.50,
     }, {
         name: "bestbuy",
-        discount: 14
+        discount: 83.50
     }, {
         name: "starbucks",
-        discount: 18
+        discount: 72.50
     }];
     res.json(data);
 });

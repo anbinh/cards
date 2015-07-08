@@ -238,3 +238,30 @@ th.card-info-header {
 #header .search {
     float: left;
 }
+
+
+
+
+/*CUSTOM HEADER*/
+#header.gift-cards {
+    margin-bottom: 0px;
+  background: linear-gradient(#030303,#0C0C0C);
+  border-bottom-color: #000 !important;
+  
+} 
+
+#header.flat-menu nav ul.nav-main>li.active>a {
+      color: white !important;
+}
+
+#header.flat-menu nav ul.nav-main li>a {
+  color: #D0CECE;
+}
+
+#header nav ul.nav-main li a {
+    padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+}
+
+/*END OF CUSTOM HEADER*/
