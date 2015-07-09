@@ -24,7 +24,30 @@ module.exports = function(m) {
             $scope.total = Math.round(total * 100) / 100;
 
             $scope.checkout = function() {
-                window.location = '/checkout';
+
+
+                var forwardUrl = btoa(window.location.origin + '/checkout');
+                var loginURL = '/login/#/?forward_url=' + forwardUrl;
+
+                // if user has not loggined yet
+                if (!store.get('user')) {
+                    swal({
+                        title: 'Notice',
+                        text: 'You can login before going to the next step <a href="' + loginURL + '">LOGIN NOW</a>  </br> Or you can continue to use the site as a guest',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Continue as guest',
+                        closeOnConfirm: false,
+                        confirmButtonColor: '#08C',
+                        html: true
+                    }, function() {
+                        window.location = window.location.origin + '/checkout/#/?guest=true';
+                        swal.close();
+                    });
+                } else {
+                    window.location = '/checkout';
+                }
+
             };
 
             $scope.removeCard = function(index) {

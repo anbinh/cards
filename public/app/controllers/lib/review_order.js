@@ -7,15 +7,30 @@ module.exports = function(m) {
 
 
             if (!authService.isAuthenticated()) {
-                window.location = '/unauthorized/';
+                $scope.isGuest = true;
+                $scope.user = {
+                    id: 0 // guest id set to 0
+                }
+            } else {
+                $scope.isGuest = false;
+                $scope.user = store.get('user');
+            }
+
+            $scope.isPaid = false;
+
+
+
+            $scope.order = store.get('order');
+
+            if ($scope.order && $scope.order.cards === undefined) {
+                alert('invalid page');
+
+                window.location = '/';
 
                 return;
             }
 
 
-            $scope.order = store.get('order');
-
-            var user = store.get('user');
 
             console.log('order', $scope.order);
 
@@ -39,7 +54,7 @@ module.exports = function(m) {
 
             $scope.pay = function() {
                 var order = {
-                    user_id: user.id,
+                    user_id: $scope.user.id,
                     billing_user: $scope.order.billingUser,
                     cards: $scope.order.cards,
                     total_amount: total,
@@ -56,7 +71,16 @@ module.exports = function(m) {
                     // 
                     console.log('PAYMENT', result);
                     store.set('cart', []);
-                    window.location = '/profile/#/orders/' + result.id;
+
+                    store.set('order', {});
+
+                    if (!$scope.isGuest) {
+                        window.location = '/profile/#/orders/' + result.id;
+                    } else {
+                        $scope.isPaid = true;
+                        swal('Congratulations!', 'Your Order has been paid', 'success')
+                    }
+
 
                 }, function(err) {
                     // console.log("ERRR", err);

@@ -142,7 +142,7 @@
 
                         <tr>
                             <td style="vertical-align: middle">
-                                <strong> Average Percentage </strong>
+                                <strong> Total Percentage Saved </strong>
                             </td>
                             <td>
                                 {{averagePercentage | number : 2}}%
@@ -175,7 +175,7 @@
 
 
 
-                <a ng-click='pay()' class="btn btn-primary btn-lg pull-right">Pay the order</a>
+                <a ng-show="!isPaid" ng-click='pay()' class="btn btn-primary btn-lg pull-right">Pay the order</a>
    
             </div>
 

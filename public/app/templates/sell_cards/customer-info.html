@@ -77,12 +77,13 @@
         <div class="row">
             <div class="col-md-2">
             </div>
-            <div class="col-md-8">
+            <div ng-show="!isGuest" class="col-md-8">
                 <h2 class="text-center"><strong>ALMOST DONE!</strong></h2>
                 <hr class="solid">
                 <h4 class="heading-primary"> <strong>Customer's Information</strong></h4>
                 <ul class="list ">
-                    <li><strong>Username:</strong> {{sellingCards.billingUser.username}}</li>
+                    <li><strong>Username:</strong> {{sellingCards.billingUser.username}}
+                    </li>
                     <li><strong>Email:</strong> {{sellingCards.billingUser.email}}</li>
                 </ul>
                 <hr>
@@ -111,16 +112,12 @@
                             <th>
                                 Card Pin
                             </th>
-
                             <th>
                                 Your Offer
                             </th>
-
                             <th>
                                 Payout
                             </th>
-                            
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -144,7 +141,6 @@
                             <td>
                                 {{card.gogo_buy}}%
                             </td>
-                            
                         </tr>
                     </tbody>
                 </table>
@@ -176,7 +172,6 @@
                                 {{averagePayout | number:2}}%
                             </td>
                         </tr>
-                        
                         <tr>
                             <td style="vertical-align: middle">
                                 <strong>Total Selling Price  </strong>
@@ -188,6 +183,140 @@
                     </tbody>
                 </table>
                 <a ng-click='sellCards()' class="btn btn-primary btn-lg pull-right">Sell Cards</a>
+            </div>
+            <div ng-show="isGuest" class="col-md-8">
+                <form role="form" ng-submit="sellCards()">
+                    <h2 class="text-center"><strong>ALMOST DONE!</strong></h2>
+                    <hr class="solid">
+                    <h4 class="heading-primary"> <strong>Customer's Information</strong></h4>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Username</label>
+                                <input ng-model="sellingCards.billingUser.username" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Email</label>
+                                <input ng-model="sellingCards.billingUser.email" type="email" value="" class="form-control " ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4 class="heading-primary"> <strong>Customer's Address</strong></h4>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Address</label>
+                                <input ng-model="sellingCards.billingUser.address" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <label>City</label>
+                                <input ng-model="sellingCards.billingUser.city" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-4">
+                                <label>State</label>
+                                <input ng-model="sellingCards.billingUser.state" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Zipcode</label>
+                                <input ng-model="sellingCards.billingUser.zipcode" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4 class="heading-primary"> <strong>Cards review</strong></h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                </th>
+                                <th>
+                                </th>
+                                <th>
+                                    Merchant
+                                </th>
+                                <th>
+                                    Card Number
+                                </th>
+                                <th>
+                                    Card Pin
+                                </th>
+                                <th>
+                                    Your Offer
+                                </th>
+                                <th>
+                                    Payout
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="card in sellingCards.cards track by $index">
+                                <td>{{$index + 1}}</td>
+                                <td style="vertical-align: middle">
+                                    <img height="30px" ng-src="/img/cards/{{card.store_name}}.jpg" alt="">
+                                </td>
+                                <td>
+                                    {{card.store_name | storename | titlecase }} (${{card.value}})
+                                </td>
+                                <td>
+                                    {{card.number}}
+                                </td>
+                                <td>
+                                    {{card.pin}}
+                                </td>
+                                <td>
+                                    {{card.gogo_buy*card.value/100 | number:2}}
+                                </td>
+                                <td>
+                                    {{card.gogo_buy}}%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <h4 class="heading-primary"> <strong>Total Cards</strong></h4>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <strong>Total Face Value  </strong>
+                                </td>
+                                <td>
+                                    ${{totalFaceValue | number : 2}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <strong>Total Cards For Sell  </strong>
+                                </td>
+                                <td>
+                                    {{sellingCards.cards.length}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <strong> Average Payout </strong>
+                                </td>
+                                <td>
+                                    {{averagePayout | number:2}}%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <strong>Total Selling Price  </strong>
+                                </td>
+                                <td>
+                                    <h4 style="color : #08C">${{total}}</h4>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="submit" class="btn btn-primary btn-lg pull-right" value="Sell Cards">
+                </form>
             </div>
             <div class="col-md-2">
             </div>

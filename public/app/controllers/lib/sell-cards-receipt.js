@@ -5,6 +5,17 @@ module.exports = function(m) {
     m.controller('SellCardReceiptController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'SellingCardList', 'utilService',
         function($scope, $location, $routeParams, authService, store, userService, SellingCardList, utilService) {
 
+            var guest;
+
+            if ($routeParams.guest === 'true') {
+                $scope.isGuest = true;
+                guest = {
+                    id: 0
+                }
+            } else {
+                $scope.isGuest = false;
+            }
+
 
 
             $scope.sellingCards = SellingCardList;

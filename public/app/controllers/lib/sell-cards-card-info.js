@@ -44,18 +44,23 @@ module.exports = function(m) {
 
                 store.set('selling_cards', angular.copy($scope.allSellingCards));
 
+                var forwardUrl = btoa(window.location.origin + '/sell-cards/#/customer-info');
+                var loginURL = '/login/#/?forward_url=' + forwardUrl;
+
                 // if user has not loggined yet
                 if (!store.get('user')) {
                     swal({
-                        title: 'Error',
-                        text: 'Please login first to go to the next step',
-                        type: 'error',
+                        title: 'Notice',
+                        text: 'You can login before going to the next step <a href="' + loginURL + '">LOGIN NOW</a>  </br> Or you can continue to use the site as a guest',
+                        type: 'warning',
                         showCancelButton: true,
-                        confirmButtonText: 'Login',
+                        confirmButtonText: 'Continue as guest',
                         closeOnConfirm: false,
                         confirmButtonColor: '#08C',
+                        html: true
                     }, function() {
-                        window.location = '/login/#/?forward_url=' + btoa(window.location.origin + '/sell-cards/#/customer-info');
+                        window.location = window.location.origin + '/sell-cards/#/customer-info?guest=true';
+                        swal.close();
                     });
                 } else {
                     window.location = window.location.origin + '/sell-cards/#/customer-info';

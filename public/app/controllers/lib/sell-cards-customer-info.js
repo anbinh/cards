@@ -5,12 +5,25 @@ module.exports = function(m) {
     m.controller('SellCardCustomerInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'utilService',
         function($scope, $location, $routeParams, authService, store, userService, utilService) {
 
+            var guest;
+
+            if ($routeParams.guest === 'true') {
+                $scope.isGuest = true;
+                guest = {
+                    id: 0
+                }
+            } else {
+                $scope.isGuest = false;
+            }
+
 
 
             $scope.sellingCards = {
-                billingUser: store.get('user'),
+                billingUser: ($scope.isGuest) ? guest : store.get('user'),
                 cards: store.get('selling_cards')
             };
+
+
 
             console.log('selling cards', store.get('selling_cards'));
 
@@ -23,7 +36,7 @@ module.exports = function(m) {
 
             $scope.sellCards = function() {
 
-                var user = store.get('user');
+                var user = ($scope.isGuest) ? guest : store.get('user');
 
                 // find store list
                 var store_list = [];
@@ -58,7 +71,13 @@ module.exports = function(m) {
                     store.set('selling_cards', []);
                     store.set('selling_stores', []);
 
-                    $location.url('receipt/' + result.id);
+
+                    if ($scope.isGuest) {
+                        $location.url('receipt/' + result.id + '?guest=true');
+                    } else {
+                        $location.url('receipt/' + result.id);
+                    }
+
 
                     console.log('RECEIPT', result);
                 }, function(err) {

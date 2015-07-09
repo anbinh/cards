@@ -59,7 +59,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="card in filteredCards = (cards | cardvalue:priceRange.from:priceRange.to)">
+                                <tr ng-repeat="card in filteredCards = (cards | cardvalue:priceRange.from:priceRange.to) track by $index">
                                     <td style="vertical-align: middle">
                                         <img height="30px" ng-src="/img/cards/{{card.name}}.jpg" alt=""> {{card.name | storename | titlecase}}
                                     </td>
@@ -76,7 +76,9 @@
                                         {{card.save | number:2}}%
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary pull-right" ng-click="addToCart(card)">Add to Cart</a>
+                                        <a ng-show="!card.isAdded" class="btn btn-primary pull-right" ng-click="addToCart(card,$index)"> Add to Cart</a>
+
+                                        <a ng-show="card.isAdded" disabled class="btn btn-primary pull-right" style="color : white" > <i class="fa fa-check"></i>Added</a>
                                     </td>
                                 </tr>
                             </tbody>

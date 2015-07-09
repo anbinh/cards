@@ -9,11 +9,16 @@ module.exports = function(m) {
 
 
             if (!authService.isAuthenticated()) {
-                window.location = '/unauthorized/';
+                $scope.isGuest = true;
+                $scope.user = {
+                    id: 0 // guest id set to 0
+                }
+            } else {
+                $scope.isGuest = false;
+                $scope.user = store.get('user');
             }
 
 
-            $scope.user = store.get('user');
 
 
 
@@ -39,6 +44,8 @@ module.exports = function(m) {
                     billingUser: $scope.user,
                     cards: $scope.selectedCards,
                 };
+
+                // console.log('this order', order);
 
                 store.set('order', order);
 

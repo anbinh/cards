@@ -62,8 +62,22 @@ module.exports = function(m) {
             console.log('min value', $scope.minPrice);
 
             // $scope.maxPrice = maxValue;
+            // 
+            // 
+            // check if card has been added
+            var currentCart = store.get('cart');
+            for (var j = 0; j < $scope.cards.length; j = j + 1) {
+                for (var i = 0; i < currentCart.length; i = i + 1) {
+                    console.log($scope.cards[j].id, currentCart[i].id);
+                    if ($scope.cards[j].id === currentCart[i].id) {
+                        $scope.cards[j].isAdded = true;
+                    }
 
-            $scope.addToCart = function(card) {
+                };
+            };
+
+
+            $scope.addToCart = function(card, index) {
                 console.log('Add new item to cart', card);
 
 
@@ -81,6 +95,7 @@ module.exports = function(m) {
                         }
                     }
                     if (exist === false) {
+                        $scope.cards[index].isAdded = true;
                         currentCart.push(angular.copy(card));
                         // console.log("current card", currentCart);
                         store.set('cart', currentCart);
