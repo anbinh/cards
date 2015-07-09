@@ -14,6 +14,13 @@ module.exports = function(m) {
                 online: false
             };
 
+            // init default values
+            $scope.store = {
+                balance: null,
+                amount: 1,
+                brand: null
+            };
+
             // console.log('STORE LIST', storeList);
 
             $scope.storeSelected = undefined;
@@ -68,6 +75,16 @@ module.exports = function(m) {
                         brand: null
                     };
                     swal('Invalid Store', 'The store you entered is not valid', 'error');
+                    return;
+                }
+
+                if (($scope.store.balance === undefined) || ($scope.store.balance === null)) {
+                    swal('Invalid Balance', 'Please enter the card balance', 'error');
+                    return;
+                }
+
+                if (($scope.store.amount === undefined) || ($scope.store.amount === null)) {
+                    swal('Invalid Quantity', 'Please enter the quantity number', 'error');
                     return;
                 }
 

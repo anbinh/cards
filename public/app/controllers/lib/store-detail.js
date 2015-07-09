@@ -70,7 +70,7 @@ module.exports = function(m) {
 
                 var currentCart = store.get('cart');
 
-                console.log("BEFORE", currentCart);
+                // console.log("BEFORE", currentCart);
                 if (currentCart) {
 
                     // check if the card is duplicated
