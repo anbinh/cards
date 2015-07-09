@@ -43,6 +43,10 @@ router.get('/about-us', function(req, res) {
     res.render('about-us', {});
 });
 
+router.get('/terms-and-conditions', function(req, res) {
+    res.render('tos', {});
+});
+
 router.get('/unauthorized', function(req, res) {
     res.render('unauthorized', {});
 });
