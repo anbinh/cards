@@ -35,16 +35,27 @@ module.exports = function(m) {
             $scope.$watch('payBy.mail', function() {
                 if ($scope.payBy.mail === true) {
                     $scope.payBy.online = false;
+
+
                 }
+
+
+
             });
 
             $scope.$watch('payBy.online', function() {
                 if ($scope.payBy.online === true) {
                     $scope.payBy.mail = false;
+
+
                 }
             });
 
             $scope.goToCardInfo = function() {
+
+                console.log('SELLING STORES', store.get('selling_stores'));
+
+
                 $location.url('/card-info');
             };
 
@@ -100,7 +111,8 @@ module.exports = function(m) {
                     gogo_buy: $scope.store.brand.gogo_buy,
                     name: $scope.store.brand.name,
                     originalName: $scope.store.brand.originalName,
-                    id: $scope.store.brand.id
+                    id: $scope.store.brand.id,
+                    payBy: ($scope.payBy.mail === true) ? 'mail' : 'online'
                 };
 
                 $scope.store = {
@@ -132,12 +144,24 @@ module.exports = function(m) {
             $scope.mailBoxCLick = function() {
                 if ($scope.payBy.mail === false) {
                     $scope.payBy.mail = !$scope.payBy.mail;
+                    var currentStores = store.get('selling_stores');
+                    for (var i = 0; i < currentStores.length; i = i + 1) {
+                        currentStores[i].payBy = 'mail';
+                    };
+
+                    store.set('selling_stores', currentStores);
                 }
             };
 
             $scope.onlineBoxCLick = function() {
                 if ($scope.payBy.online === false) {
                     $scope.payBy.online = !$scope.payBy.online;
+
+                    var currentStores = store.get('selling_stores');
+                    for (var i = 0; i < currentStores.length; i = i + 1) {
+                        currentStores[i].payBy = 'online';
+                    };
+                    store.set('selling_stores', currentStores);
                 }
             };
 

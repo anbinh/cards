@@ -11,7 +11,7 @@ module.exports = function(m) {
                 $scope.isGuest = true;
                 guest = {
                     id: 0
-                }
+                };
             } else {
                 $scope.isGuest = false;
             }
@@ -27,7 +27,9 @@ module.exports = function(m) {
 
             console.log('selling cards', store.get('selling_cards'));
 
-            $scope.total = utilService.totalOfferMailCard($scope.sellingCards.cards);
+            console.log('ME XXXXXXX', $scope.sellingCards.cards[0].payBy);
+
+            $scope.total = ($scope.sellingCards.cards[0].payBy === 'mail') ? utilService.totalOfferMailCard($scope.sellingCards.cards) : utilService.totalOfferOnline($scope.sellingCards.cards);
 
             $scope.totalFaceValue = utilService.totalFaceValue($scope.sellingCards.cards);
 
@@ -35,6 +37,12 @@ module.exports = function(m) {
 
 
             $scope.sellCards = function() {
+
+                if ($scope.agreed == false) {
+                    swal('Warning', 'You have to agree the terms and conditions', 'warnning');
+                    return;
+                }
+
 
                 var user = ($scope.isGuest) ? guest : store.get('user');
 
@@ -50,6 +58,19 @@ module.exports = function(m) {
                         store_list.push(card.store_name);
                     }
                 }
+
+                var bilingUser = $scope.sellingCards.billingUser;
+
+                if (bilingUser.email !== bilingUser.email2) {
+                    swal('Error!', 'Email does not match', 'error');
+                    return;
+                }
+
+                if (bilingUser.password !== bilingUser.password2) {
+                    swal('Error!', 'Password does not match', 'error');
+                    return;
+                }
+
 
                 var selling_cards = {
                     user_id: user.id,

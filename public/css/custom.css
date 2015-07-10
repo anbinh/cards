@@ -270,3 +270,12 @@ th.card-info-header {
 #header nav.mega-menu .mega-menu-shop .product-actions {
     width: 20px;
 }
+
+.testimonial.testimonial-with-quotes blockquote p {
+    color: white;
+}
+
+.testimonial.testimonial-with-quotes blockquote:before,
+.testimonial.testimonial-with-quotes blockquote:after{
+    color: white;
+}

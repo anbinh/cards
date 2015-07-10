@@ -73,8 +73,8 @@ module.exports = function(m) {
                         $scope.cards[j].isAdded = true;
                     }
 
-                };
-            };
+                }
+            }
 
 
             $scope.addToCart = function(card, index) {

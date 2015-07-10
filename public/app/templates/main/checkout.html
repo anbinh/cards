@@ -95,10 +95,10 @@
                                             Total
                                         </th>
                                         <th class="product-subtotal">
-                                            Percentage
+                                            Discount
                                         </th>
                                         <th class="product-subtotal">
-                                            Sell Price
+                                            Selling Price
                                         </th>
                                     </tr>
                                 </thead>
@@ -152,7 +152,7 @@
                                     </tr>
                                     <tr class="cart-subtotal">
                                         <th>
-                                            <strong>Total Percentage Saved</strong>
+                                            <strong>Total Discount Saved</strong>
                                         </th>
                                         <td>
                                             <strong><span class="amount">{{averagePercentage | number : 2}}%</span></strong>
@@ -169,7 +169,7 @@
                                     </tr>
                                     <tr class="total">
                                         <th>
-                                            <strong>Total Sell Price</strong>
+                                            <strong>Total</strong>
                                         </th>
                                         <td>
                                             <strong><span class="amount">${{total | number:2}}</span></strong>
@@ -199,7 +199,12 @@
                             </div>
                         </accordion-group>
                     </accordion>
+                    <div>
+                        <input type="checkbox" ng-model="agreed" ng-required='true'> I hereby certify I have read <a href="/terms-and-conditions">terms and conditions</a>  and agree 
+                    </div>
+
                     <div class="actions-continue">
+
                         <input type="submit" value="Place Order" name="proceed" class="btn btn-lg btn-primary mt-xl">
                     </div>
                 </div>

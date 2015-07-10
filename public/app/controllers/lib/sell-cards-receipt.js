@@ -11,7 +11,7 @@ module.exports = function(m) {
                 $scope.isGuest = true;
                 guest = {
                     id: 0
-                }
+                };
             } else {
                 $scope.isGuest = false;
             }

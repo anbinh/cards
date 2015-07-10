@@ -75,7 +75,7 @@
                                 Total
                             </th>
                             <th>
-                                Percentage
+                                Discount
                             </th>
                             <th>
                                 Sell Price
@@ -142,7 +142,7 @@
 
                         <tr>
                             <td style="vertical-align: middle">
-                                <strong> Total Percentage Saved </strong>
+                                <strong> Total Discount Saved </strong>
                             </td>
                             <td>
                                 {{averagePercentage | number : 2}}%
@@ -162,7 +162,7 @@
 
                         <tr>
                             <td style="vertical-align: middle">
-                                <strong>Total Sell Price  </strong>
+                                <strong>Total   </strong>
                             </td>
                             <td>
                                  <h4 style="color : #08C">${{total | number:2}}</h4>
@@ -175,7 +175,7 @@
 
 
 
-                <a ng-show="!isPaid" ng-click='pay()' class="btn btn-primary btn-lg pull-right">Pay the order</a>
+                <a ng-show="!isPaid" ng-click='pay()' class="btn btn-primary btn-lg pull-right">Place order</a>
    
             </div>
 

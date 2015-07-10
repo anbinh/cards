@@ -2,15 +2,15 @@
 
 
 module.exports = function(m) {
-    m.controller('ReviewOrderController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService',
-        function($scope, $location, $routeParams, authService, store, userService) {
+    m.controller('ReviewOrderController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', '$rootScope',
+        function($scope, $location, $routeParams, authService, store, userService, $rootScope) {
 
 
             if (!authService.isAuthenticated()) {
                 $scope.isGuest = true;
                 $scope.user = {
                     id: 0 // guest id set to 0
-                }
+                };
             } else {
                 $scope.isGuest = false;
                 $scope.user = store.get('user');
@@ -78,7 +78,8 @@ module.exports = function(m) {
                         window.location = '/profile/#/orders/' + result.id;
                     } else {
                         $scope.isPaid = true;
-                        swal('Congratulations!', 'Your Order has been paid', 'success')
+                        swal('Congratulations!', 'Your Order has been paid', 'success');
+                        $rootScope.$broadcast('CHANGE_CART', {});
                     }
 
 

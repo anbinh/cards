@@ -12,7 +12,7 @@ module.exports = function(m) {
                 $scope.isGuest = true;
                 $scope.user = {
                     id: 0 // guest id set to 0
-                }
+                };
             } else {
                 $scope.isGuest = false;
                 $scope.user = store.get('user');
@@ -39,6 +39,11 @@ module.exports = function(m) {
 
 
             $scope.placeOrder = function() {
+
+                if ($scope.agreed == false) {
+                    swal('Warning', 'You have to agree the terms and conditions', 'warnning');
+                    return;
+                }
 
                 var order = {
                     billingUser: $scope.user,

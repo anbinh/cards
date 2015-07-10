@@ -22,7 +22,7 @@ module.exports = function(m) {
                     total += card[i].gogo_buy * card[i].value * card[i].amount / 100;
                 }
 
-                return (total > 10) ? (total - 10) : 0;
+                return (total > 5) ? (total - 5) : 0;
             };
 
             var totalFaceValue = function(cards) {

@@ -191,15 +191,51 @@
                     <h4 class="heading-primary"> <strong>Customer's Information</strong></h4>
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label>Username</label>
                                 <input ng-model="sellingCards.billingUser.username" type="text" value="" class="form-control" ng-required="true">
                             </div>
+                            
+                        </div>
+                        <div class="form-group">
                             <div class="col-md-6">
-                                <label>Email</label>
-                                <input ng-model="sellingCards.billingUser.email" type="email" value="" class="form-control " ng-required="true">
+                                <label>First Name</label>
+                                <input ng-model="sellingCards.billingUser.first_name" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Last Name</label>
+                                <input ng-model="sellingCards.billingUser.last_name" type="text" value="" class="form-control " ng-required="true">
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Email</label>
+                                <input ng-model="sellingCards.billingUser.email" type="email" value="" class="form-control" ng-required="true">
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Confirm Email</label>
+                                <input ng-model="sellingCards.billingUser.email2" type="email" value="" class="form-control" ng-required="true">
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <label>Password</label>
+                                <input ng-model="sellingCards.billingUser.password" type="password" value="" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Confirm Password</label>
+                                <input ng-model="sellingCards.billingUser.password2" type="password" value="" class="form-control" ng-required="true">
+                            </div>
+                            
+                        </div>
+                    
                     </div>
                     <hr>
                     <h4 class="heading-primary"> <strong>Customer's Address</strong></h4>
@@ -208,6 +244,15 @@
                             <div class="col-md-12">
                                 <label>Address</label>
                                 <input ng-model="sellingCards.billingUser.address" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Address 2</label>
+                                <input ng-model="sellingCards.billingUser.address2" type="text" value="" class="form-control" ng-required="true">
                             </div>
                         </div>
                     </div>
@@ -224,6 +269,14 @@
                             <div class="col-md-4">
                                 <label>Zipcode</label>
                                 <input ng-model="sellingCards.billingUser.zipcode" type="text" value="" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Phone</label>
+                                <input ng-model="sellingCards.billingUser.phone" type="text" value="" class="form-control" ng-required="true">
                             </div>
                         </div>
                     </div>
@@ -307,7 +360,7 @@
                             </tr>
                             <tr>
                                 <td style="vertical-align: middle">
-                                    <strong>Total Selling Price  </strong>
+                                    <strong>Total  </strong>
                                 </td>
                                 <td>
                                     <h4 style="color : #08C">${{total}}</h4>
@@ -315,6 +368,12 @@
                             </tr>
                         </tbody>
                     </table>
+                    
+                    <div>
+                        <input type="checkbox" ng-model="agreed" ng-required='true'> I hereby certify I have read <a href="/terms-and-conditions">terms and conditions</a>  and agree 
+                    </div>
+
+
                     <input type="submit" class="btn btn-primary btn-lg pull-right" value="Sell Cards">
                 </form>
             </div>
