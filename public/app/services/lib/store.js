@@ -11,9 +11,9 @@ module.exports = function(m) {
                     'url': '/api/stores/featured',
                     isArray: true
                 },
-                'bestSelling': {
+                'highestPayout': {
                     method: 'GET',
-                    'url': '/api/stores/best-selling',
+                    'url': '/api/stores/highest-payout',
                     isArray: true
                 },
                 'get': {

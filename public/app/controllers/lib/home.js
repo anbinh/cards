@@ -11,7 +11,7 @@ module.exports = function(m) {
 
         $scope.featuredstoreService = storeService.featured();
 
-        $scope.bestsellingStores = storeService.bestSelling();
+        $scope.highestPayouts = storeService.highestPayout();
 
         $scope.login = function() {
 

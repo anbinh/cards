@@ -188,21 +188,27 @@ router.get('/featured', function(req, res, next) {
     res.json(data);
 });
 
-router.get('/best-selling', function(req, res, next) {
-    var data = [{
-        name: "target",
-        discount: 86.50
-    }, {
-        name: "walmart",
-        discount: 90.50,
-    }, {
-        name: "bestbuy",
-        discount: 83.50
-    }, {
-        name: "starbucks",
-        discount: 72.50
-    }];
-    res.json(data);
+router.get('/highest-payout', function(req, res, next) {
+
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select stats.id,gcg_buy,stores.name from stats LEFT JOIN stores on stores.id = stats.id order by gcg_buy DESC limit 4', [], function(err, rows) {
+            if (err) return next(err);
+            var ret = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var stat = {
+                    name: rows[i].name,
+                    payout: rows[i].gcg_buy + 1
+                };
+
+                ret.push(stat);
+            };
+
+            res.json(ret);
+        });
+
+    });
 });
 
 // get all cards from a store
