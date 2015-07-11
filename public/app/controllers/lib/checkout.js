@@ -35,7 +35,7 @@ module.exports = function(m) {
             }
             $scope.total = total;
             $scope.totalFaceValue = totalFaceValue;
-            $scope.averagePercentage = totalPercentage / $scope.selectedCards.length;
+            $scope.averagePercentage = 100 - totalPercentage / $scope.selectedCards.length;
 
 
             $scope.placeOrder = function() {

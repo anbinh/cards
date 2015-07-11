@@ -33,7 +33,7 @@ module.exports = function(m) {
 
             $scope.totalFaceValue = utilService.totalFaceValue($scope.sellingCards.cards);
 
-            $scope.averagePayout = utilService.averagePayout($scope.sellingCards.cards);
+            $scope.averagePayout = $scope.total / $scope.totalFaceValue * 100;
 
 
             $scope.sellCards = function() {
@@ -61,12 +61,12 @@ module.exports = function(m) {
 
                 var bilingUser = $scope.sellingCards.billingUser;
 
-                if (bilingUser.email !== bilingUser.email2) {
+                if (($scope.sellingCards.cards[0].payBy === 'online') && (bilingUser.email !== bilingUser.email2)) {
                     swal('Error!', 'Email does not match', 'error');
                     return;
                 }
 
-                if (bilingUser.password !== bilingUser.password2) {
+                if (($scope.sellingCards.cards[0].payBy === 'online') && (bilingUser.password !== bilingUser.password2)) {
                     swal('Error!', 'Password does not match', 'error');
                     return;
                 }

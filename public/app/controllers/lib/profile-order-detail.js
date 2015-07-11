@@ -25,7 +25,7 @@ module.exports = function(m) {
                 }
                 $scope.total = total;
                 $scope.totalFaceValue = totalFaceValue;
-                $scope.averagePercentage = totalPercentage / $scope.order.cards.length;
+                $scope.averagePercentage = 100 - totalPercentage / $scope.order.cards.length;
 
             });
         }
