@@ -198,7 +198,7 @@ router.get('/highest-payout', function(req, res, next) {
 
             for (var i = 0; i < rows.length; i++) {
                 var stat = {
-                    name: rows[i].name,
+                    name: rows[i].name.trim(),
                     payout: rows[i].gcg_buy + 1
                 };
 
