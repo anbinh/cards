@@ -35,27 +35,16 @@ module.exports = function(m) {
             $scope.$watch('payBy.mail', function() {
                 if ($scope.payBy.mail === true) {
                     $scope.payBy.online = false;
-
-
                 }
-
-
-
             });
 
             $scope.$watch('payBy.online', function() {
                 if ($scope.payBy.online === true) {
                     $scope.payBy.mail = false;
-
-
                 }
             });
 
             $scope.goToCardInfo = function() {
-
-                console.log('SELLING STORES', store.get('selling_stores'));
-
-
                 $location.url('/card-info');
             };
 
@@ -147,7 +136,7 @@ module.exports = function(m) {
                     var currentStores = store.get('selling_stores');
                     for (var i = 0; i < currentStores.length; i = i + 1) {
                         currentStores[i].payBy = 'mail';
-                    };
+                    }
 
                     store.set('selling_stores', currentStores);
                 }
@@ -160,7 +149,7 @@ module.exports = function(m) {
                     var currentStores = store.get('selling_stores');
                     for (var i = 0; i < currentStores.length; i = i + 1) {
                         currentStores[i].payBy = 'online';
-                    };
+                    }
                     store.set('selling_stores', currentStores);
                 }
             };

@@ -107,6 +107,47 @@ module.exports = function(m) {
                     store.set('cart', [angular.copy(card)]);
                     $rootScope.$broadcast('CHANGE_CART', card);
                 }
+
+                // adding effect
+                var cart = $('.shopping-cart');
+                var effectClasses = 'animated tada';
+                var imgtodrag = $('img.card_' + card.id);
+
+
+                cart.removeClass(effectClasses);
+                if (imgtodrag) {
+                    var imgclone = imgtodrag.clone()
+                        .offset({
+                            top: imgtodrag.offset().top,
+                            left: imgtodrag.offset().left
+                        })
+                        .css({
+                            'opacity': '0.5',
+                            'position': 'absolute',
+                            'height': '60px',
+                            'width': '100px',
+                            'z-index': '2000'
+                        })
+                        .appendTo($('body'))
+                        .animate({
+                            'top': cart.offset().top + 10,
+                            'left': cart.offset().left + 10,
+                            'width': 50,
+                            'height': 30
+                        }, 1000, 'easeInOutExpo');
+
+                    setTimeout(function() {
+                        cart.addClass(effectClasses);
+                    }, 1500);
+
+                    imgclone.animate({
+                        'width': 0,
+                        'height': 0
+                    }, function() {
+                        $(this).detach()
+                    });
+                }
+
             };
 
 

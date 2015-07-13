@@ -40,7 +40,7 @@ module.exports = function(m) {
 
             $scope.placeOrder = function() {
 
-                if ($scope.agreed == false) {
+                if ($scope.agreed === false) {
                     swal('Warning', 'You have to agree the terms and conditions', 'warnning');
                     return;
                 }
