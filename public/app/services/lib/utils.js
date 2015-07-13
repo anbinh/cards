@@ -19,10 +19,15 @@ module.exports = function(m) {
             var totalOfferOnline = function(card) {
                 var total = 0;
                 for (var i = 0; i < card.length; i = i + 1) {
-                    total += card[i].gogo_buy * card[i].value * card[i].amount / 100;
+                    var subTotal = card[i].gogo_buy * card[i].value * card[i].amount / 100;
+
+                    if (subTotal > 5) {
+                        subTotal -= 5 * card[i].amount;
+                    }
+                    total += subTotal;
                 }
 
-                return (total > 5) ? (total - 5) : 0;
+                return total;
             };
 
             var totalFaceValue = function(cards) {

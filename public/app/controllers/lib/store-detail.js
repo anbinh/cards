@@ -144,7 +144,7 @@ module.exports = function(m) {
                         'width': 0,
                         'height': 0
                     }, function() {
-                        $(this).detach()
+                        $(this).detach();
                     });
                 }
 
