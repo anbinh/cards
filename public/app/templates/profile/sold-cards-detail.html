@@ -66,6 +66,10 @@
                                 Card Pin
                             </th>
 
+                            <th ng-show="isDealer">
+                                Dealer Code
+                            </th>
+
                             <th>
                                 Your Offer
                             </th>
@@ -93,6 +97,11 @@
                             <td>
                                 {{card.pin}}
                             </td>
+                            
+                            <td ng-show="isDealer">
+                                {{card.dealer_code}}
+                            </td>
+
 
                             <td>
                                 {{card.gogo_buy*card.value/100 | number:2}}

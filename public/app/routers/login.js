@@ -6,7 +6,26 @@ angular.module('app')
 
             .when('/', {
                 templateUrl: 'main/login.html',
-                controller: 'LoginController'
+                controller: 'LoginController',
+                resolve: {
+                    isDealer: [
+
+                        function() {
+                            return false;
+                        }
+                    ]
+                }
+            }).when('/dealer', {
+                templateUrl: 'main/login.html',
+                controller: 'LoginController',
+                resolve: {
+                    isDealer: [
+
+                        function() {
+                            return true;
+                        }
+                    ]
+                }
             });
         }
     ]);

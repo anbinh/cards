@@ -6,7 +6,26 @@ angular.module('app')
 
             .when('/', {
                 templateUrl: 'main/register.html',
-                controller: 'RegisterController'
+                controller: 'RegisterController',
+                resolve: {
+                    isDealer: [
+
+                        function() {
+                            return false;
+                        }
+                    ]
+                }
+            }).when('/dealer', {
+                templateUrl: 'main/register.html',
+                controller: 'RegisterController',
+                resolve: {
+                    isDealer: [
+
+                        function() {
+                            return true;
+                        }
+                    ]
+                }
             })
 
 

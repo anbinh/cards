@@ -103,6 +103,9 @@
                                     <th class="card-info-header">
                                         Card Pin
                                     </th>
+                                    <th ng-show="isDealer" class="card-info-header">
+                                        Dealer Code
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,6 +124,11 @@
                                         <input type="text" ng-model="card.pin" class="input-lg card-number" placeholder="Card Pin">
 
                                     </td>
+                                    <td ng-show="isDealer" class="card-info-input">
+                                        <input type="text" ng-model="card.dealer_code" class="input-lg card-number" placeholder="Card Dealer Code">
+
+                                    </td>
+
                                 </tr>
                                 
                                 

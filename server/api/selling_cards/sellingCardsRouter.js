@@ -36,6 +36,7 @@ router.get('/:id', function(req, res, next) {
                     gogo_buy: rows[i].gogo_buy,
                     number: rows[i].number,
                     pin: rows[i].pin,
+                    dealer_code: rows[i].dealer_code,
                     store_id: rows[i].store_id,
                     store_name: rows[i].store_name,
 

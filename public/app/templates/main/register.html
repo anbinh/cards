@@ -26,10 +26,29 @@
 
                         <div class="col-sm-3"></div>
                         <div class="col-sm-6">
-                            <div class="featured-box featured-box-primary align-left mt-xlg" style="height: 400px;">
+                            <div class="featured-box featured-box-primary align-left mt-xlg" >
                                 <div class="box-content">
-                                    <h4 class="heading-primary text-uppercase mb-md">Register An Account</h4>
+                                    <h4 class="heading-primary text-uppercase mb-md">{{isDealer ? 'Register An Account  as A Dealer' : 'Register An Account'}}</h4>
                                     <form  id="frmSignUp" method="post" ng-submit="signUp()">
+                                        <div ng-show="isDealer" class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <label>Business Name</label>
+                                                    <input  ng-model="user.business_name" type="text" value="" class="form-control input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div ng-show="isDealer"  class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <label>Business Address</label>
+                                                    <input  ng-model="user.business_address" type="text" value="" class="form-control input-lg">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-md-12">
@@ -60,6 +79,8 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="submit" value="Register" class="btn btn-primary pull-right mb-xl" data-loading-text="Loading...">

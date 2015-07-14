@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1> Login  <span>Please enter correct info</span></h1>
+                    <h1> Login  <span>{{isDealer ? 'This section is for dealers' : 'This section is for regular users'}}</span></h1>
 
                     <ul class="breadcrumb breadcrumb-valign-mid">
                                     <li><a href="/">Home</a></li>
@@ -26,7 +26,7 @@
                         <div class="col-sm-6">
                             <div class="featured-box featured-box-primary align-left mt-xlg" style="height: 327px;">
                                 <div class="box-content">
-                                    <h4 class="heading-primary text-uppercase mb-md">I'm a Returning Customer</h4>
+                                    <h4 class="heading-primary text-uppercase mb-md">{{isDealer ? "I'm a Returning Dealer" : "I'm a Returning Customer"}}</h4>
                                     <form  id="frmSignIn" method="post" ng-submit="login()">
                                         
                                         <div class="row">

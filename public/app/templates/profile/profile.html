@@ -39,6 +39,13 @@
                 <h4 class="heading-primary mt-lg">Your <strong>Fullname</strong></h4>
                 <p>{{ ( (user.first_name !== null) && (user.last_name !== null) ? user.first_name + ' ' + user.last_name : 'NOT SET' )}}</p>
 
+                <hr  ng-show="isDealer"  >
+                <h4 ng-show="isDealer" class="heading-primary">Business <strong>Info</strong></h4>
+                <ul  ng-show="isDealer"  class="list list-icons list-icons-style-3 mt-xlg">
+                    <li><i class="fa fa-briefcase"></i> <strong>Business Name:</strong> {{ (user.business_name ? user.business_name : 'NOT SET')}}</li>
+                    <li><i class="fa fa-compass"></i> <strong>Business Address</strong> {{ (user.business_address ? user.business_address : 'NOT SET')}}</li>
+                    
+                </ul>
                 <hr>
 
                 <h4 class="heading-primary">Basic <strong>Info</strong></h4>

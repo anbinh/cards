@@ -2,9 +2,11 @@
 
 
 module.exports = function(m) {
-    m.controller('RegisterController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService',
-        function($scope, $location, $routeParams, authService, store, userService) {
+    m.controller('RegisterController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'isDealer',
+        function($scope, $location, $routeParams, authService, store, userService, isDealer) {
 
+
+            $scope.isDealer = isDealer;
 
             $scope.signUp = function() {
                 console.log('NEW USER', $scope.user);
@@ -19,6 +21,10 @@ module.exports = function(m) {
                 }
 
                 delete user.password2;
+
+                if (isDealer === true) {
+                    user.role = 'dealer';
+                }
 
                 var us = new UserService(user);
                 us.$save(function(result) {

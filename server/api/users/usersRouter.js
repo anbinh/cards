@@ -490,14 +490,17 @@ router.post('/sell-cards', function(req, res, next) {
                     for (var i = 0; i < receipt.cards.length; i++) {
                         receipt.cards[i].receipt_id = receiptId;
                         var card = receipt.cards[i];
-                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null];
+                        if (!card.dealer_code) {
+                            card.dealer_code = null;
+                        }
+                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null];
                         insertedCard.push(item);
 
                     };
 
                     // console.log('inserted cards', insertedCard);
 
-                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,store_id,store_name,value,user_id,sold,sold_to_user,order_id) VALUES ?', [insertedCard], function(err, ret) {
+                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id) VALUES ?', [insertedCard], function(err, ret) {
                         if (err) return next(err);
                         res.json(receipt);
 

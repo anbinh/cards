@@ -17,6 +17,20 @@ module.exports = function(m) {
             }
 
 
+            if (!authService.isAuthenticated()) {
+                window.location = '/';
+            } else {
+                $scope.user = store.get('user');
+            }
+
+            if ($scope.user.role === 'dealer') {
+                $scope.isDealer = true;
+            } else {
+                $scope.isDealer = false;
+            }
+
+
+
 
             $scope.sellingCards = {
                 billingUser: ($scope.isGuest) ? guest : store.get('user'),

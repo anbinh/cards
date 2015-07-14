@@ -5,6 +5,17 @@ module.exports = function(m) {
     m.controller('SellCardInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService',
         function($scope, $location, $routeParams, authService, store, userService) {
 
+            if (!authService.isAuthenticated()) {
+                window.location = '/';
+            } else {
+                $scope.user = store.get('user');
+            }
+
+            if ($scope.user.role === 'dealer') {
+                $scope.isDealer = true;
+            } else {
+                $scope.isDealer = false;
+            }
 
             if (!store.get('selling_cards')) {
 

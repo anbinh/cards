@@ -11,6 +11,12 @@ module.exports = function(m) {
 
             $scope.user = store.get('user');
 
+            if ($scope.user.role === 'dealer') {
+                $scope.isDealer = true;
+            } else {
+                $scope.isDealer = false;
+            }
+
 
 
         }

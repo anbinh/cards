@@ -572,25 +572,6 @@ see our terms of service for more information.</p>
         
         <% include ../inc/scripts %>
 
-        <script type="text/javascript">
-    
-    
-
-    window.onbeforeunload = function (e) {
-  var e = e || window.event;
-
-
- swal('INFO','NEW PROMOTION ORDER','success');
-
-  //IE & Firefox
-  if (e) {
-    e.returnValue = 'Please Dont Go!';
-  }
-
-  // For Safari
-  return 'Please Dont Go!';
-};
-</script>
     
     </body>
 </html>
