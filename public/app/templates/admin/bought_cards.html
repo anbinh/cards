@@ -1,0 +1,61 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>All Available Bought Cards</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Cards</span></li>
+            <li><span>Bought Cards</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <!-- start: page -->
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">Bought Cards Information</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th>Value</th>
+                     <th>Number</th>
+                     <th>Pin</th>
+                     <th>Dealer Code</th>
+                     <th>Amount</th>
+                     <th>Sold to</th>
+                     <th>Date Joined</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="card in cards track by $index">
+                     <td>{{$index}}</td>
+                     <td>{{card.value}} </td>
+                     <td>{{card.number}}  </td>
+                     <td>{{card.pin}} </td>
+                     <td>{{card.dealer_code}} </td>
+                     <td>{{card.amount}} </td>
+                     <td>{{card.sold_to}} </td>
+                     <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>

@@ -26,5 +26,13 @@ require('./lib/shopping-cart')(m);
 require('./lib/store-detail')(m);
 require('./lib/header')(m);
 
+require('./lib/admin/index')(m);
+require('./lib/admin/users')(m);
+require('./lib/admin/guests')(m);
+require('./lib/admin/dealers')(m);
+require('./lib/admin/inventory')(m);
+require('./lib/admin/sold-cards')(m);
+require('./lib/admin/bought-cards')(m);
+require('./lib/admin/sidebar')(m);
 
 module.exports = m;

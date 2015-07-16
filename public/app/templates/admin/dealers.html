@@ -1,0 +1,59 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>All Available Dealers</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Customers</span></li>
+            <li><span>Dealers</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <!-- start: page -->
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">Dealers Information</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+               <thead>
+                  <tr>
+                     <th>First Name</th>
+                     <th>Last Name</th>
+                     <th>Email</th>
+                     <th>Address</th>
+                     <th>City</th>
+                     <th>State</th>
+                     <th>Date Joined</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="user in users track by $index">
+                     <td>{{user.first_name}} </td>
+                     <td>{{user.last_name}}  </td>
+                     <td>{{user.email}} </td>
+                     <td>{{user.address}} </td>
+                     <td>{{user.city}} </td>
+                     <td>{{user.state}} </td>
+                     <td>{{user.created_date | date: 'MM/dd/yyyy'}} </td>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>
