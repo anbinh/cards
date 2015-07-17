@@ -2,7 +2,7 @@
 
 
 module.exports = function(m) {
-    m.controller('AdminBoughtCardsController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, Receipts) {
+    m.controller('AdminReceiptsController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, Receipts) {
 
 
         authService.adminAuthenticate();
@@ -35,10 +35,10 @@ module.exports = function(m) {
             }
         };
 
-        $scope.goToReceiptDetail = function(id) {
+        $scope.receiptDetail = function(id) {
 
 
-            $location.url('cards_bought/' + id);
+            $location.url('receipts/' + id);
         }
 
 

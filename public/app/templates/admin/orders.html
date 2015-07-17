@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
    <header class="page-header">
-      <h2>All Available Receipts</h2>
+      <h2>All Available Orders</h2>
    
       <div class="right-wrapper pull-right">
          <ol class="breadcrumbs">
@@ -10,7 +10,7 @@
                </a>
             </li>
             <li><span>Cards</span></li>
-            <li><span>Receipts</span></li>
+            <li><span>Orders</span></li>
          </ol>
    
          <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -22,7 +22,7 @@
          <header class="panel-heading">
             
       
-            <h2 class="panel-title">Receipts Information</h2>
+            <h2 class="panel-title">Orders Information</h2>
          </header>
          <div class="panel-body">
             <table class="table table-bordered table-striped mb-none" id="datatable-default">
@@ -40,16 +40,16 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="receipt in receipts track by $index" ng-click="goToReceiptDetail(receipt.id)">
-                     <td>{{receipt.id}}</td>
-                     <td class="center">{{receipt.total_cards}} </td>
-                     <td>${{receipt.total_face_value | number:2}}  </td>
-                     <td>${{receipt.total_amount}} </td>
-                     <td>{{receipt.average_payout | number:2}}% </td>
-                     <td class="center">{{receipt.store_list.split(',').length}} </td>
-                     <td>{{receipt.billingUser.first_name + ' ' +receipt.billingUser.last_name}} </td>
-                     <td> <span class="label {{receipt.billingUser.className}}">{{receipt.billingUser.role}}</span></td>
-                     <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
+                  <tr ng-repeat="order in orders track by $index" ng-click="goToOrderDetail(order.id)">
+                     <td>{{order.id}}</td>
+                     <td class="center">{{order.total_cards}} </td>
+                     <td>${{order.total_face_value | number:2}}  </td>
+                     <td>${{order.total_amount}} </td>
+                     <td>{{order.average_payout | number:2}}% </td>
+                     <td class="center">{{order.store_list.split(',').length}} </td>
+                     <td>{{order.billingUser.first_name + ' ' +order.billingUser.last_name}} </td>
+                     <td> <span class="label {{order.billingUser.className}}">{{order.billingUser.role}}</span></td>
+                     <td>{{order.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   
                   

@@ -31,11 +31,11 @@ require('./lib/admin/users')(m);
 require('./lib/admin/guests')(m);
 require('./lib/admin/dealers')(m);
 require('./lib/admin/inventory')(m);
-require('./lib/admin/sold-cards')(m);
-require('./lib/admin/bought-cards')(m);
+require('./lib/admin/orders')(m);
+require('./lib/admin/receipts')(m);
 require('./lib/admin/sidebar')(m);
-require('./lib/admin/sold-cards-detail')(m);
-require('./lib/admin/bought-cards-detail')(m);
+require('./lib/admin/order-detail')(m);
+require('./lib/admin/receipt-detail')(m);
 require('./lib/admin/login')(m);
 require('./lib/admin/head')(m);
 

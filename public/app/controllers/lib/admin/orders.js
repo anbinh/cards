@@ -2,9 +2,11 @@
 
 
 module.exports = function(m) {
-    m.controller('AdminSoldCardsController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, Orders) {
+    m.controller('AdminOrdersController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, Orders) {
 
         authService.adminAuthenticate();
+
+
 
         $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'sold_cards');
 
@@ -27,8 +29,10 @@ module.exports = function(m) {
             }
         };
 
-        $scope.orderDetail = function(id) {
-            $location.url('cards_sold/' + id);
+        console.log('order', $scope.orders);
+
+        $scope.goToOrderDetail = function(id) {
+            $location.url('orders/' + id);
         };
 
         $timeout(function() {

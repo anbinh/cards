@@ -96,8 +96,8 @@ angular.module('app')
                     ]
                 }
             }).when('/orders', {
-                templateUrl: 'admin/sold_cards.html',
-                controller: 'AdminSoldCardsController',
+                templateUrl: 'admin/orders.html',
+                controller: 'AdminOrdersController',
                 resolve: {
                     Orders: ['orderService', '$route',
                         function(orderService, $route) {
@@ -108,8 +108,8 @@ angular.module('app')
                     ]
                 }
             }).when('/orders/:id', {
-                templateUrl: 'admin/sold_cards_detail.html',
-                controller: 'AdminSoldCardsDetailController',
+                templateUrl: 'admin/order_detail.html',
+                controller: 'AdminOrderDetailController',
                 resolve: {
                     OrderDetail: ['orderService', '$route',
                         function(orderService, $route) {
@@ -123,8 +123,8 @@ angular.module('app')
                     ]
                 }
             }).when('/receipts', {
-                templateUrl: 'admin/bought_cards.html',
-                controller: 'AdminBoughtCardsController',
+                templateUrl: 'admin/receipts.html',
+                controller: 'AdminReceiptsController',
                 resolve: {
                     Receipts: ['receiptService', '$route',
                         function(receiptService, $route) {
@@ -135,8 +135,8 @@ angular.module('app')
                     ]
                 }
             }).when('/receipts/:id', {
-                templateUrl: 'admin/bought_cards_detail.html',
-                controller: 'AdminBoughtCardsDetailController',
+                templateUrl: 'admin/receipt_detail.html',
+                controller: 'AdminReceiptDetailController',
                 resolve: {
                     ReceiptDetail: ['receiptService', '$route',
                         function(receiptService, $route) {

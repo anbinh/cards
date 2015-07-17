@@ -2,7 +2,7 @@
 
 
 module.exports = function(m) {
-    m.controller('AdminSoldCardsDetailController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, OrderDetail) {
+    m.controller('AdminOrderDetailController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, OrderDetail) {
 
         authService.adminAuthenticate();
 
