@@ -48,10 +48,19 @@
                         Users
                         </a>
                      </li>
-                     <li class="{{currentActiveChild == 'guests' ? 'nav-active' : '' }}">
-                        <a  href="/dashboard/#/guests">
+                     <li class="{{currentActiveChild == 'guests' ? 'nav-active' : '' }} nav-parent">
+                        <a >
                         Guests
                         </a>
+                        <ul class="nav nav-children">
+                           
+                           <li>
+                              <a href="/dashboard/#/guests/buy_cards">Who Buy Cards</a>
+                           </li>
+                           <li>
+                              <a href="/dashboard/#/guests/sell_cards">Who Sell Cards</a>
+                           </li>
+                        </ul>
                      </li>
                      <li  class="{{currentActiveChild == 'dealers' ? 'nav-active' : '' }}">
                         <a  href="/dashboard/#/dealers">

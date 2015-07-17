@@ -2,31 +2,15 @@
 
 
 module.exports = function(m) {
-    m.controller('AdminInventoryController', function($scope, $rootScope, store, $location, storeService, authService, $timeout) {
+    m.controller('AdminInventoryController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, CardList) {
 
 
-
+        authService.adminAuthenticate();
 
         $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'inventory', '');
 
-        $scope.cards = [];
+        $scope.cards = CardList;
 
-        var cards = [];
-        for (var i = 0; i < 100; i = i + 1) {
-
-            var card = {
-                value: Math.random() * 1000000 | 0,
-                number: Math.random() * 1000000 | 0,
-                pin: Math.random() * 1000000 | 0,
-                amount: Math.random() * 1000 | 0,
-                dealer_code: Math.random() * 1000000 | 0,
-                sold_to: 'tinhoc@outlook.com',
-                created_date: new Date()
-            };
-            cards.push(card);
-        }
-
-        $scope.cards = cards;
 
         $timeout(function() {
             $('#datatable-default').dataTable();

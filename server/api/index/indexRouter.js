@@ -97,5 +97,11 @@ router.get('/dashboard', function(req, res) {
     });
 });
 
+router.get('/admin-login', function(req, res) {
+    res.render('admin_login', {
+
+    });
+});
+
 
 module.exports = router;

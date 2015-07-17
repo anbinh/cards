@@ -13,12 +13,31 @@ module.exports = function(m) {
                     method: 'POST',
                     'url': '/api/users/login',
                 },
+                'adminLogin': {
+                    method: 'POST',
+                    'url': '/api/users/admin-login',
+                },
                 'get': {
                     method: 'GET'
                 },
                 'dealers': {
                     method: 'GET',
                     'url': '/api/users/dealers',
+                    isArray: true
+                },
+                'guestsSellingCards': {
+                    method: 'GET',
+                    'url': '/api/users/guests/sell_cards',
+                    isArray: true
+                },
+                'guestsBuyingCards': {
+                    method: 'GET',
+                    'url': '/api/users/guests/buy_cards',
+                    isArray: true
+                },
+                'inventory': {
+                    method: 'GET',
+                    'url': '/api/users/inventory',
                     isArray: true
                 },
                 'forgetPassword': {

@@ -29,24 +29,37 @@
                <thead>
                   <tr> 
                      <th></th>
-                     <th>Value</th>
+                     <th></th>
+                     <th>Merchant</th>
+                     <th>Offer</th>
                      <th>Number</th>
                      <th>Pin</th>
                      <th>Dealer Code</th>
-                     <th>Amount</th>
-                     <th>Sold to</th>
+                     
+                     
+                     <th>Receipts</th>
+                     
                      <th>Date Joined</th>
                   </tr>
                </thead>
                <tbody>
                   <tr ng-repeat="card in cards track by $index">
-                     <td>{{$index}}</td>
-                     <td>{{card.value}} </td>
+                     <td>{{card.id}}</td>
+                     <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
+
+                     <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
+                     <td>${{card.gogo_buy * card.value / 100 | number:2}} </td>
                      <td>{{card.number}}  </td>
                      <td>{{card.pin}} </td>
                      <td>{{card.dealer_code}} </td>
-                     <td>{{card.amount}} </td>
-                     <td>{{card.sold_to}} </td>
+                     
+                     <td class="center"> 
+                        <a href="/dashboard/#/cards_bought/{{card.receipt_id}}">
+                           #{{card.receipt_id}}
+                        </a> 
+                     </td>
+                     
+                     
                      <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   

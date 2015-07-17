@@ -23,7 +23,45 @@ angular.module('app')
             }).when('/guests', {
                 templateUrl: 'admin/guests.html',
                 controller: 'AdminGuestsController',
-                resolve: {}
+                resolve: {
+
+                }
+            }).when('/guests/sell_cards', {
+                templateUrl: 'admin/guests.html',
+                controller: 'AdminGuestsController',
+                resolve: {
+                    GuestList: ['userService', '$route',
+                        function(userService, $route) {
+                            return userService.guestsSellingCards({}).$promise.then(function(guests) {
+                                return guests;
+                            });
+                        }
+                    ],
+                    GuestType: [
+
+                        function() {
+                            return 'buy';
+                        }
+                    ]
+                }
+            }).when('/guests/buy_cards', {
+                templateUrl: 'admin/guests.html',
+                controller: 'AdminGuestsController',
+                resolve: {
+                    GuestList: ['userService', '$route',
+                        function(userService, $route) {
+                            return userService.guestsBuyingCards({}).$promise.then(function(guests) {
+                                return guests;
+                            });
+                        }
+                    ],
+                    GuestType: [
+
+                        function() {
+                            return 'sell';
+                        }
+                    ]
+                }
             }).when('/dealers', {
                 templateUrl: 'admin/dealers.html',
                 controller: 'AdminDealersController',
@@ -35,11 +73,20 @@ angular.module('app')
                             });
                         }
                     ]
+
                 }
             }).when('/inventory', {
                 templateUrl: 'admin/inventory.html',
                 controller: 'AdminInventoryController',
-                resolve: {}
+                resolve: {
+                    CardList: ['userService', '$route',
+                        function(userService, $route) {
+                            return userService.inventory({}).$promise.then(function(cards) {
+                                return cards;
+                            });
+                        }
+                    ]
+                }
             }).when('/cards_sold', {
                 templateUrl: 'admin/sold_cards.html',
                 controller: 'AdminSoldCardsController',

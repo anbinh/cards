@@ -35,6 +35,67 @@ router.get('/', function(req, res, next) {
 
 });
 
+/* GET /users/inventory listing. */
+router.get('/inventory', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 ', [], function(err, rows) {
+            if (err) return next(err);
+
+            res.json(rows)
+        });
+
+    });
+
+});
+
+/* GET /users/guests/buy_cards listing. */
+router.get('/guests/buy_cards', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT billing_user,created_date, id from orders where user_id = 0 ', [], function(err, rows) {
+            if (err) return next(err);
+
+            var items = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var item = JSON.parse(rows[i].billing_user);
+                item.created_date = rows[i].created_date;
+                item.ref_id = rows[i].id;
+                items.push(item);
+            };
+
+            res.json(items);
+        });
+
+    });
+
+});
+
+/* GET /users/guests/sell_cards listing. */
+router.get('/guests/sell_cards', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT billing_user,created_date,id  from receipts where user_id = 0 ', [], function(err, rows) {
+            if (err) return next(err);
+
+            var items = [];
+
+            for (var i = 0; i < rows.length; i++) {
+                var item = JSON.parse(rows[i].billing_user);
+                item.created_date = rows[i].created_date;
+                item.ref_id = rows[i].id;
+                items.push(item);
+            };
+
+            res.json(items);
+        });
+
+    });
+
+});
+
+
 /* GET /users/dealers listing. */
 router.get('/dealers', function(req, res, next) {
     req.getConnection(function(err, connection) {
@@ -131,6 +192,24 @@ router.post('/', function(req, res, next) {
 
 
     });
+});
+
+router.post('/admin-login', function(req, res, next) {
+    var dat = req.body;
+
+    if (dat.username === 'admin' && dat.password === '123456') {
+        res.json({
+            ok: true
+        });
+    } else {
+        res.statusCode = 400;
+        res.json({
+            message: 'Wrong admin'
+        });
+
+        return;
+    }
+
 });
 
 

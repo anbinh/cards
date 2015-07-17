@@ -22,6 +22,17 @@ module.exports = function(m) {
 
             };
 
+            var adminAuthenticate = function() {
+
+                console.log('CURRENT LOGGINED USER', store.get('user'));
+                if (store.get('admin')) {
+                    return true;
+                } else {
+                    window.location = '/admin-login/#/'
+                    return false;
+                }
+            };
+
             var isAuthenticated = function() {
 
                 console.log('CURRENT LOGGINED USER', store.get('user'));
@@ -38,7 +49,8 @@ module.exports = function(m) {
                 'login': login,
                 'logout': logout,
                 'auth': auth,
-                'isAuthenticated': isAuthenticated
+                'adminAuthenticate': adminAuthenticate,
+
             };
         }
     ]);

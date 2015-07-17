@@ -4,7 +4,7 @@
 module.exports = function(m) {
     m.controller('AdminSoldCardsController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, Orders) {
 
-
+        authService.adminAuthenticate();
 
         $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'sold_cards');
 

@@ -198,7 +198,8 @@ gulp.task('mincss', function() {
         './public/vendor/morris/morris.css',
         './public/stylesheets/theme.css',
         './public/stylesheets/skins/default.css',
-        './public/stylesheets/theme-custom.css'
+        './public/stylesheets/theme-custom.css',
+        './public/vendor/sweetalert/dist/sweetalert.css'
     ]).pipe(minifyCSS({
         compatibility: 'ie8'
     }))
