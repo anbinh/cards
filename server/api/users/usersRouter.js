@@ -19,8 +19,34 @@ var transporter = nodemailer.createTransport({
 router.get('/', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT * from users', [], function(err, rows) {
+        connection.query('SELECT * from users where role ="user" and id <> 0 ', [], function(err, rows) {
             if (err) return next(err);
+
+
+            for (var i = 0; i < rows.length; i++) {
+                delete rows[i].password;
+                delete rows[i].reset_token;
+            };
+
+            res.json(rows)
+        });
+
+    });
+
+});
+
+/* GET /users/dealers listing. */
+router.get('/dealers', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT * from users where role ="dealer" and id <> 0 ', [], function(err, rows) {
+            if (err) return next(err);
+
+
+            for (var i = 0; i < rows.length; i++) {
+                delete rows[i].password;
+                delete rows[i].reset_token;
+            };
 
             res.json(rows)
         });

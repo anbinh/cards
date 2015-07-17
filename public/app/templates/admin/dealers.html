@@ -34,18 +34,22 @@
                      <th>Address</th>
                      <th>City</th>
                      <th>State</th>
+                     <th>Business Name</th>
+                     <th>Business Address</th>
                      <th>Date Joined</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="user in users track by $index">
-                     <td>{{user.first_name}} </td>
-                     <td>{{user.last_name}}  </td>
-                     <td>{{user.email}} </td>
-                     <td>{{user.address}} </td>
-                     <td>{{user.city}} </td>
-                     <td>{{user.state}} </td>
-                     <td>{{user.created_date | date: 'MM/dd/yyyy'}} </td>
+                  <tr ng-repeat="dealer in dealers track by $index">
+                     <td>{{dealer.first_name}} </td>
+                     <td>{{dealer.last_name}}  </td>
+                     <td>{{dealer.email}} </td>
+                     <td>{{dealer.address}} </td>
+                     <td>{{dealer.city}} </td>
+                     <td>{{dealer.state}} </td>
+                     <td>{{dealer.business_name}} </td>
+                     <td>{{dealer.business_address}} </td>
+                     <td>{{dealer.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   
                   

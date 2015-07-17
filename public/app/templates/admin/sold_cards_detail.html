@@ -1,0 +1,116 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>Order Detail</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Cards</span></li>
+            <li><span>Sold Cards</span></li>
+            <li><span>Order {{order.id}}</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <div class="row">
+      
+      <div class="col-md-12">
+         <section class="panel panel-horizontal">
+            <header class="panel-heading bg-white" style="width : 150px;vertical-align: top;">
+               <div class="panel-heading-icon bg-primary mt-sm">
+                  <i class="fa fa-shopping-cart"></i>
+               </div>
+            </header>
+            <div class="panel-body p-lg">
+               <h3 class="text-weight-semibold mt-sm">Order Info</h3>
+               <p>
+                  <ul style="  padding-left : 20px; bottom-margin : 10px">
+                     <li class="user-li"> <strong>Total Face Value:</strong> <span>${{order.total_face_value}}</span></li>
+                     <li class="user-li"><strong>Total Amount:</strong> ${{order.total_amount}}</li>
+                     <li class="user-li"><strong>The Number Of Cards:</strong> {{order.total_cards}}</li>
+                     <li class="user-li"><strong>Average Percentage:</strong> {{order.average_percentage | number:2}}%</li>
+                     <li class="user-li"><strong>Datetime:</strong> {{order.created_date | date: 'MM/dd/yyyy'}}</li>
+                  </ul>
+               </p>
+
+            </div>
+         </section>
+      </div>
+   </div>
+
+
+   <div class="row">
+      
+      <div class="col-md-12">
+         <section class="panel panel-horizontal">
+            <header class="panel-heading bg-white" style="width : 150px;vertical-align: top">
+               <div class="panel-heading-icon bg-primary mt-sm">
+                  <i class="fa fa-user"></i>
+               </div>
+            </header>
+            <div class="panel-body p-lg">
+               <h3 class="text-weight-semibold mt-sm">{{order.billingUser.role}} Info </h3>
+               <p>
+                  <ul style="  padding-left : 20px; bottom-margin : 10px">
+                     <li class="user-li"> <strong>Fullname:</strong> {{order.billingUser.first_name + order.billingUser.last_name}}</li>
+                     <li class="user-li"><strong>Email:</strong> {{order.billingUser.email}}</li>
+                     <li class="user-li"><strong>Address:</strong> {{order.billingUser.address}}</li>
+                     <li class="user-li"><strong>City:</strong> {{order.billingUser.city}}</li>
+                     <li class="user-li"><strong>State:</strong> {{order.billingUser.state}}</li>
+                     <li class="user-li"><strong>Zipcode:</strong> {{order.billingUser.zipcode}}</li>
+                  </ul>
+               </p>
+
+            </div>
+         </section>
+      </div>
+   </div>
+
+   
+
+   <!-- start: page -->
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">  All Cards</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th>Merchant</th>
+                     <th>Card Value</th>
+                     <th>Qty</th>
+                     <th>Total</th>
+                     <th>Discount</th>
+                     <th>Selling Price</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="card in order.cards"> 
+                     <th><img height="50px" ng-src="/img/cards/{{card.name}}.jpg"></th>
+                     <th>{{card.name | storename | titlecase}}</th>
+                     <th>${{card.value | number:2}}</th>
+                     <th>1</th>
+                     <th>${{card.value | number:2}}</th>
+                     <th>{{card.save| number:2}}%</th>
+                     <th>${{card.pay| number:2}}</th>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>

@@ -213,6 +213,7 @@ gulp.task('watch', function() {
     gulp.watch(_src + "/templates/**/*.html", ['templates']);
     gulp.watch(_src + "/**/*.js", ['scripts']);
     gulp.watch("./public/css/*.css", ['mincss']);
+    gulp.watch("./public/stylesheets/*.css", ['mincss']);
 });
 
 /* Build the whole app */

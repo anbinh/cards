@@ -4,7 +4,6 @@ var express = require('express');
 var router = express.Router();
 
 
-
 // /orders
 router.get('/:id', function(req, res, next) {
     req.getConnection(function(err, connection) {
@@ -21,6 +20,28 @@ router.get('/:id', function(req, res, next) {
     });
 
 });
+
+// get all orders
+router.get('/', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT * from orders', [], function(err, rows) {
+            if (err) return next(err);
+
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].billingUser = JSON.parse(rows[i].billing_user);
+                rows[i].cards = JSON.parse(rows[i].cards);
+                delete rows[i].billing_user;
+                delete rows[i].billingUser.reset_token;
+            };
+
+            res.json(rows)
+        });
+
+    });
+
+});
+
 
 
 

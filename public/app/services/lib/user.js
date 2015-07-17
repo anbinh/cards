@@ -16,6 +16,11 @@ module.exports = function(m) {
                 'get': {
                     method: 'GET'
                 },
+                'dealers': {
+                    method: 'GET',
+                    'url': '/api/users/dealers',
+                    isArray: true
+                },
                 'forgetPassword': {
                     method: 'POST',
                     'url': '/api/users/forget-password',

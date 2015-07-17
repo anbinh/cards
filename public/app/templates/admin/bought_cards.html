@@ -29,25 +29,27 @@
                <thead>
                   <tr> 
                      <th></th>
-                     <th>Value</th>
-                     <th>Number</th>
-                     <th>Pin</th>
-                     <th>Dealer Code</th>
-                     <th>Amount</th>
-                     <th>Sold to</th>
-                     <th>Date Joined</th>
+                     <th>Total Cards</th>
+                     <th>Total Face Value</th>
+                     <th>Total Amount</th>
+                     <th>Average Payout</th>
+                     <th>Total Stores</th>
+                     <th>User Name</th>
+                     <th>User Type</th>
+                     <th>Datetime</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="card in cards track by $index">
-                     <td>{{$index}}</td>
-                     <td>{{card.value}} </td>
-                     <td>{{card.number}}  </td>
-                     <td>{{card.pin}} </td>
-                     <td>{{card.dealer_code}} </td>
-                     <td>{{card.amount}} </td>
-                     <td>{{card.sold_to}} </td>
-                     <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
+                  <tr ng-repeat="receipt in receipts track by $index" ng-click="goToReceiptDetail(receipt.id)">
+                     <td>{{receipt.id}}</td>
+                     <td class="center">{{receipt.total_cards}} </td>
+                     <td>${{receipt.total_face_value | number:2}}  </td>
+                     <td>${{receipt.total_amount}} </td>
+                     <td>{{receipt.average_payout | number:2}}% </td>
+                     <td class="center">{{receipt.store_list.split(',').length}} </td>
+                     <td>{{receipt.billingUser.first_name + ' ' +receipt.billingUser.last_name}} </td>
+                     <td> <span class="label {{receipt.billingUser.className}}">{{receipt.billingUser.role}}</span></td>
+                     <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   
                   

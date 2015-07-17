@@ -29,6 +29,7 @@ var dbOptions = {
 var routes = require('./server/api/index/indexRouter');
 var users = require('./server/api/users/usersRouter');
 var orders = require('./server/api/orders/ordersRouter');
+var receipts = require('./server/api/receipts/receiptsRouter');
 var email = require('./server/api/email/emailRouter');
 var stores = require('./server/api/stores/storesRouter');
 var sellingCards = require('./server/api/selling_cards/sellingCardsRouter');
@@ -55,6 +56,7 @@ app.use(myConnection(mysql, dbOptions, 'pool'));
 app.use('/', routes);
 app.use('/api/users', users);
 app.use('/api/orders', orders);
+app.use('/api/receipts', receipts);
 app.use('/api/email', email);
 app.use('/api/stores', stores);
 app.use('/api/selling_cards', sellingCards);

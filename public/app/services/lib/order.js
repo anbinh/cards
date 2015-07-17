@@ -9,7 +9,12 @@ module.exports = function(m) {
                 'get': {
                     method: 'GET',
                     'url': '/api/orders/:id'
-                }
+                },
+                'query': {
+                    method: 'GET',
+                    isArray: true,
+                    'url': '/api/orders'
+                },
 
             });
         }

@@ -1,0 +1,118 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>Receipt Detail</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Cards</span></li>
+            <li><span>Bought Cards</span></li>
+            <li><span>Receipt {{receipt.id}}</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <div class="row">
+      
+      <div class="col-md-12">
+         <section class="panel panel-horizontal">
+            <header class="panel-heading bg-white" style="width : 150px;vertical-align: top;">
+               <div class="panel-heading-icon bg-primary mt-sm">
+                  <i class="fa fa-shopping-cart"></i>
+               </div>
+            </header>
+            <div class="panel-body p-lg">
+               <h3 class="text-weight-semibold mt-sm">Receipt Info</h3>
+               <p>
+                  <ul style="  padding-left : 20px; bottom-margin : 10px">
+                     <li class="user-li"> <strong>Total Face Value:</strong> <span>${{receipt.total_face_value}}</span></li>
+                     <li class="user-li"><strong>Total Amount:</strong> ${{receipt.total_amount}}</li>
+                     <li class="user-li"><strong>The Number Of Cards:</strong> {{receipt.total_cards}}</li>
+                     <li class="user-li"><strong>Average Payout:</strong> {{receipt.average_payout | number:2}}%</li>
+                     <li class="user-li"><strong>Datetime:</strong> {{receipt.created_date | date: 'MM/dd/yyyy'}}</li>
+                  </ul>
+               </p>
+
+            </div>
+         </section>
+      </div>
+   </div>
+
+
+   <div class="row">
+      
+      <div class="col-md-12">
+         <section class="panel panel-horizontal">
+            <header class="panel-heading bg-white" style="width : 150px;vertical-align: top">
+               <div class="panel-heading-icon bg-primary mt-sm">
+                  <i class="fa fa-user"></i>
+               </div>
+            </header>
+            <div class="panel-body p-lg">
+               <h3 class="text-weight-semibold mt-sm">{{receipt.billingUser.role}} Info </h3>
+               <p>
+                  <ul style="  padding-left : 20px; bottom-margin : 10px">
+                     <li class="user-li"> <strong>Fullname:</strong> {{receipt.billingUser.first_name + receipt.billingUser.last_name}}</li>
+                     <li class="user-li"><strong>Email:</strong> {{receipt.billingUser.email}}</li>
+                     <li class="user-li"><strong>Address:</strong> {{receipt.billingUser.address}}</li>
+                     <li class="user-li"><strong>City:</strong> {{receipt.billingUser.city}}</li>
+                     <li class="user-li"><strong>State:</strong> {{receipt.billingUser.state}}</li>
+                     <li class="user-li"><strong>Zipcode:</strong> {{receipt.billingUser.zipcode}}</li>
+                  </ul>
+               </p>
+
+            </div>
+         </section>
+      </div>
+   </div>
+
+   
+
+   <!-- start: page -->
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">  All Cards</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th></th>
+                     <th>Merchant</th>
+                     <th>Card Number</th>
+                     <th>Card Pin</th>
+                     <th ng-show="receipt.billingUser.role == 'Dealer' ">Dealer Code</th>
+                     <th>Your Offer</th>
+                     <th>Payout</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="card in receipt.cards" > 
+                  <th>{{card.id}}</th>
+                     <th><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></th>
+                     <th>{{card.store_name | storename | titlecase}} (${{card.value}})</th>
+                     <th>{{card.number }}</th>
+                     <th>{{card.pin}}</th>
+                     <th ng-show="receipt.billingUser.role == 'Dealer' ">{{card.dealer_code}}</th>
+                     <th>${{card.gogo_buy * card.value / 100 | number:2}}</th>
+                     <th>{{card.gogo_buy| number:2}}%</th>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>

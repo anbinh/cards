@@ -25,29 +25,30 @@
             <h2 class="panel-title">Sold Cards Information</h2>
          </header>
          <div class="panel-body">
-            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
                <thead>
                   <tr> 
                      <th></th>
-                     <th>Value</th>
-                     <th>Number</th>
-                     <th>Pin</th>
-                     <th>Dealer Code</th>
-                     <th>Amount</th>
-                     <th>Sold to</th>
-                     <th>Date Joined</th>
+                     <th>Number Of Cards</th>
+                     <th>Total Face Value</th>
+                     <th>Total Amount</th>
+                     <th>Average Payout</th>
+                     <th>User Name</th>
+                     <th>User Type</th>
+                     <th>Datetime</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="card in cards track by $index">
-                     <td>{{$index}}</td>
-                     <td>{{card.value}} </td>
-                     <td>{{card.number}}  </td>
-                     <td>{{card.pin}} </td>
-                     <td>{{card.dealer_code}} </td>
-                     <td>{{card.amount}} </td>
-                     <td>{{card.sold_to}} </td>
-                     <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
+                  <tr ng-repeat="order in orders track by $index" ng-click="orderDetail(order.id)">
+                     <td>{{order.id}}</td>
+                     
+                     <td class="center">{{order.total_cards}}  </td>
+                     <td>${{order.total_face_value| number:2}} </td>
+                     <td>${{order.total_amount| number:2}} </td>
+                     <td>{{order.average_percentage| number:2}}% </td>
+                     <td>{{order.billingUser.first_name + ' '+ order.billingUser.last_name}} </td>
+                     <td> <span class="label {{order.billingUser.className}}">{{order.billingUser.role}}</span></td>
+                     <td>{{order.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   
                   

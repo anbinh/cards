@@ -34,5 +34,7 @@ require('./lib/admin/inventory')(m);
 require('./lib/admin/sold-cards')(m);
 require('./lib/admin/bought-cards')(m);
 require('./lib/admin/sidebar')(m);
+require('./lib/admin/sold-cards-detail')(m);
+require('./lib/admin/bought-cards-detail')(m);
 
 module.exports = m;

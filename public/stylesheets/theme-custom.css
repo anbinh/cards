@@ -1,1 +1,9 @@
 /* Add here all your CSS customizations */
+.user-icon-detail {
+	padding: 5px;
+	border-radius: 50%;
+}
+
+li.user-li {
+	padding-bottom: 5px;
+}
