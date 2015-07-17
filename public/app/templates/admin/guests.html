@@ -41,7 +41,7 @@
                </thead>
                <tbody>
                   <tr ng-repeat="user in users track by $index">
-                     <td><a ng-href="{{type === 'sell' ? '/dashboard/#/cards_sold/'+user.ref_id : '/dashboard/#/cards_bought/'+user.ref_id }}">#{{user.ref_id}}</a> </td>
+                     <td><a ng-href="{{type === 'sell' ? '/dashboard/#/orders/'+user.ref_id : '/dashboard/#/receipts/'+user.ref_id }}">#{{user.ref_id}}</a> </td>
                      <td>{{user.first_name}} </td>
                      <td>{{user.last_name}}  </td>
                      <td>{{user.email}} </td>

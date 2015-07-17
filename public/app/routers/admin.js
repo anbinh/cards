@@ -95,7 +95,7 @@ angular.module('app')
                         }
                     ]
                 }
-            }).when('/cards_sold', {
+            }).when('/orders', {
                 templateUrl: 'admin/sold_cards.html',
                 controller: 'AdminSoldCardsController',
                 resolve: {
@@ -107,7 +107,7 @@ angular.module('app')
                         }
                     ]
                 }
-            }).when('/cards_sold/:id', {
+            }).when('/orders/:id', {
                 templateUrl: 'admin/sold_cards_detail.html',
                 controller: 'AdminSoldCardsDetailController',
                 resolve: {
@@ -122,7 +122,7 @@ angular.module('app')
                         }
                     ]
                 }
-            }).when('/cards_bought', {
+            }).when('/receipts', {
                 templateUrl: 'admin/bought_cards.html',
                 controller: 'AdminBoughtCardsController',
                 resolve: {
@@ -134,7 +134,7 @@ angular.module('app')
                         }
                     ]
                 }
-            }).when('/cards_bought/:id', {
+            }).when('/receipts/:id', {
                 templateUrl: 'admin/bought_cards_detail.html',
                 controller: 'AdminBoughtCardsDetailController',
                 resolve: {
