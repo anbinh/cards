@@ -50,6 +50,7 @@ module.exports = function(m) {
                 'logout': logout,
                 'auth': auth,
                 'adminAuthenticate': adminAuthenticate,
+                isAuthenticated: isAuthenticated
 
             };
         }
