@@ -188,6 +188,85 @@ router.get('/featured', function(req, res, next) {
     res.json(data);
 });
 
+
+router.get('/stats', function(req, res, next) {
+
+    var result = {
+
+        cards: {
+
+        },
+        guests: {
+
+        }
+    };
+
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select count(sold) as count,sold from sold_cards group by sold', [], function(err, rows) {
+            if (err) return next(err);
+
+            for (var i = 0; i < rows.length; i++) {
+                if (rows[i].sold === 0) {
+                    result.cards.available = rows[i].count
+                }
+
+                if (rows[i].sold === 1) {
+                    result.cards.sold = rows[i].count
+                }
+            };
+
+            connection.query('select count(role) as count,role from users where id <>0  group by role', [], function(err, rows) {
+
+                for (var i = 0; i < rows.length; i++) {
+                    if (rows[i].role === 'user') {
+                        result.users = rows[i].count
+                    }
+
+                    if (rows[i].role === 'dealer') {
+                        result.dealers = rows[i].count
+                    }
+                };
+
+                connection.query('select sum(total_amount) as revenue from orders', [], function(err, rows) {
+
+                    result.revenue = rows[0].revenue;
+
+                    connection.query('select sum(value*gogo_buy/100) as expense from sold_cards ', [], function(err, rows) {
+
+                        result.expense = rows[0].expense;
+
+                        result.profit = result.revenue - result.expense;
+
+                        connection.query('select count(id) as count from orders where user_id=0', [], function(err, rows) {
+
+                            result.guests.buy_cards = rows[0].count;
+
+                            connection.query('select count(id) as count from receipts where user_id=0', [], function(err, rows) {
+
+                                result.guests.sell_cards = rows[0].count;
+
+                                res.json(result);
+                            });
+
+
+                        });
+
+                    });
+
+                });
+
+
+            });
+
+
+
+
+        });
+
+    });
+});
+
 router.get('/highest-payout', function(req, res, next) {
 
     req.getConnection(function(err, connection) {

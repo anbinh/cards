@@ -20,6 +20,10 @@ module.exports = function(m) {
                     method: 'GET',
                     'url': '/api/stores/:id',
                     isArray: true
+                },
+                'stats': {
+                    method: 'GET',
+                    'url': '/api/stores/stats'
                 }
             });
         }

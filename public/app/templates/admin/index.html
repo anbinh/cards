@@ -28,13 +28,105 @@
                         </div>
                         <div class="widget-summary-col">
                            <div class="summary">
-                              <h4 class="title">Total Cards Sold</h4>
+                              <h4 class="title">Total Cards</h4>
                               <div class="info">
-                                 <strong class="amount">1281</strong>
+                                 <strong class="amount">{{stats.cards.available + stats.cards.sold}}</strong>
+                              </div>
+                           </div>
+                           
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6">
+               <section class="panel panel-featured-left panel-featured-primary">
+                  <div class="panel-body">
+                     <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                           <div class="summary-icon bg-primary">
+                              <i class="fa fa-credit-card"></i>
+                           </div>
+                        </div>
+                        <div class="widget-summary-col">
+                           <div class="summary">
+                              <h4 class="title">Total Cards Available</h4>
+                              <div class="info">
+                                 <strong class="amount">{{stats.cards.available}}</strong>
                               </div>
                            </div>
                            <div class="summary-footer">
-                              <a class="text-muted text-uppercase">(view all)</a>
+                              <a class="text-muted text-uppercase" href="/dashboard/#/inventory">(view inventory)</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6">
+               <section class="panel panel-featured-left panel-featured-primary">
+                  <div class="panel-body">
+                     <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                           <div class="summary-icon bg-primary">
+                              <i class="fa fa-credit-card"></i>
+                           </div>
+                        </div>
+                        <div class="widget-summary-col">
+                           <div class="summary">
+                              <h4 class="title">Total Cards Sold To Users</h4>
+                              <div class="info">
+                                 <strong class="amount">{{stats.cards.sold}}</strong>
+                              </div>
+                           </div>
+                           
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+
+            <!-- GUESTS -->
+            <div class="col-md-6 col-lg-6 col-xl-6">
+               <section class="panel panel-featured-left panel-featured-secondary">
+                  <div class="panel-body">
+                     <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                           <div class="summary-icon bg-secondary">
+                              <i class="fa fa-user-secret"></i>
+                           </div>
+                        </div>
+                        <div class="widget-summary-col">
+                           <div class="summary">
+                              <h4 class="title">Total Guests</h4>
+                              <div class="info">
+                                 <strong class="amount">{{stats.guests.buy_cards + stats.guests.sell_cards}}</strong>
+                              </div>
+                           </div>
+                           
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6">
+               <section class="panel panel-featured-left panel-featured-secondary">
+                  <div class="panel-body">
+                     <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                           <div class="summary-icon bg-secondary">
+                              <i class="fa fa-user-secret"></i>
+                           </div>
+                        </div>
+                        <div class="widget-summary-col">
+                           <div class="summary">
+                              <h4 class="title">Total Guests Buying Cards</h4>
+                              <div class="info">
+                                 <strong class="amount">{{stats.guests.buy_cards}}</strong>
+                              </div>
+                           </div>
+                           <div class="summary-footer">
+                              <a class="text-muted text-uppercase" href="/dashboard/#/guests/buy_cards">(view guests)</a>
                            </div>
                         </div>
                      </div>
@@ -47,24 +139,26 @@
                      <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
                            <div class="summary-icon bg-secondary">
-                              <i class="fa fa-usd"></i>
+                              <i class="fa fa-user-secret"></i>
                            </div>
                         </div>
                         <div class="widget-summary-col">
                            <div class="summary">
-                              <h4 class="title">Total Card Bought</h4>
+                              <h4 class="title">Total Guests Selling Cards</h4>
                               <div class="info">
-                                 <strong class="amount">122</strong>
+                                 <strong class="amount">{{stats.guests.sell_cards}}</strong>
                               </div>
                            </div>
                            <div class="summary-footer">
-                              <a class="text-muted text-uppercase">(view all)</a>
+                              <a class="text-muted text-uppercase" href="/dashboard/#/guests/sell_cards">(view guests)</a>
                            </div>
                         </div>
                      </div>
                   </div>
                </section>
             </div>
+
+
             <div class="col-md-6 col-lg-6 col-xl-6">
                <section class="panel panel-featured-left panel-featured-tertiary">
                   <div class="panel-body">
@@ -78,12 +172,61 @@
                            <div class="summary">
                               <h4 class="title">Total Users</h4>
                               <div class="info">
-                                 <strong class="amount">38</strong>
+                                 <strong class="amount">{{stats.users}}</strong>
                               </div>
                            </div>
                            <div class="summary-footer">
-                              <a class="text-muted text-uppercase">(view all)</a>
+                              <a class="text-muted text-uppercase" href="/dashboard/#/users">(view users)</a>
                            </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+
+            <div class="col-md-6 col-lg-6 col-xl-6">
+               <section class="panel panel-featured-left panel-featured-tertiary">
+                  <div class="panel-body">
+                     <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                           <div class="summary-icon bg-tertiary">
+                              <i class="fa fa-user-plus"></i>
+                           </div>
+                        </div>
+                        <div class="widget-summary-col">
+                           <div class="summary">
+                              <h4 class="title">Total Dealers</h4>
+                              <div class="info">
+                                 <strong class="amount">{{stats.dealers}}</strong>
+                              </div>
+                           </div>
+                           <div class="summary-footer">
+                              <a class="text-muted text-uppercase" href="/dashboard/#/dealers">(view dealers)</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+
+            <!-- FINANCIAL STATS -->
+            <div class="col-md-6 col-lg-6 col-xl-6">
+               <section class="panel panel-featured-left panel-featured-quartenary">
+                  <div class="panel-body">
+                     <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                           <div class="summary-icon bg-quartenary">
+                              <i class="fa fa-money"></i>
+                           </div>
+                        </div>
+                        <div class="widget-summary-col">
+                           <div class="summary">
+                              <h4 class="title">Total Revenue</h4>
+                              <div class="info">
+                                 <strong class="amount">{{stats.revenue | number : 2}}</strong>
+                              </div>
+                           </div>
+                           
                         </div>
                      </div>
                   </div>
@@ -95,54 +238,28 @@
                      <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
                            <div class="summary-icon bg-quartenary">
-                              <i class="fa fa-user-secret"></i>
+                              <i class="fa fa-money"></i>
                            </div>
                         </div>
                         <div class="widget-summary-col">
                            <div class="summary">
-                              <h4 class="title">Total Guests</h4>
+                              <h4 class="title">Total Expense</h4>
                               <div class="info">
-                                 <strong class="amount">3765</strong>
+                                 <strong class="amount">{{stats.expense | number : 2}}</strong>
                               </div>
                            </div>
-                           <div class="summary-footer">
-                              <a class="text-muted text-uppercase">(view all)</a>
-                           </div>
+                           
                         </div>
                      </div>
                   </div>
                </section>
             </div>
             <div class="col-md-6 col-lg-6 col-xl-6">
-               <section class="panel panel-featured-left panel-featured-primary">
+               <section class="panel panel-featured-left panel-featured-quartenary">
                   <div class="panel-body">
                      <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
-                           <div class="summary-icon bg-primary">
-                              <i class="fa fa-user-plus"></i>
-                           </div>
-                        </div>
-                        <div class="widget-summary-col">
-                           <div class="summary">
-                              <h4 class="title">Total Dealers</h4>
-                              <div class="info">
-                                 <strong class="amount">3765</strong>
-                              </div>
-                           </div>
-                           <div class="summary-footer">
-                              <a class="text-muted text-uppercase">(view all)</a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </section>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-6">
-               <section class="panel panel-featured-left panel-featured-secondary">
-                  <div class="panel-body">
-                     <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                           <div class="summary-icon bg-secondary">
+                           <div class="summary-icon bg-quartenary">
                               <i class="fa fa-money"></i>
                            </div>
                         </div>
@@ -150,12 +267,10 @@
                            <div class="summary">
                               <h4 class="title">Total Profit</h4>
                               <div class="info">
-                                 <strong class="amount">$3765</strong>
+                                 <strong class="amount">{{stats.profit | number : 2}}</strong>
                               </div>
                            </div>
-                           <div class="summary-footer">
-                              <a class="text-muted text-uppercase">(view all)</a>
-                           </div>
+                           
                         </div>
                      </div>
                   </div>

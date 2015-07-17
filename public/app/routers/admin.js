@@ -7,7 +7,15 @@ angular.module('app')
             .when('/', {
                 templateUrl: 'admin/index.html',
                 controller: 'AdminIndexController',
-                resolve: {}
+                resolve: {
+                    SiteStats: ['storeService', '$route',
+                        function(storeService, $route) {
+                            return storeService.stats({}).$promise.then(function(stats) {
+                                return stats;
+                            });
+                        }
+                    ]
+                }
             }).when('/users', {
                 templateUrl: 'admin/users.html',
                 controller: 'AdminUsersController',
