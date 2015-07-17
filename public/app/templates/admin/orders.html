@@ -25,7 +25,7 @@
             <h2 class="panel-title">Orders Information</h2>
          </header>
          <div class="panel-body">
-            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+            <table class="table table-bordered  table-hover  table-striped mb-none" id="datatable-default">
                <thead>
                   <tr> 
                      <th></th>
@@ -40,7 +40,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="order in orders track by $index" ng-click="goToOrderDetail(order.id)">
+                  <tr ng-repeat="order in orders track by $index" style="cursor : pointer" ng-click="goToOrderDetail(order.id)">
                      <td>{{order.id}}</td>
                      <td class="center">{{order.total_cards}} </td>
                      <td>${{order.total_face_value | number:2}}  </td>

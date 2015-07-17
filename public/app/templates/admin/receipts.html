@@ -39,7 +39,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="receipt in receipts track by $index" ng-click="receiptDetail(receipt.id)">
+                  <tr ng-repeat="receipt in receipts track by $index"  style="cursor : pointer" ng-click="receiptDetail(receipt.id)">
                      <td>{{receipt.id}}</td>
                      
                      <td class="center">{{receipt.total_cards}}  </td>
