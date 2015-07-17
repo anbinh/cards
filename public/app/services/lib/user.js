@@ -25,6 +25,10 @@ module.exports = function(m) {
                     'url': '/api/users/dealers',
                     isArray: true
                 },
+                'profile': {
+                    method: 'GET',
+                    'url': '/api/users/profile/:id'
+                },
                 'guestsSellingCards': {
                     method: 'GET',
                     'url': '/api/users/guests/sell_cards',
@@ -38,6 +42,16 @@ module.exports = function(m) {
                 'inventory': {
                     method: 'GET',
                     'url': '/api/users/inventory',
+                    isArray: true
+                },
+                'cards': {
+                    method: 'GET',
+                    'url': '/api/users/cards',
+                    isArray: true
+                },
+                'soldCards': {
+                    method: 'GET',
+                    'url': '/api/users/sold-cards',
                     isArray: true
                 },
                 'forgetPassword': {

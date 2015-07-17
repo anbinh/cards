@@ -10,8 +10,8 @@
                </a>
             </li>
             <li><span>Cards</span></li>
-            <li><span>Bought Cards</span></li>
-            <li><span>Receipt {{receipt.id}}</span></li>
+            <li><span>Receipts</span></li>
+            <li><span>Receipt #{{receipt.id}}</span></li>
          </ol>
    
          <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -58,7 +58,7 @@
                <h3 class="text-weight-semibold mt-sm">{{receipt.billingUser.role}} Info </h3>
                <p>
                   <ul style="  padding-left : 20px; bottom-margin : 10px">
-                     <li class="user-li"> <strong>Fullname:</strong> {{receipt.billingUser.first_name + receipt.billingUser.last_name}}</li>
+                     <li class="user-li"> <strong>Fullname:</strong> {{receipt.billingUser |fullname}}</li>
                      <li class="user-li"><strong>Email:</strong> {{receipt.billingUser.email}}</li>
                      <li class="user-li"><strong>Address:</strong> {{receipt.billingUser.address}}</li>
                      <li class="user-li"><strong>City:</strong> {{receipt.billingUser.city}}</li>
@@ -66,6 +66,8 @@
                      <li class="user-li"><strong>Zipcode:</strong> {{receipt.billingUser.zipcode}}</li>
                   </ul>
                </p>
+
+               <p class="pull-right"><a href="/dashboard/#/user-profile/{{receipt.billingUser.id}}">View Profile</a></p>
 
             </div>
          </section>

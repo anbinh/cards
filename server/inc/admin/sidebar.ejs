@@ -24,14 +24,26 @@
                   <span>Cards</span>
                   </a>
                   <ul class="nav nav-children">
-                     <li class="{{currentActiveChild == 'sold_cards' ? 'nav-active' : '' }}">
+                     <li class="{{currentActiveChild == 'orders' ? 'nav-active' : '' }}">
                         <a href="/dashboard/#/orders">
                         All Orders
                         </a>
                      </li>
-                     <li class="{{currentActiveChild == 'bought_cards' ? 'nav-active' : '' }}">
+                     <li class="{{currentActiveChild == 'receipts' ? 'nav-active' : '' }}">
                         <a href="/dashboard/#/receipts">
                         All Receipts
+                        </a>
+                     </li>
+
+                     <li class="{{currentActiveChild == 'all_cards' ? 'nav-active' : '' }}">
+                        <a href="/dashboard/#/cards">
+                        All Cards
+                        </a>
+                     </li>
+
+                     <li class="{{currentActiveChild == 'sold_cards' ? 'nav-active' : '' }}">
+                        <a href="/dashboard/#/sold-cards">
+                        All Sold Cards
                         </a>
                      </li>
                      

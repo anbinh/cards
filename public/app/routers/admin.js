@@ -83,6 +83,30 @@ angular.module('app')
                     ]
 
                 }
+            }).when('/cards', {
+                templateUrl: 'admin/cards.html',
+                controller: 'AdminCardsController',
+                resolve: {
+                    CardList: ['userService', '$route',
+                        function(userService, $route) {
+                            return userService.cards({}).$promise.then(function(cards) {
+                                return cards;
+                            });
+                        }
+                    ]
+                }
+            }).when('/sold-cards', {
+                templateUrl: 'admin/sold_cards.html',
+                controller: 'AdminSoldCardsController',
+                resolve: {
+                    CardList: ['userService', '$route',
+                        function(userService, $route) {
+                            return userService.soldCards({}).$promise.then(function(cards) {
+                                return cards;
+                            });
+                        }
+                    ]
+                }
             }).when('/inventory', {
                 templateUrl: 'admin/inventory.html',
                 controller: 'AdminInventoryController',
@@ -145,6 +169,36 @@ angular.module('app')
                                 id: id
                             }).$promise.then(function(orders) {
                                 return orders;
+                            });
+                        }
+                    ]
+                }
+            }).when('/user-profile/:id', {
+                templateUrl: 'admin/user-profile.html',
+                controller: 'AdminUserProfileController',
+                resolve: {
+                    UserProfile: ['userService', '$route',
+                        function(userService, $route) {
+                            var id = $route.current.params.id;
+                            return userService.profile({
+                                id: id
+                            }).$promise.then(function(profile) {
+                                return profile;
+                            });
+                        }
+                    ]
+                }
+            }).when('/dealer-profile/:id', {
+                templateUrl: 'admin/dealer-profile.html',
+                controller: 'AdminDealerProfileController',
+                resolve: {
+                    DealerProfile: ['userService', '$route',
+                        function(userService, $route) {
+                            var id = $route.current.params.id;
+                            return userService.profile({
+                                id: id
+                            }).$promise.then(function(profile) {
+                                return profile;
                             });
                         }
                     ]

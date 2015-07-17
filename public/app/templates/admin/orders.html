@@ -32,8 +32,7 @@
                      <th>Total Cards</th>
                      <th>Total Face Value</th>
                      <th>Total Amount</th>
-                     <th>Average Payout</th>
-                     <th>Total Stores</th>
+                     <th>Average Discount</th>
                      <th>User Name</th>
                      <th>User Type</th>
                      <th>Datetime</th>
@@ -45,9 +44,13 @@
                      <td class="center">{{order.total_cards}} </td>
                      <td>${{order.total_face_value | number:2}}  </td>
                      <td>${{order.total_amount}} </td>
-                     <td>{{order.average_payout | number:2}}% </td>
-                     <td class="center">{{order.store_list.split(',').length}} </td>
-                     <td>{{order.billingUser.first_name + ' ' +order.billingUser.last_name}} </td>
+                     <td>{{order.average_percentage | number:2}}% </td>
+                     <td ng-switch on="order.billingUser.role">
+                        <a ng-switch-when="User" href="{{order.billingUser | dashboardProfile}}">{{order.billingUser | fullname}} </a>
+
+                      
+                        <span ng-switch-when="Guest">{{order.billingUser | fullname}} </span>
+                     </td>
                      <td> <span class="label {{order.billingUser.className}}">{{order.billingUser.role}}</span></td>
                      <td>{{order.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>

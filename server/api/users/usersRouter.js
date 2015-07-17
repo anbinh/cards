@@ -49,6 +49,50 @@ router.get('/inventory', function(req, res, next) {
 
 });
 
+/* GET /users/cards listing. */
+router.get('/cards', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id ', [], function(err, rows) {
+            if (err) return next(err);
+
+            res.json(rows)
+        });
+
+    });
+
+});
+
+/* GET /users/sold-cards listing. */
+router.get('/sold-cards', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT sold_cards.*, receipts.created_date, orders.cards from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id JOIN orders ON orders.id = sold_cards.order_id where sold = 1', [], function(err, rows) {
+            if (err) return next(err);
+
+            var items = [];
+            for (var i = 0; i < rows.length; i++) {
+                var item = rows[i];
+                var cards = JSON.parse(item.cards);
+                for (var j = 0; j < cards.length; j++) {
+                    if (cards[j].id === item.id) {
+                        item.purchase = cards[j];
+                    }
+                };
+
+                delete item.cards;
+
+                items.push(item);
+
+            };
+
+            res.json(items)
+        });
+
+    });
+
+});
+
 /* GET /users/guests/buy_cards listing. */
 router.get('/guests/buy_cards', function(req, res, next) {
     req.getConnection(function(err, connection) {
@@ -258,32 +302,53 @@ router.post('/login', function(req, res, next) {
 });
 
 
+/* GET /users/profileid */
+router.get('/profile/:id', function(req, res, next) {
 
-
-/* GET /users/id */
-router.get('/:id', function(req, res, next) {
-    User.findById(req.params.id, function(err, post) {
+    req.getConnection(function(err, connection) {
         if (err) return next(err);
-        res.json(post);
+        // check if user is unique
+        connection.query('select * from users where id = ?', [req.params.id], function(err, rows) {
+
+
+
+            var user = rows[0];
+
+            delete user.reset_token;
+            delete user.password;
+
+            connection.query('select * from orders where user_id = ?', [user.id], function(err, rows) {
+                user.orders = rows;
+
+                for (var i = 0; i < user.orders.length; i++) {
+                    delete user.orders[i].billing_user;
+                    delete user.orders[i].cards;
+                };
+
+                connection.query('select * from receipts where user_id = ?', [user.id], function(err, rows) {
+                    user.receipts = rows;
+
+                    for (var i = 0; i < user.receipts.length; i++) {
+                        delete user.receipts[i].billing_user;
+                    };
+
+                    res.json(user);
+                });
+
+            });
+
+
+        });
+
     });
+
 });
 
 
 
 
-/* 
 
-/* GET /users/by_id/:user_id */
-router.get('/by_id/:user_id', function(req, res, next) {
 
-    console.log("USER ID", req.params.user_id);
-    User.findOne({
-        user_id: req.params.user_id
-    }, function(err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
-});
 
 /* GET /users/forget-password */
 router.post('/forget-password', function(req, res, next) {

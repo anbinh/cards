@@ -33,6 +33,7 @@
                      <th>Total Face Value</th>
                      <th>Total Amount</th>
                      <th>Average Payout</th>
+                     <th>Total Stores</th>
                      <th>User Name</th>
                      <th>User Type</th>
                      <th>Datetime</th>
@@ -45,8 +46,19 @@
                      <td class="center">{{receipt.total_cards}}  </td>
                      <td>${{receipt.total_face_value| number:2}} </td>
                      <td>${{receipt.total_amount| number:2}} </td>
-                     <td>{{receipt.average_percentage| number:2}}% </td>
-                     <td>{{receipt.billingUser.first_name + ' '+ receipt.billingUser.last_name}} </td>
+                     <td>{{receipt.average_payout| number:2}}% </td>
+                  
+                     <td class="center">{{receipt.store_list.split(',').length}} </td>
+
+                     <td ng-switch on="receipt.billingUser.role">
+                        <a ng-switch-when="User" href="{{receipt.billingUser | dashboardProfile}}">{{receipt.billingUser | fullname}} </a>
+
+                        <a ng-switch-when="Dealer" href="{{receipt.billingUser | dashboardDealerProfile}}">{{receipt.billingUser | fullname}} </a>
+
+                      
+                        <span ng-switch-when="Guest">{{receipt.billingUser | fullname}} </span>
+                     </td>
+
                      <td> <span class="label {{receipt.billingUser.className}}">{{receipt.billingUser.role}}</span></td>
                      <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>

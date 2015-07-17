@@ -8,7 +8,7 @@ module.exports = function(m) {
 
 
 
-        $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'sold_cards');
+        $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'orders');
 
         $scope.orders = Orders;
 

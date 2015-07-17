@@ -1,0 +1,135 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>User Profile</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Cards</span></li>
+            <li><span>User Profile</span></li>
+            <li><span>{{user | fullname}} #{{user.id}}</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <div class="row">
+      
+
+
+
+   <div class="row">
+      
+      <div class="col-md-12">
+         <section class="panel panel-horizontal">
+            <header class="panel-heading bg-white" style="width : 150px;vertical-align: top">
+               <div class="panel-heading-icon bg-primary mt-sm">
+                  <i class="fa fa-user"></i>
+               </div>
+            </header>
+            <div class="panel-body p-lg">
+               <h3 class="text-weight-semibold mt-sm">{{user.role}} Info </h3>
+               <p>
+                  <ul style="  padding-left : 20px; bottom-margin : 10px">
+                     <li class="user-li"> <strong>Fullname:</strong> {{user | fullname}}</li>
+                     <li class="user-li"><strong>Email:</strong> {{user.email}}</li>
+                     <li class="user-li"><strong>Address:</strong> {{user.address}}</li>
+                     <li class="user-li"><strong>City:</strong> {{user.city}}</li>
+                     <li class="user-li"><strong>State:</strong> {{user.state}}</li>
+                     <li class="user-li"><strong>Zipcode:</strong> {{user.zipcode}}</li>
+                  </ul>
+               </p>
+
+            </div>
+         </section>
+      </div>
+   </div>
+
+   
+
+   <!-- start: page -->
+    <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">Orders Information</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered  table-hover  table-striped mb-none" id="datatable-orders">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th>Total Cards</th>
+                     <th>Total Face Value</th>
+                     <th>Total Amount</th>
+                     <th>Average Discount</th>
+                   
+                     <th>Datetime</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="order in user.orders track by $index" style="cursor : pointer" ng-click="goToOrderDetail(order.id)">
+                     <td>{{order.id}}</td>
+                     <td class="center">{{order.total_cards}} </td>
+                     <td>${{order.total_face_value | number:2}}  </td>
+                     <td>${{order.total_amount}} </td>
+                     <td>{{order.average_percentage | number:2}}% </td>
+                     
+                     <td>{{order.created_date | date: 'MM/dd/yyyy'}} </td>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+
+
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">Receipts Information</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-receipts">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th>Number Of Cards</th>
+                     <th>Total Face Value</th>
+                     <th>Total Amount</th>
+                     <th>Average Payout</th>
+                     <th>Total Stores</th>
+                 
+                     <th>Datetime</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="receipt in user.receipts track by $index"  style="cursor : pointer" ng-click="receiptDetail(receipt.id)">
+                     <td>{{receipt.id}}</td>
+                     
+                     <td class="center">{{receipt.total_cards}}  </td>
+                     <td>${{receipt.total_face_value| number:2}} </td>
+                     <td>${{receipt.total_amount| number:2}} </td>
+                     <td>{{receipt.average_payout| number:2}}% </td>
+                  
+                     <td class="center">{{receipt.store_list.split(',').length}} </td>
+                  
+                     <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>

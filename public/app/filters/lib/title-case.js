@@ -24,5 +24,27 @@ module.exports = function(m) {
         return function(input) {
             return input.split('-').join(' ');
         };
+    }).filter('fullname', function() {
+        return function(user) {
+
+            if ((user.first_name !== undefined) && (user.last_name !== undefined)) {
+                return user.first_name + ' ' + user.last_name;
+            } else {
+                return user.email;
+            }
+
+        };
+    }).filter('dashboardProfile', function() {
+        return function(user) {
+
+            return "/dashboard/#/user-profile/" + user.id;
+
+        };
+    }).filter('dashboardDealerProfile', function() {
+        return function(user) {
+
+            return "/dashboard/#/dealer-profile/" + user.id;
+
+        };
     });
 };

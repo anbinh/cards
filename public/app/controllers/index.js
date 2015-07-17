@@ -38,5 +38,9 @@ require('./lib/admin/order-detail')(m);
 require('./lib/admin/receipt-detail')(m);
 require('./lib/admin/login')(m);
 require('./lib/admin/head')(m);
+require('./lib/admin/cards')(m);
+require('./lib/admin/sold_cards')(m);
+require('./lib/admin/user-profile')(m);
+require('./lib/admin/dealer-profile')(m);
 
 module.exports = m;

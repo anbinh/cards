@@ -11,6 +11,10 @@ module.exports = function(m) {
 
         $scope.dealers = DealerList;
 
+        $scope.dealerDeatail = function(id) {
+            $location.url('dealer-profile/' + id);
+        }
+
 
         $timeout(function() {
             $('#datatable-default').dataTable();

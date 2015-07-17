@@ -25,9 +25,10 @@
             <h2 class="panel-title">Dealers Information</h2>
          </header>
          <div class="panel-body">
-            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+            <table class="table table-bordered table-striped mb-none" id="datatable-default" style="cursor:pointer">
                <thead>
                   <tr>
+                     <th>Id</th>
                      <th>First Name</th>
                      <th>Last Name</th>
                      <th>Email</th>
@@ -40,7 +41,8 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="dealer in dealers track by $index">
+                  <tr ng-repeat="dealer in dealers track by $index" ng-click="dealerDeatail(dealer.id)">
+                     <td>{{dealer.id}}</td>
                      <td>{{dealer.first_name}} </td>
                      <td>{{dealer.last_name}}  </td>
                      <td>{{dealer.email}} </td>

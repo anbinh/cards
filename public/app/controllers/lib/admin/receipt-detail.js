@@ -7,7 +7,7 @@ module.exports = function(m) {
         authService.adminAuthenticate();
 
 
-        $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'bought_cards');
+        $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'receipts');
 
         console.log(ReceiptDetail);
 

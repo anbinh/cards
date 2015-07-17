@@ -13,6 +13,10 @@ module.exports = function(m) {
 
         $scope.users = UserList;
 
+        $scope.userProfile = function(id) {
+            $location.url('user-profile/' + id);
+        };
+
 
         $timeout(function() {
             $('#datatable-default').dataTable();
