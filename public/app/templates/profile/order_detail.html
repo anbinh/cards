@@ -113,7 +113,7 @@
                                 ${{card.value}}
                             </td>
                             <td>
-                                {{card.pay/card.value*100 | number : 2}}%
+                                {{100 - card.pay/card.value*100 | number : 2}}%
                             </td>
                             <td>
                                 ${{card.pay | number:2}}
