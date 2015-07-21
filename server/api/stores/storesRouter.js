@@ -246,7 +246,27 @@ router.get('/stats', function(req, res, next) {
 
                                 result.guests.sell_cards = rows[0].count;
 
-                                res.json(result);
+                                connection.query("select count(*) as count from (select 1 from sold_cards LEFT JOIN users ON users.id = sold_cards.sold_to_user where users.role='user' and sold_cards.sold_to_user <> 0 and sold_cards.sold=1 group by sold_cards.sold_to_user ) as me", [], function(err, rows) {
+
+                                    result.users_buying = rows[0].count;
+
+                                    connection.query("select count(*) as count from (select 1 from sold_cards LEFT JOIN users ON users.id = sold_cards.user_id where users.role='user' and sold_cards.user_id <> 0 group by sold_cards.user_id ) as me", [], function(err, rows) {
+
+                                        result.users_selling = rows[0].count;
+
+                                        connection.query("select count(*) as count from (select 1 from sold_cards LEFT JOIN users ON users.id = sold_cards.user_id where users.role='dealer' and sold_cards.user_id <> 0 group by sold_cards.user_id ) as me", [], function(err, rows) {
+
+                                            result.dealers_selling = rows[0].count;
+
+                                            connection.query("select count(*) as count from (select 1 from sold_cards LEFT JOIN users ON users.id = sold_cards.sold_to_user where users.role='dealer' and sold_cards.sold_to_user <> 0 and sold_cards.sold=1 group by sold_cards.sold_to_user ) as me", [], function(err, rows) {
+
+                                                result.dealers_buying = rows[0].count;
+
+                                                res.json(result);
+                                            });
+                                        });
+                                    });
+                                });
                             });
 
 
