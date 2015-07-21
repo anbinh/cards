@@ -31,7 +31,8 @@
                      <th></th>
                      <th>Total Cards</th>
                      <th>Total Face Value</th>
-                     <th>Total Amount</th>
+                     <th>Price Paid</th>
+                     <th>Margin (Spread %)</th>
                      <th>Average Discount</th>
                      <th>User Name</th>
                      <th>User Type</th>
@@ -44,6 +45,7 @@
                      <td class="center">{{order.total_cards}} </td>
                      <td>${{order.total_face_value | number:2}}  </td>
                      <td>${{order.total_amount}} </td>
+                     <td></td>
                      <td>{{order.average_percentage | number:2}}% </td>
                      <td ng-switch on="order.billingUser.role">
                         <a ng-switch-when="User" href="{{order.billingUser | dashboardProfile}}">{{order.billingUser | fullname}} </a>
