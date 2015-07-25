@@ -6,7 +6,6 @@ module.exports = function(m) {
 
         authService.adminAuthenticate();
 
-
         $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'dashboard', '');
 
         $scope.stats = SiteStats;

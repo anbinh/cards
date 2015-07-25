@@ -45,7 +45,7 @@
                <tbody>
                   <tr ng-repeat="card in cards track by $index">
                      <td>{{card.id}}</td>
-                     <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
+                     <td> <a href="/dashboard/#/inventory/{{card.store_id}}"><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></a> </td>
 
                      <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
                      <td>${{card.gogo_buy * card.value / 100 | number:2}} </td>

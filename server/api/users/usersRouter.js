@@ -37,9 +37,17 @@ router.get('/', function(req, res, next) {
 
 /* GET /users/inventory listing. */
 router.get('/inventory', function(req, res, next) {
+
+    var query;
+    if (req.query.id) {
+        query = 'SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and store_id = ' + req.query.id;
+    } else {
+        query = 'SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 ';
+    }
+
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 ', [], function(err, rows) {
+        connection.query(query, [], function(err, rows) {
             if (err) return next(err);
 
             res.json(rows)

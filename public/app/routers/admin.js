@@ -119,6 +119,21 @@ angular.module('app')
                         }
                     ]
                 }
+            }).when('/inventory/:id', {
+                templateUrl: 'admin/inventory.html',
+                controller: 'AdminInventoryController',
+                resolve: {
+                    CardList: ['userService', '$route',
+                        function(userService, $route) {
+                            var id = $route.current.params.id;
+                            return userService.inventory({
+                                id: id
+                            }).$promise.then(function(cards) {
+                                return cards;
+                            });
+                        }
+                    ]
+                }
             }).when('/orders', {
                 templateUrl: 'admin/orders.html',
                 controller: 'AdminOrdersController',
