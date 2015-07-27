@@ -39,6 +39,8 @@
                      <th>Payout</th>
                      <th>Discount</th>
 
+                     <th>Spread</th>
+
                      <th>Number</th>
                      <th>Pin</th>
                      <th>Dealer Code</th>
@@ -54,16 +56,26 @@
                      <td>{{card.id}}</td>
                      <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
 
+                     <!-- MERCHANT NAME -->
                      <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
+
+                     <!-- OFFER -->
                      <td>${{card.gogo_buy * card.value / 100 | number:2}} </td>
                      
+                     <!-- SELLING PRICE -->
                      <td>${{card.purchase.pay}}</td>
                      
+                     <!-- PROFIT -->
                      <td>${{card.purchase.pay - card.gogo_buy * card.value / 100  | number:2}}</td>
-
+                     
+                     <!-- PAYOUT -->
                      <td>{{card.gogo_buy | number:2}}%</td>
+
+                     <!-- DISCOUNT -->
                      <td>{{card.purchase.save | number:2}}%</td>
 
+                     <!-- SPREAD -->
+                     <td>{{card.spread | number:2}}%</td>
 
                      <td>{{card.number}}  </td>
                      <td>{{card.pin}} </td>

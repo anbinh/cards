@@ -383,9 +383,30 @@
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="title">Average Profit Margin</h4>
+                                        <h4 class="title">Average Profit </h4>
                                         <div class="info">
-                                            <strong class="amount">${{stats.profit | number : 2}}</strong>
+                                            <strong class="amount">${{stats.average_profit | number : 2}}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <section class="panel panel-featured-left panel-featured-quartenary">
+                        <div class="panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-quartenary">
+                                        <i class="fa fa-money"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="title">Average Margin </h4>
+                                        <div class="info">
+                                            <strong class="amount">{{stats.average_margin | number : 2}}%</strong>
                                         </div>
                                     </div>
                                 </div>

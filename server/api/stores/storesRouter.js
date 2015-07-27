@@ -262,7 +262,38 @@ router.get('/stats', function(req, res, next) {
 
                                                 result.dealers_buying = rows[0].count;
 
-                                                res.json(result);
+
+
+                                                // calculate average margin, discount, profit
+                                                connection.query('SELECT sum((gogo_buy*value/100)) as total_bought from sold_cards  where sold = 1', [], function(err, rows) {
+                                                    if (err) return next(err);
+
+                                                    var total_bought = rows[0].total_bought;
+
+                                                    connection.query('SELECT sum(total_amount) as total_sold,sum(average_percentage)/count(id) as average_discount from orders ', [], function(err, rows) {
+                                                        if (err) return next(err);
+
+                                                        var total_sold = rows[0].total_sold;
+                                                        var average_discount = rows[0].average_discount;
+
+                                                        connection.query('SELECT count(id) as total_order from orders  ', [], function(err, rows) {
+                                                            if (err) return next(err);
+
+                                                            var total_order = rows[0].total_order;
+
+
+                                                            result.average_margin = (total_sold - total_bought) / total_sold * 100;
+                                                            result.average_profit = (total_sold - total_bought) / total_order;
+                                                            result.average_discount = average_discount;
+
+                                                            res.json(result);
+                                                        });
+
+
+                                                    });
+                                                });
+
+
                                             });
                                         });
                                     });
@@ -305,6 +336,66 @@ router.get('/highest-payout', function(req, res, next) {
             };
 
             res.json(ret);
+        });
+
+    });
+});
+
+router.get('/popular-bought', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select count(store_id) as count,store_name from sold_cards group by store_id order by count desc limit 10', [], function(err, rows) {
+            if (err) return next(err);
+            res.json(rows);
+        });
+
+    });
+});
+
+
+
+router.get('/popular-sold', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select count(store_id) as count,store_name from sold_cards where sold=1 group by store_id order by count desc limit 10', [], function(err, rows) {
+            if (err) return next(err);
+            res.json(rows);
+        });
+
+    });
+});
+
+router.get('/average', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT sum((gogo_buy*value/100)) as total_bought from sold_cards  where sold = 1', [], function(err, rows) {
+            if (err) return next(err);
+
+            var total_bought = rows[0].total_bought;
+
+            connection.query('SELECT sum(total_amount) as total_sold,sum(average_percentage)/count(id) as average_discount from orders ', [], function(err, rows) {
+                if (err) return next(err);
+
+                var total_sold = rows[0].total_sold;
+                var average_discount = rows[0].average_discount;
+
+                connection.query('SELECT count(id) as total_order from orders  ', [], function(err, rows) {
+                    if (err) return next(err);
+
+                    var total_order = rows[0].total_order;
+
+                    var ret = {
+                        total_bought: total_bought,
+                        total_sold: total_sold,
+                        average_margin: (total_sold - total_bought) / total_sold * 100,
+                        average_profit: (total_sold - total_bought) / total_order,
+                        average_discount: average_discount
+                    }
+                    res.json(ret);
+                });
+
+
+            });
         });
 
     });
@@ -418,6 +509,8 @@ router.get('/:name', function(req, res, next) {
 
     });
 });
+
+
 
 
 

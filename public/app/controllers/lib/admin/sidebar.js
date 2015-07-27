@@ -10,7 +10,14 @@ module.exports = function(m) {
             console.log('parent child', parent, child);
             $scope.currentActiveParent = parent;
             $scope.currentActiveChild = child;
-        })
+        });
+
+
+        $scope.popularBought = storeService.popularBought();
+
+        $scope.popularSold = storeService.popularSold();
+
+        $scope.average = storeService.average();
 
 
 

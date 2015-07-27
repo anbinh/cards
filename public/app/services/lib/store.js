@@ -24,6 +24,20 @@ module.exports = function(m) {
                 'stats': {
                     method: 'GET',
                     'url': '/api/stores/stats'
+                },
+                'popularBought': {
+                    method: 'GET',
+                    'url': '/api/stores/popular-bought',
+                    isArray: true
+                },
+                'popularSold': {
+                    method: 'GET',
+                    'url': '/api/stores/popular-sold',
+                    isArray: true
+                },
+                'average': {
+                    method: 'GET',
+                    'url': '/api/stores/average'
                 }
             });
         }
