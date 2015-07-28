@@ -10,6 +10,7 @@ module.exports = function(m) {
             // } else {
             //     $scope.user = store.get('user');
             // }
+            $scope.user = store.get('user');
 
             // if the $scope.user found
             if ($scope.user) {
