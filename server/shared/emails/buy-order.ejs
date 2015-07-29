@@ -633,8 +633,9 @@
                         <td valign="top" class="mcnTextContent" style="padding-top:9px; padding-right: 18px; padding-bottom: 9px; padding-left: 18px;">
                         
                             &nbsp;
-<h1>Reset Your Password Below</h1>
-
+<h1>Thank You&nbsp;For Your Order.</h1>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style="font-size:20px">Your Savings are on the way :)&nbsp;</span><br>
+&nbsp;
                         </td>
                     </tr>
                 </tbody></table>
@@ -652,32 +653,80 @@
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:9px; padding-right: 18px; padding-bottom: 9px; padding-left: 18px;">
                         
-                            <table cellpadding="0" cellspacing="0">
+                            <h3>&nbsp;</h3>
+
+<table cellpadding="0" cellspacing="0" class="t1" width="546.0">
 	<tbody>
 		<tr>
 			<td class="td1" valign="middle">
-
-			<p class="p1">Hi <%= username %></p>
-
-
-			<p class="p1">We are sorry about your password,&nbsp;</p>
-
-			<p class="p1"><span class="s1">We received a request to reset it&nbsp;on your account at CardSlyce.com</span></p>
-
-			<p class="p1"><span class="s1">To reset your password, click the link below and enter a new password when prompted:</span></p>
-
-			<p class="p2"><span class="s3"><a href="<%=link%>"><%=link%></a></span><br>
-			<br>
-			<span style="line-height:1.6em">If you did not make this request, please contact us here www.cardslyce.com/contactus</span><br>
-			<br>
-			<span class="s1" style="line-height:20.7999992370605px"><strong>Thank You&nbsp;For Using CardSlyce!&nbsp;</strong></span><br style="line-height: 20.7999992370605px;">
-			<span style="line-height:20.7999992370605px">The easiest way to Buy &amp; Sell Discounted Gift Cards</span><br style="line-height: 20.7999992370605px;">
-			<br>
-			&nbsp;</p>
+			<p class="p1"><span class="s1"><strong>Order Number: #<%=id%></strong></span></p>
+			</td>
+			<td class="td2" valign="middle">
+			<p class="p2"><span class="s1">Ordered on <%=created_date%></span></p>
 			</td>
 		</tr>
 	</tbody>
 </table>
+&nbsp;
+
+<h3 style="line-height: 20.7999992370605px;">Dear <%=billingUser.username%></h3>
+&nbsp;
+
+<p class="p1"><span class="s1">Our System&nbsp;is processing&nbsp;your order right now. We'll send you an email With the Card Number and Pin&nbsp;the moment&nbsp;your gift cards are ready.</span></p>
+
+<p class="p1"><span class="s1">Your items:</span></p>
+
+<table cellpadding="0" cellspacing="0" class="t1" width="546.0">
+	<tbody>
+		<tr>
+			<td class="td1" valign="middle">
+			<p class="p2">&nbsp;</p>
+			</td>
+			<td class="td2" valign="middle">
+			<p class="p3"><strong>MERCHANT</strong></p>
+			</td>
+			<td class="td3" valign="middle">
+			<p class="p2"><span class="s1"><strong>VALUE</strong></span></p>
+			</td>
+			<td class="td4" valign="middle">
+			<p class="p2"><span class="s1"><strong>&nbsp; YOU PAID</strong></span></p>
+			</td>
+			<td class="td5" valign="middle">
+			<p class="p2"><strong>YOU SAVED</strong></p>
+			</td>
+		</tr>
+
+<% for(var i=0; i<cards.length; i++) {%>
+   <tr>
+			<td class="td6" valign="middle">
+			<p class="p4">&nbsp;</p>
+			</td>
+			<td class="td7" valign="middle">
+			<p class="p2"><span class="s1"><strong><%=cards[i].name%></strong></span></p>
+			</td>
+			<td class="td8" valign="middle">
+			<p class="p2"><span class="s1">$<%=cards[i].value%></span></p>
+			</td>
+			<td class="td9" valign="middle">
+			<p class="p2"><span class="s1">$<%=cards[i].pay%></span></p>
+			</td>
+			<td class="td10" valign="middle">
+			<p class="p2"><span class="s1"><%=cards[i].save%>%</span></p>
+			</td>
+		</tr>
+<% } %>
+
+		
+	
+	</tbody>
+</table>
+
+<p class="p2"><span class="s1"><strong>Order Total: $<%=total_amount%><br>
+<br>
+<br>
+Thank You&nbsp;For Using CardSlyce!&nbsp;</strong></span><br>
+<span style="line-height:20.7999992370605px">The easiest way to Buy &amp; Sell Discounted Gift Cards</span><br>
+&nbsp;</p>
 
                         </td>
                     </tr>

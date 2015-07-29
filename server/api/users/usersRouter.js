@@ -4,16 +4,26 @@ var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
 
-var nodemailer = require('nodemailer');
+// var nodemailer = require('nodemailer');
 
 // create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
+// var transporter = nodemailer.createTransport({
+//     service: 'Gmail',
+//     auth: {
+//         user: 'mygiftcards14@gmail.com',
+//         pass: 'ilovecards'
+//     }
+// });
+
+var nodemailer = require('nodemailer');
+
+var mandrillTransport = require('nodemailer-mandrill-transport');
+
+var transporter = nodemailer.createTransport(mandrillTransport({
     auth: {
-        user: 'mygiftcards14@gmail.com',
-        pass: 'ilovecards'
+        apiKey: 'vlLsAGje1Fx4XBS4pckTSQ'
     }
-});
+}));
 
 /* GET /users listing. */
 router.get('/', function(req, res, next) {
@@ -233,7 +243,35 @@ router.post('/', function(req, res, next) {
                             var rdat = rows[0];
 
                             delete rdat.password;
-                            res.json(rdat);
+
+
+
+                            res.render('emails/welcome', rdat, function(err, final_html) {
+                                if (err) throw err;
+
+                                // setup e-mail data with unicode symbols
+                                var mailOptions = {
+                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                    to: rdat.email, // list of receivers
+                                    subject: 'Welcome!', // Subject line
+                                    text: 'Welcome!', // plaintext body
+                                    html: final_html // html body
+                                };
+
+                                transporter.sendMail(mailOptions, function(error, info) {
+                                    if (error) {
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: ', info);
+
+                                });
+
+                                res.json(rdat);
+
+                            });
+
+
+
                         })
                     }
                 }
@@ -402,11 +440,9 @@ router.post('/forget-password', function(req, res, next) {
                     res.render('emails/forget-password', dat, function(err, final_html) {
                         if (err) throw err;
 
-                        // console.log("HEADER", req.headers);
-
                         // setup e-mail data with unicode symbols
                         var mailOptions = {
-                            from: 'Gift Cards ✔ <schoolservice2@gmail.com>', // sender address
+                            from: 'Cardslyce <admin@cardslyce.com>', // sender address
                             to: email, // list of receivers
                             subject: 'Reset your password!', // Subject line
                             text: 'Reset your password!', // plaintext body
@@ -418,8 +454,6 @@ router.post('/forget-password', function(req, res, next) {
                                 return console.log(error);
                             }
                             console.log('Message sent: ' + info.response);
-
-
 
                         });
 
@@ -584,8 +618,11 @@ router.post('/pay-order', function(req, res, next) {
                             billingUser: JSON.parse(rows[0].billing_user),
                             cards: JSON.parse(rows[0].cards),
                             total_face_value: rows[0].total_face_value,
-                            average_percentage: rows[0].average_percentage
+                            average_percentage: rows[0].average_percentage,
+                            created_date: rows[0].created_date,
                         };
+
+
 
                         var cardSql = '';
 
@@ -601,7 +638,31 @@ router.post('/pay-order', function(req, res, next) {
                         connection.query(cardSql, [], function(err, rows) {
                             if (err) return next(err);
 
-                            res.json(order);
+
+
+                            res.render('emails/buy-order', order, function(err, final_html) {
+                                if (err) throw err;
+
+                                // setup e-mail data with unicode symbols
+                                var mailOptions = {
+                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                    to: order.billingUser.email, // list of receivers
+                                    subject: 'Your New Order!', // Subject line
+                                    text: 'Your New Order!', // plaintext body
+                                    html: final_html // html body
+                                };
+
+                                transporter.sendMail(mailOptions, function(error, info) {
+                                    if (error) {
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: ', info);
+
+                                });
+
+                                res.json(order);
+
+                            });
                         });
 
 
@@ -658,7 +719,8 @@ router.post('/sell-cards', function(req, res, next) {
                         billingUser: JSON.parse(rows[0].billing_user),
                         cards: tempCards,
                         total_face_value: rows[0].total_face_value,
-                        average_percentage: rows[0].average_percentage
+                        average_percentage: rows[0].average_percentage,
+                        created_date: rows[0].created_date
                     };
                     // 
                     var receiptId = rows[0].id;
@@ -680,7 +742,31 @@ router.post('/sell-cards', function(req, res, next) {
 
                     connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id) VALUES ?', [insertedCard], function(err, ret) {
                         if (err) return next(err);
-                        res.json(receipt);
+
+                        res.render('emails/sell-order', receipt, function(err, final_html) {
+                            if (err) throw err;
+
+                            // setup e-mail data with unicode symbols
+                            var mailOptions = {
+                                from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                to: receipt.billingUser.email, // list of receivers
+                                subject: 'Your Sell Order!', // Subject line
+                                text: 'Your Sell Order!', // plaintext body
+                                html: final_html // html body
+                            };
+
+                            transporter.sendMail(mailOptions, function(error, info) {
+                                if (error) {
+                                    return console.log(error);
+                                }
+                                console.log('Message sent: ', info);
+
+                            });
+
+                            res.json(receipt);
+
+                        });
+
 
                     });
 
