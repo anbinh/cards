@@ -38,6 +38,10 @@ module.exports = function(m) {
                 'average': {
                     method: 'GET',
                     'url': '/api/stores/average'
+                },
+                'dateRanges': {
+                    method: 'GET',
+                    'url': '/api/stores/date-ranges'
                 }
             });
         }

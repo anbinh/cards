@@ -21,6 +21,9 @@ module.exports = function(m) {
                 brand: null
             };
 
+
+            store.remove('selling_cards')
+
             // console.log('STORE LIST', storeList);
 
             $scope.storeSelected = undefined;
@@ -58,6 +61,15 @@ module.exports = function(m) {
                 $scope.stores = store.get('selling_stores');
                 $scope.totalOfferMailCard = utilService.totalOfferMailCard($scope.stores);
                 $scope.totalOfferOnline = utilService.totalOfferOnline($scope.stores);
+
+
+                if ($scope.stores[0].payBy === 'mail') {
+                    $scope.payBy.mail = true;
+                    $scope.payBy.online = false;
+                } else {
+                    $scope.payBy.mail = false;
+                    $scope.payBy.online = true;
+                }
             }
 
             // store.set('selling_stores', []);

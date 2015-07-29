@@ -16,20 +16,25 @@
     <div class="row">
         <div class="col-md-12 ">
             <div class="btn-group pull-right">
-                <button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="Activity" aria-expanded="false"> Activity  <b class="caret"></b></button>
+                <button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="Activity" aria-expanded="false"> {{currentTab | titlecase}} Activity   <b class="caret"></b></button>
                 <ul class="multiselect-container dropdown-menu">
-                    <li class="active">
-                        <a href="javascript:void(0);">
+                    <li class="{{currentTab === 'all' ? 'active' : ''}}">
+                        <a ng-click="all()" >
+                            <label class="radio"> All</label>
+                        </a>
+                    </li>
+                    <li class="{{currentTab === 'daily' ? 'active' : ''}}">
+                        <a ng-click="daily()" >
                             <label class="radio"> Daily</label>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);">
+                    <li class="{{currentTab === 'weekly' ? 'active' : ''}}">
+                        <a  ng-click="weekly()">
                             <label class="radio"> Weekly</label>
                         </a>
                     </li>
-                    <li>
-                        <a href="javascript:void(0);">
+                    <li class="{{currentTab === 'monthly' ? 'active' : ''}}">
+                        <a  ng-click="monthly()">
                             <label class="radio"> Monthly</label>
                         </a>
                     </li>
@@ -54,7 +59,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Cards Available</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.cards.available}}</strong>
+                                            <strong class="amount">{{stats.cards.available/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -78,7 +83,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Cards Sold To Users</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.cards.sold}}</strong>
+                                            <strong class="amount">{{stats.cards.sold/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -103,7 +108,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Guests</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.guests.buy_cards + stats.guests.sell_cards}}</strong>
+                                            <strong class="amount">{{(stats.guests.buy_cards + stats.guests.sell_cards)/range | number:0}}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +129,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Guests Buying Cards</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.guests.buy_cards}}</strong>
+                                            <strong class="amount">{{stats.guests.buy_cards/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -148,7 +153,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Guests Selling Cards</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.guests.sell_cards}}</strong>
+                                            <strong class="amount">{{stats.guests.sell_cards/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -173,7 +178,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Users</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.users}}</strong>
+                                            <strong class="amount">{{stats.users/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -197,7 +202,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Users Buying</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.users_buying}}</strong>
+                                            <strong class="amount">{{stats.users_buying/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -221,7 +226,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Users Selling</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.users_selling}}</strong>
+                                            <strong class="amount">{{stats.users_selling/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -246,7 +251,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Dealers</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.dealers}}</strong>
+                                            <strong class="amount">{{stats.dealers/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -270,7 +275,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Dealers Selling</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.dealers_selling}}</strong>
+                                            <strong class="amount">{{stats.dealers_selling/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -294,7 +299,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Dealers Buying</h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.dealers_buying}}</strong>
+                                            <strong class="amount">{{stats.dealers_buying/range | number:0}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -319,7 +324,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Revenue</h4>
                                         <div class="info">
-                                            <strong class="amount">${{stats.revenue | number : 2}}</strong>
+                                            <strong class="amount">${{stats.revenue/range | number : 2}}</strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
@@ -343,7 +348,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Expense</h4>
                                         <div class="info">
-                                            <strong class="amount">${{stats.expense | number : 2}}</strong>
+                                            <strong class="amount">${{stats.expense/range | number : 2}}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +369,7 @@
                                     <div class="summary">
                                         <h4 class="title">Total Profit</h4>
                                         <div class="info">
-                                            <strong class="amount">${{stats.profit | number : 2}}</strong>
+                                            <strong class="amount">${{stats.profit/range | number : 2}}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -385,7 +390,7 @@
                                     <div class="summary">
                                         <h4 class="title">Average Profit </h4>
                                         <div class="info">
-                                            <strong class="amount">${{stats.average_profit | number : 2}}</strong>
+                                            <strong class="amount">${{stats.average_profit/range | number : 2}}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -406,7 +411,7 @@
                                     <div class="summary">
                                         <h4 class="title">Average Margin </h4>
                                         <div class="info">
-                                            <strong class="amount">{{stats.average_margin | number : 2}}%</strong>
+                                            <strong class="amount">{{stats.average_margin/range | number : 2}}%</strong>
                                         </div>
                                     </div>
                                 </div>

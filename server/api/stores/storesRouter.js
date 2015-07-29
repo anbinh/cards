@@ -401,6 +401,20 @@ router.get('/average', function(req, res, next) {
     });
 });
 
+router.get('/date-ranges', function(req, res, next) {
+
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select min(created_date) as min_date, max(created_date) as max_date from sold_cards JOIN receipts ON receipts.id = sold_cards.receipt_id', [], function(err, rows) {
+            if (err) return next(err);
+
+
+            res.json(rows[0]);
+        });
+
+    });
+});
+
 // get all cards from a store
 router.get('/:name', function(req, res, next) {
     var storeName = req.params.name;

@@ -39,7 +39,8 @@ module.exports = function(m) {
                             store_name: currentStore.originalName,
                             store_id: currentStore.id,
                             value: currentStore.value,
-                            amount: 1
+                            amount: 1,
+                            payBy: currentStore.payBy
                         };
 
                         allCards.push(card);
@@ -52,7 +53,7 @@ module.exports = function(m) {
 
 
 
-            // console.log('selling stores', store.get('selling_cards'));
+            console.log('selling stores xxx', store.get('selling_cards'));
             $scope.goBack = function() {
 
                 $location.url('');
