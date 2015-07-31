@@ -49,6 +49,7 @@
                      <td>{{order.average_percentage | number:2}}% </td>
                      <td ng-switch on="order.billingUser.role">
                         <a ng-switch-when="User" href="{{order.billingUser | dashboardProfile}}">{{order.billingUser | fullname}} </a>
+                        <a ng-switch-when="Dealer" href="{{order.billingUser | dashboardProfile}}">{{order.billingUser | fullname}} </a>
 
                       
                         <span ng-switch-when="Guest">{{order.billingUser | fullname}} </span>
