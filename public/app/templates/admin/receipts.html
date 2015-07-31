@@ -36,6 +36,7 @@
                      <th>Total Stores</th>
                      <th>User Name</th>
                      <th>User Type</th>
+                     <th>Retailers</th>
                      <th>Datetime</th>
                   </tr>
                </thead>
@@ -60,6 +61,14 @@
                      </td>
 
                      <td> <span class="label {{receipt.billingUser.className}}">{{receipt.billingUser.role}}</span></td>
+                     <td>
+                        
+                        <ul>
+                           <li ng-repeat="retailer in receipt.store_list.split(',')">
+                              {{retailer | storename | titlecase}}
+                           </li>
+                        </ul>
+                     </td>
                      <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   

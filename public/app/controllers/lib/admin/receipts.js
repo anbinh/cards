@@ -33,13 +33,13 @@ module.exports = function(m) {
                     }
                 }
             }
-        };
+        }
 
         $scope.receiptDetail = function(id) {
 
 
             $location.url('receipts/' + id);
-        }
+        };
 
 
 

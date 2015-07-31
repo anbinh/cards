@@ -39,6 +39,9 @@ router.get('/:id', function(req, res, next) {
                     dealer_code: rows[i].dealer_code,
                     store_id: rows[i].store_id,
                     store_name: rows[i].store_name,
+                    pay_by: rows[i].pay_by,
+                    bought_value: rows[i].bought_value,
+                    payout: rows[i].payout
 
                 };
                 cards.push(card);

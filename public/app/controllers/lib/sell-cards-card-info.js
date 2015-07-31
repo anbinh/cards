@@ -16,12 +16,15 @@ module.exports = function(m) {
             if ($scope.user) {
                 if ($scope.user.role === 'dealer') {
                     $scope.isDealer = true;
+                    $scope.dealerCode = $scope.user.dealer_code;
                 } else {
                     $scope.isDealer = false;
                 }
             } else {
                 $scope.isDealer = false;
             }
+
+
 
 
 
@@ -32,7 +35,14 @@ module.exports = function(m) {
                 for (var i = 0; i < $scope.stores.length; i = i + 1) {
                     var currentStore = $scope.stores[i];
 
-                    // console.log('current store', currentStore);
+                    var subtractAmount;
+                    if (currentStore.payBy === 'mail') {
+                        subtractAmount = 0;
+                    } else {
+                        subtractAmount = 5;
+                    }
+
+                    console.log('current store', currentStore);
                     for (var j = 0; j < currentStore.amount; j = j + 1) {
                         var card = {
                             gogo_buy: currentStore.gogo_buy,
@@ -40,7 +50,10 @@ module.exports = function(m) {
                             store_id: currentStore.id,
                             value: currentStore.value,
                             amount: 1,
-                            payBy: currentStore.payBy
+                            pay_by: currentStore.payBy,
+                            bought_value: currentStore.gogo_buy * currentStore.value / 100 - subtractAmount,
+                            payout: (currentStore.gogo_buy * currentStore.value / 100 - subtractAmount) / currentStore.value * 100,
+                            dealer_code: ($scope.user.dealer_code) ? $scope.user.dealer_code : ''
                         };
 
                         allCards.push(card);

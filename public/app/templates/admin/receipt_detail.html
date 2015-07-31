@@ -95,18 +95,20 @@
                      <th ng-show="receipt.billingUser.role == 'Dealer' ">Dealer Code</th>
                      <th>Your Offer</th>
                      <th>Payout</th>
+                     <th>Pay By</th>
                   </tr>
                </thead>
                <tbody>
                   <tr ng-repeat="card in receipt.cards" > 
-                  <th>{{card.id}}</th>
-                     <th><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></th>
-                     <th>{{card.store_name | storename | titlecase}} (${{card.value}})</th>
-                     <th>{{card.number }}</th>
-                     <th>{{card.pin}}</th>
-                     <th ng-show="receipt.billingUser.role == 'Dealer' ">{{card.dealer_code}}</th>
-                     <th>${{card.gogo_buy * card.value / 100 | number:2}}</th>
-                     <th>{{card.gogo_buy| number:2}}%</th>
+                     <td>{{card.id}}</td>
+                     <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
+                     <td>{{card.store_name | storename | titlecase}} (${{card.value}})</td>
+                     <td>{{card.number }}</td>
+                     <td>{{card.pin}}</td>
+                     <td ng-show="receipt.billingUser.role == 'Dealer' ">{{card.dealer_code}}</td>
+                     <td>${{card.bought_value | number:2}}</td>
+                     <td>{{card.payout| number:2}}%</td>
+                     <td>{{card.pay_by | titlecase}}</td>
                   </tr>
                   
                   

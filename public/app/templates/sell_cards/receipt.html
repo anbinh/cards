@@ -122,7 +122,9 @@
                             <th>
                                 Payout
                             </th>
-                            
+                            <th>
+                                Pay By
+                            </th>
                             
                             
                         </tr>
@@ -144,10 +146,13 @@
                             </td>
                             
                             <td>
-                                {{card.gogo_buy*card.value/100 | number:2}}
+                                {{card.bought_value | number:2}}
                             </td>
                             <td>
-                                {{card.gogo_buy}}%
+                                {{card.payout}}%
+                            </td>
+                            <td>
+                                {{card.pay_by | titlecase}}
                             </td>
                             
                         </tr>

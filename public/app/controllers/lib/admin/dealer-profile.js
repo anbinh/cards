@@ -34,7 +34,7 @@ module.exports = function(m) {
 
         $scope.receiptDetail = function(id) {
             $location.url('receipts/' + id);
-        }
+        };
 
         $scope.goToOrderDetail = function(id) {
             $location.url('orders/' + id);

@@ -38,6 +38,8 @@
                      <th>Availability</th>
                      
                      <th>Receipts</th>
+
+                     <th>Pay By</th>
                      
                      <th>Date Joined</th>
                   </tr>
@@ -48,7 +50,7 @@
                      <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
 
                      <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
-                     <td>${{card.gogo_buy * card.value / 100 | number:2}} </td>
+                     <td>${{card.bought_value | number:2}} </td>
                      <td>{{card.number}}  </td>
                      <td>{{card.pin}} </td>
                      <td>{{card.dealer_code}} </td>
@@ -61,7 +63,7 @@
                         </a> 
                      </td>
                      
-                     
+                     <td>{{card.pay_by | titlecase}}</td>
                      <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   

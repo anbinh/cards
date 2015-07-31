@@ -33,26 +33,26 @@ module.exports = function(m) {
             $scope.nWeeks = Math.round(difference_ms / one_week);
             $scope.nMonths = Math.round(difference_ms / one_month);
 
-            console.log("mexx", $scope.dateRanges);
+            // console.log("mexx", $scope.dateRanges);
         });
 
 
         $scope.all = function() {
             $scope.currentTab = 'all';
             $scope.range = 1;
-        }
+        };
         $scope.daily = function() {
             $scope.currentTab = 'daily';
             $scope.range = $scope.nDays;
-        }
+        };
         $scope.weekly = function() {
             $scope.currentTab = 'weekly';
             $scope.range = $scope.nWeeks;
-        }
+        };
         $scope.monthly = function() {
             $scope.currentTab = 'monthly';
             $scope.range = $scope.nMonths;
-        }
+        };
 
 
         // 

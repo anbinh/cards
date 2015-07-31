@@ -31,6 +31,7 @@ require('./lib/admin/users')(m);
 require('./lib/admin/guests')(m);
 require('./lib/admin/dealers')(m);
 require('./lib/admin/inventory')(m);
+require('./lib/admin/inventory-retailer')(m);
 require('./lib/admin/orders')(m);
 require('./lib/admin/receipts')(m);
 require('./lib/admin/sidebar')(m);

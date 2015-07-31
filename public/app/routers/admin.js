@@ -108,12 +108,12 @@ angular.module('app')
                     ]
                 }
             }).when('/inventory', {
-                templateUrl: 'admin/inventory.html',
-                controller: 'AdminInventoryController',
+                templateUrl: 'admin/inventory_by_retailer.html',
+                controller: 'AdminInventoryRetailerController',
                 resolve: {
-                    CardList: ['userService', '$route',
+                    Retailers: ['userService', '$route',
                         function(userService, $route) {
-                            return userService.inventory({}).$promise.then(function(cards) {
+                            return userService.inventoryByRetailer({}).$promise.then(function(cards) {
                                 return cards;
                             });
                         }

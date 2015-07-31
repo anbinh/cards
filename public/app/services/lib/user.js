@@ -44,6 +44,11 @@ module.exports = function(m) {
                     'url': '/api/users/inventory',
                     isArray: true
                 },
+                'inventoryByRetailer': {
+                    method: 'GET',
+                    'url': '/api/users/inventory_by_retailer',
+                    isArray: true
+                },
                 'cards': {
                     method: 'GET',
                     'url': '/api/users/cards',

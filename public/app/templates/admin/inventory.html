@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
    <header class="page-header">
-      <h2>All Available Cards</h2>
+      <h2>All Available Cards Of {{cards[0].store_name | storename | titlecase}}</h2>
    
       <div class="right-wrapper pull-right">
          <ol class="breadcrumbs">
@@ -22,7 +22,7 @@
          <header class="panel-heading">
             
       
-            <h2 class="panel-title">Inventory Information</h2>
+            <h2 class="panel-title">{{cards[0].store_name | storename | titlecase}} Information</h2>
          </header>
          <div class="panel-body">
             <table class="table table-bordered table-striped mb-none" id="datatable-default">

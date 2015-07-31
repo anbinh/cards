@@ -38,13 +38,19 @@ module.exports = function(m) {
                 cards: store.get('selling_cards')
             };
 
+            if ($scope.sellingCards.cards[0].pay_by === 'mail') {
+                $scope.subtractAmount = 0;
+            } else {
+                $scope.subtractAmount = 5;
+            }
+
 
 
             console.log('selling cards', store.get('selling_cards'));
 
-            console.log('ME XXXXXXX', $scope.sellingCards.cards[0].payBy);
+            console.log('ME XXXXXXX', $scope.sellingCards.cards[0].pay_by);
 
-            $scope.total = ($scope.sellingCards.cards[0].payBy === 'mail') ? utilService.totalOfferMailCard($scope.sellingCards.cards) : utilService.totalOfferOnline($scope.sellingCards.cards);
+            $scope.total = ($scope.sellingCards.cards[0].pay_by === 'mail') ? utilService.totalOfferMailCard($scope.sellingCards.cards) : utilService.totalOfferOnline($scope.sellingCards.cards);
 
             $scope.totalFaceValue = utilService.totalFaceValue($scope.sellingCards.cards);
 
@@ -76,15 +82,19 @@ module.exports = function(m) {
 
                 var bilingUser = $scope.sellingCards.billingUser;
 
-                if (($scope.sellingCards.cards[0].payBy === 'online') && (bilingUser.email !== bilingUser.email2)) {
-                    swal('Error!', 'Email does not match', 'error');
-                    return;
+                if ($scope.isGuest === true) {
+                    if (($scope.sellingCards.cards[0].pay_by === 'online') && (bilingUser.email !== bilingUser.email2)) {
+                        swal('Error!', 'Email does not match', 'error');
+                        return;
+                    }
+
+                    if (($scope.sellingCards.cards[0].pay_by === 'online') && (bilingUser.password !== bilingUser.password2)) {
+                        swal('Error!', 'Password does not match', 'error');
+                        return;
+                    }
                 }
 
-                if (($scope.sellingCards.cards[0].payBy === 'online') && (bilingUser.password !== bilingUser.password2)) {
-                    swal('Error!', 'Password does not match', 'error');
-                    return;
-                }
+
 
 
                 var selling_cards = {

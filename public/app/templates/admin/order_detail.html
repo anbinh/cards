@@ -98,13 +98,13 @@
                </thead>
                <tbody>
                   <tr ng-repeat="card in order.cards"> 
-                     <th><img height="50px" ng-src="/img/cards/{{card.name}}.jpg"></th>
-                     <th>{{card.name | storename | titlecase}}</th>
-                     <th>${{card.value | number:2}}</th>
-                     <th>1</th>
-                     <th>${{card.value | number:2}}</th>
-                     <th>{{card.save| number:2}}%</th>
-                     <th>${{card.pay| number:2}}</th>
+                     <td><img height="50px" ng-src="/img/cards/{{card.name}}.jpg"></td>
+                     <td>{{card.name | storename | titlecase}}</td>
+                     <td>${{card.value | number:2}}</td>
+                     <td>1</td>
+                     <td>${{card.value | number:2}}</td>
+                     <td>{{card.save| number:2}}%</td>
+                     <td>${{card.pay| number:2}}</td>
                   </tr>
                   
                   

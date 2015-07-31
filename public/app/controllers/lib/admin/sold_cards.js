@@ -12,12 +12,12 @@ module.exports = function(m) {
         $scope.cards = CardList;
 
 
-        for (var i = 0; i < $scope.cards.length; i++) {
+        for (var i = 0; i < $scope.cards.length; i = i + 1) {
             var gogo_buy = $scope.cards[i].gogo_buy;
             var discount = $scope.cards[i].purchase.save;
             $scope.cards[i].spread = (100 - gogo_buy - discount) / (100 - discount) * 100;
 
-        };
+        }
 
 
 

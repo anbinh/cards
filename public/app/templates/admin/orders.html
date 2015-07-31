@@ -35,6 +35,7 @@
                      <th>Average Discount</th>
                      <th>User Name</th>
                      <th>User Type</th>
+                     <th>Retailers</th>
                      <th>Datetime</th>
                   </tr>
                </thead>
@@ -53,6 +54,14 @@
                         <span ng-switch-when="Guest">{{order.billingUser | fullname}} </span>
                      </td>
                      <td> <span class="label {{order.billingUser.className}}">{{order.billingUser.role}}</span></td>
+                     <td>
+                        
+                        <ul>
+                           <li ng-repeat="retailer in order.storeList">
+                              {{retailer | storename | titlecase}}
+                           </li>
+                        </ul>
+                     </td>
                      <td>{{order.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   

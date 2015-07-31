@@ -47,6 +47,8 @@
                      
                      <th>Receipts</th>
                      <th>Orders</th>
+
+                     <th>Pay By</th>
                      
                      <th>Date Joined</th>
                   </tr>
@@ -60,16 +62,16 @@
                      <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
 
                      <!-- OFFER -->
-                     <td>${{card.gogo_buy * card.value / 100 | number:2}} </td>
+                     <td>${{card.bought_value | number:2}} </td>
                      
                      <!-- SELLING PRICE -->
                      <td>${{card.purchase.pay}}</td>
                      
                      <!-- PROFIT -->
-                     <td>${{card.purchase.pay - card.gogo_buy * card.value / 100  | number:2}}</td>
+                     <td>${{card.purchase.pay - card.bought_value | number:2}}</td>
                      
                      <!-- PAYOUT -->
-                     <td>{{card.gogo_buy | number:2}}%</td>
+                     <td>{{card.payout | number:2}}%</td>
 
                      <!-- DISCOUNT -->
                      <td>{{card.purchase.save | number:2}}%</td>
@@ -93,6 +95,7 @@
                         </a> 
                      </td>
                      
+                     <td>{{card.pay_by | titlecase}}</td>
                      
                      <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>

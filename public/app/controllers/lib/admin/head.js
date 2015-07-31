@@ -8,6 +8,6 @@ module.exports = function(m) {
 
             store.remove('admin');
             window.location = '/admin-login/#/';
-        }
+        };
     });
 };

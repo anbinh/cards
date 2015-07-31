@@ -27,7 +27,19 @@ module.exports = function(m) {
                     }
                 }
             }
-        };
+
+            var cards = $scope.orders[i].cards;
+            var storeList = [];
+
+            for (var j = 0; j < cards.length; j = j + 1) {
+                if (storeList.indexOf(cards[j].name) === -1) {
+                    storeList.push(cards[j].name);
+                }
+            }
+
+            $scope.orders[i].storeList = storeList;
+
+        }
 
         console.log('order', $scope.orders);
 

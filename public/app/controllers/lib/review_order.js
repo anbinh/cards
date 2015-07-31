@@ -75,7 +75,18 @@ module.exports = function(m) {
                     store.set('order', {});
 
                     if (!$scope.isGuest) {
-                        window.location = '/profile/#/orders/' + result.id;
+                        swal({
+                            title: 'Congratulations!',
+                            text: 'Your Order has been paid!',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok, view order!',
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function() {
+                            window.location = '/profile/#/orders/' + result.id;
+                        });
+
                     } else {
                         $scope.isPaid = true;
                         swal('Congratulations!', 'Your Order has been paid', 'success');

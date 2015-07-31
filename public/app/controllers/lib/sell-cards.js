@@ -22,7 +22,7 @@ module.exports = function(m) {
             };
 
 
-            store.remove('selling_cards')
+            store.remove('selling_cards');
 
             // console.log('STORE LIST', storeList);
 

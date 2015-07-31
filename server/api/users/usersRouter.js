@@ -67,6 +67,26 @@ router.get('/inventory', function(req, res, next) {
 
 });
 
+/* GET /users/inventory_by_retailer listing. */
+router.get('/inventory_by_retailer', function(req, res, next) {
+
+    var query;
+
+
+    query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 group by store_id ';
+
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query(query, [], function(err, rows) {
+            if (err) return next(err);
+
+            res.json(rows)
+        });
+
+    });
+
+});
+
 /* GET /users/cards listing. */
 router.get('/cards', function(req, res, next) {
     req.getConnection(function(err, connection) {
@@ -733,14 +753,14 @@ router.post('/sell-cards', function(req, res, next) {
                         if (!card.dealer_code) {
                             card.dealer_code = null;
                         }
-                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null];
+                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout];
                         insertedCard.push(item);
 
                     };
 
                     // console.log('inserted cards', insertedCard);
 
-                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id) VALUES ?', [insertedCard], function(err, ret) {
+                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout) VALUES ?', [insertedCard], function(err, ret) {
                         if (err) return next(err);
 
                         res.render('emails/sell-order', receipt, function(err, final_html) {

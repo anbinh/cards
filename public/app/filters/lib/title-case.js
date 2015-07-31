@@ -37,13 +37,13 @@ module.exports = function(m) {
     }).filter('dashboardProfile', function() {
         return function(user) {
 
-            return "/dashboard/#/user-profile/" + user.id;
+            return '/dashboard/#/user-profile/' + user.id;
 
         };
     }).filter('dashboardDealerProfile', function() {
         return function(user) {
 
-            return "/dashboard/#/dealer-profile/" + user.id;
+            return '/dashboard/#/dealer-profile/' + user.id;
 
         };
     });

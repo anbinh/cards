@@ -25,7 +25,7 @@
             <h2 class="panel-title">Dealers Information</h2>
          </header>
          <div class="panel-body">
-            <table class="table table-bordered table-striped mb-none" id="datatable-default" style="cursor:pointer">
+            <table class="table table-bordered table-striped mb-none" id="datatable-default" style="cursor:pointer" aria-describedby="datatable-editable_info">
                <thead>
                   <tr>
                      <th>Id</th>
@@ -39,13 +39,14 @@
                      <th>Business Name</th>
                      <th>Business Address</th>
                      <th>Date Joined</th>
+                     <th>Actions</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="dealer in dealers track by $index" ng-click="dealerDeatail(dealer.id)">
-                     <td>{{dealer.id}}</td>
-                     <td>{{dealer.first_name}} </td>
-                     <td>{{dealer.last_name}}  </td>
+                  <tr ng-repeat="dealer in dealers track by $index" >
+                     <td ng-click="dealerDeatail(dealer.id)">{{dealer.id}}</td>
+                     <td ng-click="dealerDeatail(dealer.id)">{{dealer.first_name}} </td>
+                     <td ng-click="dealerDeatail(dealer.id)">{{dealer.last_name}}  </td>
                      <td>{{dealer.email}} </td>
                      <td>{{dealer.address}} </td>
                      <td>{{dealer.city}} </td>
@@ -54,6 +55,18 @@
                      <td>{{dealer.business_name}} </td>
                      <td>{{dealer.business_address}} </td>
                      <td>{{dealer.created_date | date: 'MM/dd/yyyy'}} </td>
+                     <td class="actions">
+                        <a  class="hidden on-editing save-row">
+                           <i class="fa fa-save"></i>
+                        </a>
+                        <a  class="hidden on-editing cancel-row">
+                           <i class="fa fa-times"></i>
+                        </a>
+                        <a  class="on-default edit-row">
+                           <i class="fa fa-pencil"></i>
+                        </a>
+                        
+                     </td>
                   </tr>
                   
                   
