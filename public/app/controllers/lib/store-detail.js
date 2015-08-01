@@ -67,7 +67,7 @@ module.exports = function(m) {
             // check if card has been added
             var currentCart = store.get('cart');
 
-            if (currentCart != null) {
+            if (currentCart !== null) {
                 for (var j = 0; j < $scope.cards.length; j = j + 1) {
                     for (var i = 0; i < currentCart.length; i = i + 1) {
                         console.log($scope.cards[j].id, currentCart[i].id);

@@ -25,6 +25,9 @@ var transporter = nodemailer.createTransport(mandrillTransport({
     }
 }));
 
+var ADMIN_EMAIL = 'admin@cardslyce.com';
+// var ADMIN_EMAIL = 'tinhoc@outlook.com';
+
 /* GET /users listing. */
 router.get('/', function(req, res, next) {
     req.getConnection(function(err, connection) {
@@ -264,7 +267,25 @@ router.post('/', function(req, res, next) {
 
                             delete rdat.password;
 
+                            res.render('emails/new-dealer', rdat, function(err, final_html) {
+                                if (err) throw err;
 
+                                // setup e-mail data with unicode symbols
+                                var mailOptions = {
+                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                    to: ADMIN_EMAIL, // list of receivers
+                                    subject: 'New Dealer!', // Subject line
+                                    text: 'New Dealer!', // plaintext body
+                                    html: final_html // html body
+                                };
+
+                                transporter.sendMail(mailOptions, function(error, info) {
+                                    if (error) {
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: ', info);
+                                });
+                            });
 
                             res.render('emails/welcome', rdat, function(err, final_html) {
                                 if (err) throw err;

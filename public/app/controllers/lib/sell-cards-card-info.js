@@ -52,8 +52,7 @@ module.exports = function(m) {
                             amount: 1,
                             pay_by: currentStore.payBy,
                             bought_value: currentStore.gogo_buy * currentStore.value / 100 - subtractAmount,
-                            payout: (currentStore.gogo_buy * currentStore.value / 100 - subtractAmount) / currentStore.value * 100,
-                            dealer_code: ($scope.dealerCode) ? $scope.dealerCode : ''
+                            payout: (currentStore.gogo_buy * currentStore.value / 100 - subtractAmount) / currentStore.value * 100
                         };
 
                         allCards.push(card);
@@ -62,6 +61,20 @@ module.exports = function(m) {
                 $scope.allSellingCards = allCards;
             } else {
                 $scope.allSellingCards = store.get('selling_cards');
+            }
+
+            if (($scope.user.dealer_code === null) || ($scope.user.dealer_code === undefined) || ($scope.user.dealer_code === '')) {
+                swal({
+                    title: 'Dealer Code Missing!',
+                    text: 'Missing Delear code for your dealer account. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
+                    type: 'error',
+                    showCancelButton: false,
+                    confirmButtonText: 'Ok',
+                    closeOnConfirm: false,
+                    closeOnCancel: false,
+                    animation: 'slide-from-top',
+                    html: true
+                });
             }
 
 
@@ -74,6 +87,30 @@ module.exports = function(m) {
 
             $scope.goNext = function() {
                 console.log('current selling cards', $scope.allSellingCards);
+
+
+                var checkDealerCode = false;
+
+                for (var i = 0; i < $scope.allSellingCards.length; i = i + 1) {
+                    if ($scope.allSellingCards[i].dealer_code !== $scope.user.dealer_code) {
+                        checkDealerCode = true;
+                    }
+                }
+
+                if (checkDealerCode === true) {
+                    swal({
+                        title: 'Dealer Code Not Match!',
+                        text: 'Dealer Code does not match. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
+                        type: 'error',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                        closeOnConfirm: false,
+                        closeOnCancel: false,
+                        animation: 'slide-from-top',
+                        html: true
+                    });
+                    return;
+                }
 
                 store.set('selling_cards', angular.copy($scope.allSellingCards));
 
