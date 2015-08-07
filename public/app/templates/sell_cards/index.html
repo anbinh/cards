@@ -169,7 +169,7 @@
                                             {{store.value*store.gogo_buy/100 | number:2}}
                                         </td>
                                         <td class="{{ payBy.online ? 'col-select' : '' }} text-center">
-                                            {{store.value*store.gogo_buy/100 - 5 | number:2}}
+                                            {{store.value*store.gogo_buy/100*(1-ENTER_ONLINE_DISCOUNT) | number:2}}
                                         </td>
                                         <td class="text-center">
                                             <i ng-click="removeStore($index)" class="fa fa-times selling-cards-close-icon"></i>

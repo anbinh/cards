@@ -7,6 +7,9 @@ module.exports = function(m) {
 
             var guest;
 
+            //discount by "enter online" method to 5.75%
+            $scope.ENTER_ONLINE_DISCOUNT = 0.0575;
+
             if ($routeParams.guest === 'true') {
                 $scope.isGuest = true;
                 guest = {
@@ -105,7 +108,8 @@ module.exports = function(m) {
                     total_cards: $scope.sellingCards.cards.length,
                     total_face_value: $scope.totalFaceValue,
                     average_payout: $scope.averagePayout,
-                    store_list: store_list.join(',')
+                    store_list: store_list.join(','),
+                    payment: $scope.sellingCards.cards[0].pay_by
                 };
 
                 console.log('YOUR SELLING CARDS', selling_cards);

@@ -206,7 +206,7 @@ router.get('/dealers', function(req, res, next) {
 router.get('/orders/:id', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_percentage,created_date from orders where user_id = ?', [req.params.id], function(err, rows) {
+        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_percentage,created_date,payment from orders where user_id = ?', [req.params.id], function(err, rows) {
             if (err) return next(err);
 
             res.json(rows)
@@ -220,7 +220,7 @@ router.get('/orders/:id', function(req, res, next) {
 router.get('/sold-cards-list/:id', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_payout,created_date, store_list from receipts where user_id = ?', [req.params.id], function(err, rows) {
+        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_payout,created_date, store_list,payment from receipts where user_id = ?', [req.params.id], function(err, rows) {
             if (err) return next(err);
 
             res.json(rows)

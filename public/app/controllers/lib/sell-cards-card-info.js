@@ -5,6 +5,10 @@ module.exports = function(m) {
     m.controller('SellCardInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService',
         function($scope, $location, $routeParams, authService, store, userService) {
 
+            //discount by "enter online" method to 5.75%
+            $scope.ENTER_ONLINE_DISCOUNT = 0.0575;
+
+
             // if (!authService.isAuthenticated()) {
             //     window.location = '/';
             // } else {
@@ -35,15 +39,17 @@ module.exports = function(m) {
                 for (var i = 0; i < $scope.stores.length; i = i + 1) {
                     var currentStore = $scope.stores[i];
 
-                    var subtractAmount;
+                    var less;
                     if (currentStore.payBy === 'mail') {
-                        subtractAmount = 0;
+                        less = 1 - 0;
                     } else {
-                        subtractAmount = 5;
+                        // 5.75% less
+                        less = 1 - $scope.ENTER_ONLINE_DISCOUNT;
                     }
 
                     console.log('current store', currentStore);
                     for (var j = 0; j < currentStore.amount; j = j + 1) {
+                        var val = currentStore.gogo_buy * currentStore.value / 100;
                         var card = {
                             gogo_buy: currentStore.gogo_buy,
                             store_name: currentStore.originalName,
@@ -51,8 +57,8 @@ module.exports = function(m) {
                             value: currentStore.value,
                             amount: 1,
                             pay_by: currentStore.payBy,
-                            bought_value: currentStore.gogo_buy * currentStore.value / 100 - subtractAmount,
-                            payout: (currentStore.gogo_buy * currentStore.value / 100 - subtractAmount) / currentStore.value * 100
+                            bought_value: val * less,
+                            payout: (val * less) / currentStore.value * 100
                         };
 
                         allCards.push(card);

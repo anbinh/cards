@@ -20,14 +20,11 @@ module.exports = function(m) {
                 var total = 0;
                 for (var i = 0; i < card.length; i = i + 1) {
                     var subTotal = card[i].gogo_buy * card[i].value * card[i].amount / 100;
-
-                    if (subTotal > 5) {
-                        subTotal -= 5 * card[i].amount;
-                    }
                     total += subTotal;
                 }
 
-                return total;
+                // 5.75% less
+                return (1 - 0.0575) * total;
             };
 
             var totalFaceValue = function(cards) {

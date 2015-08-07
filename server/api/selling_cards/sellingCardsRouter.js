@@ -23,7 +23,8 @@ router.get('/:id', function(req, res, next) {
                 average_payout: rows[0].average_payout,
                 store_list: rows[0].store_list,
                 created_date: rows[0].created_date,
-                billingUser: rows[0].billingUser
+                billingUser: rows[0].billingUser,
+                payment: rows[0].payment
             };
 
             var cards = [];

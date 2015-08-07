@@ -60,7 +60,8 @@ module.exports = function(m) {
                     total_amount: total,
                     total_cards: $scope.order.cards.length,
                     total_face_value: $scope.totalFaceValue,
-                    average_percentage: $scope.averagePercentage
+                    average_percentage: $scope.averagePercentage,
+                    payment: $scope.order.payment
                 };
 
                 console.log('order', order);

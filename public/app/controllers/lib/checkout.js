@@ -19,6 +19,9 @@ module.exports = function(m) {
             }
 
 
+            $scope.payment = {
+                name: 'cc_terminal'
+            };
 
 
 
@@ -48,9 +51,12 @@ module.exports = function(m) {
                 var order = {
                     billingUser: $scope.user,
                     cards: $scope.selectedCards,
+                    payment: $scope.payment.name
                 };
 
                 // console.log('this order', order);
+
+                // return;
 
                 store.set('order', order);
 

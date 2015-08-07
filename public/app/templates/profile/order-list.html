@@ -49,6 +49,7 @@
                             <th>
                                 #Cards
                             </th>
+                            <th>Payment</th>
                             <th>
                                 Payment Date
                             </th>
@@ -72,6 +73,9 @@
                             </td>
                             <td>
                                 {{order.total_cards}}
+                            </td>
+                            <td>
+                                {{(order.payment === 'ach') ? 'ACH' : 'CC Terminal'}}
                             </td>
                             <td>
                                 {{order.created_date | date: 'MM/dd/yyyy h:mma' }}

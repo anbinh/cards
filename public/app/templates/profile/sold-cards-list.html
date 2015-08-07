@@ -44,6 +44,7 @@
                             <th>
                                 #Cards
                             </th>
+                            <th>Payment</th>
                             <th>
                                 Selling Date
                             </th>
@@ -66,6 +67,9 @@
                             </td>
                             <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 {{soldCards.total_cards}}
+                            </td>
+                            <td>
+                                {{(soldCards.payment==='mail' ? 'Mail' : 'Online')}}
                             </td>
                             <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 {{soldCards.created_date | date: 'MM/dd/yyyy h:mma' }}

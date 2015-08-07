@@ -6,13 +6,16 @@ module.exports = function(m) {
         function($scope, $location, $routeParams, authService, store, userService, storeList, utilService) {
 
 
-
+            //discount by "enter online" method to 5.75%
+            $scope.ENTER_ONLINE_DISCOUNT = 0.0575;
 
             console.log('util service', utilService);
             $scope.payBy = {
                 mail: true,
                 online: false
             };
+
+
 
             // init default values
             $scope.store = {

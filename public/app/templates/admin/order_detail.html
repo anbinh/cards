@@ -35,6 +35,9 @@
                      <li class="user-li"><strong>Total Amount:</strong> ${{order.total_amount}}</li>
                      <li class="user-li"><strong>The Number Of Cards:</strong> {{order.total_cards}}</li>
                      <li class="user-li"><strong>Average Percentage:</strong> {{order.average_percentage | number:2}}%</li>
+                     <li class="user-li">
+                        <strong>Payment:</strong> {{(order.payment === 'ach') ? 'ACH' : 'CC Terminal'}}
+                     </li>
                      <li class="user-li"><strong>Datetime:</strong> {{order.created_date | date: 'MM/dd/yyyy'}}</li>
                   </ul>
                </p>
