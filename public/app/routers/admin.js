@@ -218,6 +218,18 @@ angular.module('app')
                         }
                     ]
                 }
+            }).when('/retailer-limits', {
+                templateUrl: 'admin/retailers_limits.html',
+                controller: 'AdminRetailerLimitController',
+                resolve: {
+                    Retailers: ['storeService', '$route',
+                        function(storeService, $route) {
+                            return storeService.limits({}).$promise.then(function(retailers) {
+                                return retailers;
+                            });
+                        }
+                    ]
+                }
             });
         }
     ]);

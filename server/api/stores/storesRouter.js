@@ -114,7 +114,7 @@ router.get('/', function(req, res, next) {
 
             // console.log(ids);
 
-            connection.query('select stores.id, stores.name as name, cards.discount, stats.gcg_buy,stats.gogo_discount_extra, stats.fixed_discount from cards LEFT JOIN stores ON stores.id = cards.store_id   LEFT JOIN stats ON stats.id=cards.store_id where cards.id in ( ' + ids + ' ) order by store_id DESC', [], function(err, rows) {
+            connection.query('select stores.id, stores.name as name, stores.limit as store_limit, cards.discount, stats.gcg_buy,stats.gogo_discount_extra, stats.fixed_discount from cards LEFT JOIN stores ON stores.id = cards.store_id   LEFT JOIN stats ON stats.id=cards.store_id where cards.id in ( ' + ids + ' ) order by store_id DESC', [], function(err, rows) {
                 if (err) return next(err);
 
                 var stores = [];
@@ -154,7 +154,40 @@ router.get('/', function(req, res, next) {
 
                 };
 
-                res.json(stores);
+                var query;
+
+
+                query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 group by store_id ';
+
+                req.getConnection(function(err, connection) {
+                    if (err) return next(err);
+                    connection.query(query, [], function(err, rows) {
+                        if (err) return next(err);
+
+                        var storeInventories = rows;
+
+                        // set the default to zero
+                        for (var i = 0; i < stores.length; i++) {
+                            stores[i].inventory = 0;
+                            stores[i].name = stores[i].name.trim();
+                        };
+
+                        for (var i = 0; i < stores.length; i++) {
+                            var store = stores[i];
+
+                            for (var j = 0; j < storeInventories.length; j++) {
+                                var storeInventory = storeInventories[j];
+                                if (storeInventory.store_id === store.id) {
+                                    stores[i].inventory = storeInventory.count;
+                                    // console.log(storeInventory, store);
+                                }
+                            };
+                        };
+
+                        res.json(stores)
+                    });
+
+                });
             });
 
 
@@ -415,6 +448,55 @@ router.get('/date-ranges', function(req, res, next) {
     });
 });
 
+router.get('/limits', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('select * from stores', function(err, rows) {
+            if (err) return next(err);
+
+
+            var stores = JSON.parse(JSON.stringify(rows));
+
+
+            var query;
+
+
+            query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 group by store_id ';
+
+            req.getConnection(function(err, connection) {
+                if (err) return next(err);
+                connection.query(query, [], function(err, rows) {
+                    if (err) return next(err);
+
+                    var storeInventories = rows;
+
+                    // set the default to zero
+                    for (var i = 0; i < stores.length; i++) {
+                        stores[i].inventory = 0;
+                        stores[i].name = stores[i].name.trim();
+                    };
+
+                    for (var i = 0; i < stores.length; i++) {
+                        var store = stores[i];
+
+                        for (var j = 0; j < storeInventories.length; j++) {
+                            var storeInventory = storeInventories[j];
+                            if (storeInventory.store_id === store.id) {
+                                stores[i].inventory = storeInventory.count;
+                                // console.log(storeInventory, store);
+                            }
+                        };
+                    };
+
+                    res.json(stores)
+                });
+
+            });
+        });
+
+    });
+});
+
 // get all cards from a store
 router.get('/:name', function(req, res, next) {
     var storeName = req.params.name;
@@ -525,7 +607,25 @@ router.get('/:name', function(req, res, next) {
 });
 
 
+router.put('/:id', function(req, res, next) {
 
+    var dat = req.body;
+
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+
+        var updatedDat = {
+            limit: dat.limit
+        }
+
+        connection.query('UPDATE stores SET  ? where id = ?', [updatedDat, req.params.id], function(err, rows) {
+            if (err) return next(err);
+            var rdat = rows[0];
+            res.json(rdat);
+        });
+
+    });
+});
 
 
 

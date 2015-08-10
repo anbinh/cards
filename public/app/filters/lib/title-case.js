@@ -22,7 +22,12 @@ module.exports = function(m) {
         };
     }).filter('storename', function() {
         return function(input) {
-            return input.split('-').join(' ');
+            if (input !== undefined) {
+                return input.split('-').join(' ');
+            } else {
+                return '';
+            }
+
         };
     }).filter('fullname', function() {
         return function(user) {

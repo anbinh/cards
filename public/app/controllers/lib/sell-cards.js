@@ -103,6 +103,12 @@ module.exports = function(m) {
                     return;
                 }
 
+                if ($scope.store.amount + $scope.store.brand.inventory > $scope.store.brand.store_limit) {
+                    var errMsg = 'The amount exceeds the limit ' + $scope.store.brand.store_limit + ' cards for the store: ' + $scope.store.brand.name;
+                    swal('Invalid Quantity', errMsg, 'error');
+                    return;
+                }
+
                 // remove selling_cards saving
                 store.remove('selling_cards');
                 console.log('store', $scope.store);

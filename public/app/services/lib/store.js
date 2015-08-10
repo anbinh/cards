@@ -6,6 +6,9 @@ module.exports = function(m) {
         function($resource) {
 
             return $resource('/api/stores/:id', null, {
+                'update': {
+                    method: 'PUT'
+                },
                 'featured': {
                     method: 'GET',
                     'url': '/api/stores/featured',
@@ -42,6 +45,11 @@ module.exports = function(m) {
                 'dateRanges': {
                     method: 'GET',
                     'url': '/api/stores/date-ranges'
+                },
+                'limits': {
+                    method: 'GET',
+                    'url': '/api/stores/limits',
+                    isArray: true
                 }
             });
         }
