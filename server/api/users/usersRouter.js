@@ -53,9 +53,9 @@ router.get('/inventory', function(req, res, next) {
 
     var query;
     if (req.query.id) {
-        query = 'SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and store_id = ' + req.query.id;
+        query = 'SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok" and store_id = ' + req.query.id;
     } else {
-        query = 'SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 ';
+        query = 'SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok"';
     }
 
     req.getConnection(function(err, connection) {
@@ -76,7 +76,7 @@ router.get('/inventory_by_retailer', function(req, res, next) {
     var query;
 
 
-    query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 group by store_id ';
+    query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok" group by store_id ';
 
     req.getConnection(function(err, connection) {
         if (err) return next(err);
@@ -122,7 +122,6 @@ router.get('/sold-cards', function(req, res, next) {
                 };
 
                 delete item.cards;
-
                 items.push(item);
 
             };
@@ -220,7 +219,7 @@ router.get('/orders/:id', function(req, res, next) {
 router.get('/sold-cards-list/:id', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_payout,created_date, store_list,payment from receipts where user_id = ?', [req.params.id], function(err, rows) {
+        connection.query('SELECT id, user_id, total_amount,total_cards,total_face_value,average_payout,created_date, store_list,payment,status from receipts where user_id = ?', [req.params.id], function(err, rows) {
             if (err) return next(err);
 
             res.json(rows)
@@ -761,7 +760,8 @@ router.post('/sell-cards', function(req, res, next) {
                         cards: tempCards,
                         total_face_value: rows[0].total_face_value,
                         average_percentage: rows[0].average_percentage,
-                        created_date: rows[0].created_date
+                        created_date: rows[0].created_date,
+                        status: rows[0].status
                     };
                     // 
                     var receiptId = rows[0].id;
@@ -774,25 +774,32 @@ router.post('/sell-cards', function(req, res, next) {
                         if (!card.dealer_code) {
                             card.dealer_code = null;
                         }
-                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout];
+                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout, card.status];
                         insertedCard.push(item);
 
                     };
 
                     // console.log('inserted cards', insertedCard);
 
-                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout) VALUES ?', [insertedCard], function(err, ret) {
+                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout,status) VALUES ?', [insertedCard], function(err, ret) {
                         if (err) return next(err);
 
                         res.render('emails/sell-order', receipt, function(err, final_html) {
                             if (err) throw err;
 
+                            var title;
+                            if (receipt.status === 'ok') {
+                                title = 'Your Sell Order';
+                            } else {
+                                title = 'Your Pending Sell Order';
+                            }
+
                             // setup e-mail data with unicode symbols
                             var mailOptions = {
                                 from: 'Cardslyce <admin@cardslyce.com>', // sender address
                                 to: receipt.billingUser.email, // list of receivers
-                                subject: 'Your Sell Order!', // Subject line
-                                text: 'Your Sell Order!', // plaintext body
+                                subject: title, // Subject line
+                                text: title, // plaintext body
                                 html: final_html // html body
                             };
 

@@ -2,10 +2,14 @@
 
 
 module.exports = function(m) {
-    m.controller('SellCardCustomerInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'utilService',
-        function($scope, $location, $routeParams, authService, store, userService, utilService) {
+    m.controller('SellCardCustomerInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'utilService', 'storeList',
+        function($scope, $location, $routeParams, authService, store, userService, utilService, storeList) {
 
             var guest;
+
+            var cards;
+
+
 
             //discount by "enter online" method to 5.75%
             $scope.ENTER_ONLINE_DISCOUNT = 0.0575;
@@ -35,29 +39,81 @@ module.exports = function(m) {
 
 
 
+            cards = store.get('selling_cards');
 
+            // to check the number of cards remaining we can add
+            // to the inventory
+            var availAmounts = {};
+            for (var i = 0; i < storeList.length; i = i + 1) {
+                availAmounts[storeList[i].id] = storeList[i].limit - storeList[i].inventory;
+            }
+            // console.log('Availe amount', availAmounts);
+
+
+            // check if the selling has pending cards
+            // 
+            $scope.hasPendingCards = false;
+            for (i = 0; i < cards.length; i = i + 1) {
+                if (availAmounts[cards[i].store_id] > 0) {
+                    cards[i].status = 'ok';
+                    availAmounts[cards[i].store_id] -= 1;
+                } else {
+                    cards[i].status = 'pending';
+                    $scope.hasPendingCards = true;
+                }
+            }
+
+
+            var validCards = [];
+            var pendingCards = [];
+            for (i = 0; i < cards.length; i = i + 1) {
+                if (cards[i].status === 'ok') {
+                    validCards.push(cards[i]);
+                }
+
+                if (cards[i].status === 'pending') {
+                    pendingCards.push(cards[i]);
+                }
+            }
+
+
+            // init selling cards
             $scope.sellingCards = {
                 billingUser: ($scope.isGuest) ? guest : store.get('user'),
-                cards: store.get('selling_cards')
+                cards: validCards
             };
-
             if ($scope.sellingCards.cards[0].pay_by === 'mail') {
                 $scope.subtractAmount = 0;
             } else {
                 $scope.subtractAmount = 5;
             }
-
-
-
             console.log('selling cards', store.get('selling_cards'));
 
-            console.log('ME XXXXXXX', $scope.sellingCards.cards[0].pay_by);
-
+            console.log('PAYBY:', $scope.sellingCards.cards[0].pay_by);
+            // console.log('store limit', storeList);
             $scope.total = ($scope.sellingCards.cards[0].pay_by === 'mail') ? utilService.totalOfferMailCard($scope.sellingCards.cards) : utilService.totalOfferOnline($scope.sellingCards.cards);
-
             $scope.totalFaceValue = utilService.totalFaceValue($scope.sellingCards.cards);
-
             $scope.averagePayout = $scope.total / $scope.totalFaceValue * 100;
+
+
+
+            if ($scope.hasPendingCards === true) {
+                // init pending cards 
+                $scope.pendingCards = {
+                    billingUser: ($scope.isGuest) ? guest : store.get('user'),
+                    cards: pendingCards
+                };
+                if ($scope.pendingCards.cards[0].pay_by === 'mail') {
+                    $scope.subtractAmount = 0;
+                } else {
+                    $scope.subtractAmount = 5;
+                }
+                $scope.pendingTotal = ($scope.pendingCards.cards[0].pay_by === 'mail') ? utilService.totalOfferMailCard($scope.pendingCards.cards) : utilService.totalOfferOnline($scope.pendingCards.cards);
+                $scope.pendingTotalFaceValue = utilService.totalFaceValue($scope.pendingCards.cards);
+                $scope.pendingAveragePayout = $scope.pendingTotal / $scope.totalFaceValue * 100;
+
+
+            }
 
 
             $scope.sellCards = function() {
@@ -109,10 +165,15 @@ module.exports = function(m) {
                     total_face_value: $scope.totalFaceValue,
                     average_payout: $scope.averagePayout,
                     store_list: store_list.join(','),
-                    payment: $scope.sellingCards.cards[0].pay_by
+                    payment: $scope.sellingCards.cards[0].pay_by,
+                    status: 'ok'
                 };
 
+
+
                 console.log('YOUR SELLING CARDS', selling_cards);
+
+                console.log('YOUR PENDING CARDS', pending_cards);
 
                 userService.sellCards(selling_cards, function(result) {
 
@@ -134,6 +195,34 @@ module.exports = function(m) {
                     // console.log("ERRR", err);
                     swal('Error', err.data.message, 'error');
                 });
+
+
+                // save pending cards
+                if ($scope.hasPendingCards === true) {
+                    var pending_cards = {
+                        user_id: user.id,
+                        billing_user: $scope.pendingCards.billingUser,
+                        cards: $scope.pendingCards.cards,
+                        total_amount: $scope.pendingTotal,
+                        total_cards: $scope.pendingCards.cards.length,
+                        total_face_value: $scope.pendingTotalFaceValue,
+                        average_payout: $scope.pendingAveragePayout,
+                        store_list: store_list.join(','),
+                        payment: $scope.pendingCards.cards[0].pay_by,
+                        status: 'pending'
+                    };
+
+                    userService.sellCards(pending_cards, function(result) {
+                        console.log(result);
+                        console.log('PENDING RECEIPT', result);
+                    }, function(err) {
+                        // console.log("ERRR", err);
+                        swal('Error', err.data.message, 'error');
+                    });
+                }
+
+
+
 
             };
 

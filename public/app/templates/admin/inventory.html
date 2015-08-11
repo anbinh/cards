@@ -38,6 +38,8 @@
                      
                      
                      <th>Receipts</th>
+
+                     <th>Status</th>
                      
                      <th>Date Joined</th>
                   </tr>
@@ -57,6 +59,10 @@
                         <a href="/dashboard/#/receipts/{{card.receipt_id}}">
                            #{{card.receipt_id}}
                         </a> 
+                     </td>
+
+                     <td>
+                        <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
                      </td>
                      
                      

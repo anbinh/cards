@@ -730,6 +730,18 @@ See your Sell Order details below:</span></p>
 <p class="p2"><span class="s1"><strong>Payment&nbsp;Total: $<%=total_amount%><br>
 Payment you chose: ((check/ ACH / PayPal))&nbsp;<br>
 <br>
+
+<%if  (status == 'pending') {%>
+<p class="p2">
+<strong>We will process your payment once your order is confirmed </strong>
+</p>
+<br>
+Status: <%=status%>
+<br>
+<%}%>
+
+
+
 <br>
 Thank You&nbsp;For Using CardSlyce!&nbsp;</strong></span><br>
 The easiest way to Buy &amp; Sell Discounted Gift Cards&nbsp;<br>

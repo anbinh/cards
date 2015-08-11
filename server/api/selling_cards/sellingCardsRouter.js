@@ -24,7 +24,8 @@ router.get('/:id', function(req, res, next) {
                 store_list: rows[0].store_list,
                 created_date: rows[0].created_date,
                 billingUser: rows[0].billingUser,
-                payment: rows[0].payment
+                payment: rows[0].payment,
+                status: rows[0].status
             };
 
             var cards = [];
@@ -42,7 +43,8 @@ router.get('/:id', function(req, res, next) {
                     store_name: rows[i].store_name,
                     pay_by: rows[i].pay_by,
                     bought_value: rows[i].bought_value,
-                    payout: rows[i].payout
+                    payout: rows[i].payout,
+                    status: rows[i].status
 
                 };
                 cards.push(card);

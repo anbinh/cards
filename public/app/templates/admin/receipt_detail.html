@@ -35,6 +35,7 @@
                      <li class="user-li"><strong>Total Amount:</strong> ${{receipt.total_amount}}</li>
                      <li class="user-li"><strong>The Number Of Cards:</strong> {{receipt.total_cards}}</li>
                      <li class="user-li"><strong>Average Payout:</strong> {{receipt.average_payout | number:2}}%</li>
+                     <li class="user-li"><strong>Status:</strong> {{receipt.status | titlecase}}</li>
                      <li class="user-li"><strong>Datetime:</strong> {{receipt.created_date | date: 'MM/dd/yyyy'}}</li>
                   </ul>
                </p>
@@ -96,6 +97,7 @@
                      <th>Your Offer</th>
                      <th>Payout</th>
                      <th>Pay By</th>
+                     <th>Status</th>
                   </tr>
                </thead>
                <tbody>
@@ -109,6 +111,9 @@
                      <td>${{card.bought_value | number:2}}</td>
                      <td>{{card.payout| number:2}}%</td>
                      <td>{{card.pay_by | titlecase}}</td>
+                     <td>
+                        <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                     </td>
                   </tr>
                   
                   

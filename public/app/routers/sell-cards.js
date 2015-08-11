@@ -18,13 +18,18 @@ angular.module('app')
                 }).when('/card-info', {
                     templateUrl: 'sell_cards/card-info.html',
                     controller: 'SellCardInfoController'
-
-
                 }).when('/customer-info', {
                     templateUrl: 'sell_cards/customer-info.html',
-                    controller: 'SellCardCustomerInfoController'
-
-
+                    controller: 'SellCardCustomerInfoController',
+                    resolve: {
+                        storeList: ['storeService',
+                            function(storeSerivce) {
+                                return storeSerivce.limits().$promise.then(function(stores) {
+                                    return stores;
+                                });
+                            }
+                        ]
+                    }
                 }).when('/receipt/:id', {
                     templateUrl: 'sell_cards/receipt.html',
                     controller: 'SellCardReceiptController',

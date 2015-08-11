@@ -8,7 +8,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('SELECT * from receipts', [], function(err, rows) {
+        connection.query('SELECT * from receipts ORDER BY created_date DESC', [], function(err, rows) {
             if (err) return next(err);
 
             for (var i = 0; i < rows.length; i++) {

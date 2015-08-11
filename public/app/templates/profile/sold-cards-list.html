@@ -45,9 +45,11 @@
                                 #Cards
                             </th>
                             <th>Payment</th>
+                            <th>Status</th>
                             <th>
                                 Selling Date
                             </th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +72,9 @@
                             </td>
                             <td>
                                 {{(soldCards.payment==='mail' ? 'Mail' : 'Online')}}
+                            </td>
+                            <td>
+                                <div class="label {{(soldCards.status == 'ok') ? 'label-success' : 'label-danger'}}">{{soldCards.status | titlecase}}</div>
                             </td>
                             <td ng-click="soldCardsDetail(soldCards.id)" style="vertical-align : middle">
                                 {{soldCards.created_date | date: 'MM/dd/yyyy h:mma' }}

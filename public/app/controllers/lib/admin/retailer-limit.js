@@ -244,7 +244,7 @@ module.exports = function(m) {
                     }
 
 
-                    console.log("data posted", ret);
+                    console.log('data posted', ret);
                 },
 
                 rowRemove: function($row) {

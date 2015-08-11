@@ -78,6 +78,7 @@
                                 Payout
                             </th>
                             <th>Pay by</th>
+                            <td>Status</td>
                             
                             
                             
@@ -111,6 +112,9 @@
                                 {{card.payout | number:2}}%
                             </td>
                             <td>{{card.pay_by}}</td>
+                            <td>
+                                <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                            </td>
                             
                             
                         </tr>

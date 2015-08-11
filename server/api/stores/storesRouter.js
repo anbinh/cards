@@ -154,40 +154,7 @@ router.get('/', function(req, res, next) {
 
                 };
 
-                var query;
-
-
-                query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 group by store_id ';
-
-                req.getConnection(function(err, connection) {
-                    if (err) return next(err);
-                    connection.query(query, [], function(err, rows) {
-                        if (err) return next(err);
-
-                        var storeInventories = rows;
-
-                        // set the default to zero
-                        for (var i = 0; i < stores.length; i++) {
-                            stores[i].inventory = 0;
-                            stores[i].name = stores[i].name.trim();
-                        };
-
-                        for (var i = 0; i < stores.length; i++) {
-                            var store = stores[i];
-
-                            for (var j = 0; j < storeInventories.length; j++) {
-                                var storeInventory = storeInventories[j];
-                                if (storeInventory.store_id === store.id) {
-                                    stores[i].inventory = storeInventory.count;
-                                    // console.log(storeInventory, store);
-                                }
-                            };
-                        };
-
-                        res.json(stores)
-                    });
-
-                });
+                res.json(stores);
             });
 
 
@@ -265,7 +232,7 @@ router.get('/stats', function(req, res, next) {
 
                     result.revenue = rows[0].revenue;
 
-                    connection.query('select sum(value*gogo_buy/100) as expense from sold_cards ', [], function(err, rows) {
+                    connection.query('select sum(value*gogo_buy/100) as expense from sold_cards where status ="ok" ', [], function(err, rows) {
 
                         result.expense = rows[0].expense;
 
@@ -377,7 +344,7 @@ router.get('/highest-payout', function(req, res, next) {
 router.get('/popular-bought', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('select count(store_id) as count,store_name from sold_cards group by store_id order by count desc limit 10', [], function(err, rows) {
+        connection.query('select count(store_id) as count,store_name from sold_cards where status = "ok" group by store_id order by count desc limit 10', [], function(err, rows) {
             if (err) return next(err);
             res.json(rows);
         });
@@ -461,7 +428,7 @@ router.get('/limits', function(req, res, next) {
             var query;
 
 
-            query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 group by store_id ';
+            query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok" group by store_id ';
 
             req.getConnection(function(err, connection) {
                 if (err) return next(err);
@@ -567,7 +534,7 @@ router.get('/:name', function(req, res, next) {
                     var store = stores[0];
 
 
-                    connection.query('select * from sold_cards where store_id = ? and sold = 0', [storeId], function(err, rows) {
+                    connection.query('select * from sold_cards where store_id = ? and sold = 0 and status = "ok" ', [storeId], function(err, rows) {
                         if (err) return next(err);
 
                         var data = [];
