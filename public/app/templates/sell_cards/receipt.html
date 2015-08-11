@@ -125,6 +125,8 @@
                             <th>
                                 Pay By
                             </th>
+
+                            <th>Status</th>
                             
                             
                         </tr>
@@ -153,6 +155,9 @@
                             </td>
                             <td>
                                 {{card.pay_by | titlecase}}
+                            </td>
+                            <td>
+                                <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
                             </td>
                             
                         </tr>

@@ -95,8 +95,8 @@
                     <li><strong>Zipcode:</strong> {{ (sellingCards.billingUser.zipcode ? order.billingUser.zipcode : 'NOT SET')}}</li>
                 </ul>
                 <hr>
-                <h4 class="heading-primary"> <strong>Cards Review</strong></h4>
-                <table class="table table-striped">
+                <h4  ng-show='hasValidCards'  class="heading-primary"> <strong>Cards Review</strong></h4>
+                <table  ng-show='hasValidCards'  class="table table-striped">
                     <thead>
                         <tr>
                             <th>
@@ -231,8 +231,8 @@
                 <!-- END OF PENDING CARDS -->
 
                 <hr>
-                <h4 class="heading-primary"> <strong>Total Cards</strong></h4>
-                <table class="table">
+                <h4 ng-show='hasValidCards'  class="heading-primary"> <strong>Total Cards</strong></h4>
+                <table  ng-show='hasValidCards'  class="table">
                     <tbody>
                         <tr>
                             <td style="vertical-align: middle">

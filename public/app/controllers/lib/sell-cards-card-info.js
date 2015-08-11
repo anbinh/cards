@@ -69,19 +69,24 @@ module.exports = function(m) {
                 $scope.allSellingCards = store.get('selling_cards');
             }
 
-            if (($scope.user.dealer_code === null) || ($scope.user.dealer_code === undefined) || ($scope.user.dealer_code === '')) {
-                swal({
-                    title: 'Dealer Code Missing!',
-                    text: 'Missing Delear code for your dealer account. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
-                    type: 'error',
-                    showCancelButton: false,
-                    confirmButtonText: 'Ok',
-                    closeOnConfirm: false,
-                    closeOnCancel: false,
-                    animation: 'slide-from-top',
-                    html: true
-                });
+
+            if ($scope.isDealer === true) {
+                if (($scope.user.dealer_code === null) || ($scope.user.dealer_code === undefined) || ($scope.user.dealer_code === '')) {
+                    swal({
+                        title: 'Dealer Code Missing!',
+                        text: 'Missing Delear code for your dealer account. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
+                        type: 'error',
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                        closeOnConfirm: false,
+                        closeOnCancel: false,
+                        animation: 'slide-from-top',
+                        html: true
+                    });
+                }
             }
+
+
 
 
 
@@ -103,7 +108,7 @@ module.exports = function(m) {
                     }
                 }
 
-                if (checkDealerCode === true) {
+                if ((checkDealerCode === true) && ($scope.isDealer === true)) {
                     swal({
                         title: 'Dealer Code Not Match!',
                         text: 'Dealer Code does not match. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
