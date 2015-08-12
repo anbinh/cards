@@ -133,6 +133,77 @@ router.get('/sold-cards', function(req, res, next) {
 
 });
 
+/* GET /users/pending-cards listing. */
+router.get('/pending-cards', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+        connection.query('SELECT sold_cards.*, receipts.created_date from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold_cards.status = "pending"', [], function(err, rows) {
+            if (err) return next(err);
+
+
+            var pendingCards = JSON.parse(JSON.stringify(rows));
+
+
+            connection.query('select * from stores', function(err, rows) {
+                if (err) return next(err);
+
+
+                var stores = JSON.parse(JSON.stringify(rows));
+
+
+                var query;
+
+
+                query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok" group by store_id ';
+
+                req.getConnection(function(err, connection) {
+                    if (err) return next(err);
+                    connection.query(query, [], function(err, rows) {
+                        if (err) return next(err);
+
+                        var storeInventories = rows;
+
+                        // set the default to zero
+                        for (var i = 0; i < stores.length; i++) {
+                            stores[i].inventory = 0;
+                            stores[i].name = stores[i].name.trim();
+                        };
+
+                        for (var i = 0; i < stores.length; i++) {
+                            var store = stores[i];
+
+                            for (var j = 0; j < storeInventories.length; j++) {
+                                var storeInventory = storeInventories[j];
+                                if (storeInventory.store_id === store.id) {
+                                    stores[i].inventory = storeInventory.count;
+                                    // console.log(storeInventory, store);
+                                }
+                            };
+                        };
+
+                        for (var i = 0; i < pendingCards.length; i++) {
+                            var pendingCard = pendingCards[i];
+
+                            for (var j = 0; j < stores.length; j++) {
+                                if (stores[j].id === pendingCard.store_id) {
+                                    pendingCards[i].store_inventory = stores[j].inventory;
+                                    pendingCards[i].store_limit = stores[j].limit;
+                                }
+                            };
+                        };
+
+                        res.json(pendingCards)
+                    });
+
+                });
+            });
+
+        });
+
+    });
+
+});
+
 /* GET /users/guests/buy_cards listing. */
 router.get('/guests/buy_cards', function(req, res, next) {
     req.getConnection(function(err, connection) {

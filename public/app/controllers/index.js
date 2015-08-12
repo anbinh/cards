@@ -44,5 +44,6 @@ require('./lib/admin/sold_cards')(m);
 require('./lib/admin/user-profile')(m);
 require('./lib/admin/dealer-profile')(m);
 require('./lib/admin/retailer-limit')(m);
+require('./lib/admin/pending_cards')(m);
 
 module.exports = m;

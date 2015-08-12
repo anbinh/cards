@@ -402,99 +402,218 @@
                         </div>
                     </div>
                     <hr>
-                    <h4 class="heading-primary"> <strong>Cards review</strong></h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>
-                                </th>
-                                <th>
-                                </th>
-                                <th>
-                                    Merchant
-                                </th>
-                                <th>
-                                    Card Number
-                                </th>
-                                <th>
-                                    Card Pin
-                                </th>
-                                <th>
-                                    Your Offer
-                                </th>
-                                <th>
-                                    Payout
-                                </th>
-                                <th>
-                                    Pay By
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="card in sellingCards.cards track by $index">
-                                <td>{{$index + 1}}</td>
-                                <td style="vertical-align: middle">
-                                    <img height="30px" ng-src="/img/cards/{{card.store_name}}.jpg" alt="">
-                                </td>
-                                <td>
-                                    {{card.store_name | storename | titlecase }} (${{card.value}})
-                                </td>
-                                <td>
-                                    {{card.number}}
-                                </td>
-                                <td>
-                                    {{card.pin}}
-                                </td>
-                                <td>
-                                    {{card.bought_value | number:2}}
-                                </td>
-                                <td>
-                                    {{card.payout | number:2}}%
-                                </td>
-                                <td>
-                                    {{card.pay_by | titlecase}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <hr>
-                    <h4 class="heading-primary"> <strong>Total Cards</strong></h4>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td style="vertical-align: middle">
-                                    <strong>Total Face Value  </strong>
-                                </td>
-                                <td>
-                                    ${{totalFaceValue | number : 2}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle">
-                                    <strong>Total Cards For Sell  </strong>
-                                </td>
-                                <td>
-                                    {{sellingCards.cards.length}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle">
-                                    <strong> Average Payout </strong>
-                                </td>
-                                <td>
-                                    {{averagePayout | number:2}}%
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="vertical-align: middle">
-                                    <strong>Total  </strong>
-                                </td>
-                                <td>
-                                    <h4 style="color : #08C">${{total | number:2}}</h4>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h4  ng-show='hasValidCards'  class="heading-primary"> <strong>Cards Review</strong></h4>
+                <table  ng-show='hasValidCards'  class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                                Merchant
+                            </th>
+                            <th>
+                                Card Number
+                            </th>
+                            <th>
+                                Card Pin
+                            </th>
+                            <th ng-show="isDealer">
+                                Card Dealer Code
+                            </th>
+                            <th>
+                                Your Offer
+                            </th>
+                            <th>
+                                Payout
+                            </th>
+                            <th>
+                                Pay By
+                            </th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="card in sellingCards.cards track by $index">
+                            <td>{{$index + 1}}</td>
+                            <td style="vertical-align: middle">
+                                <img height="30px" ng-src="/img/cards/{{card.store_name}}.jpg" alt="">
+                            </td>
+                            <td>
+                                {{card.store_name | storename | titlecase }} (${{card.value}})
+                            </td>
+                            <td>
+                                {{card.number}}
+                            </td>
+                            <td>
+                                {{card.pin}}
+                            </td>
+                            <td ng-show="isDealer">
+                                {{card.dealer_code}}
+                            </td>
+                            <td>
+                                {{card.bought_value | number:2}}
+                            </td>
+                            <td>
+                                {{card.payout | number:2}}%
+                            </td>
+                            <td>
+                                {{card.pay_by | titlecase}}
+                            </td>
+                            <td>
+                                <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <!-- FOR PENDING CARDS -->
+                <h4 ng-show='hasPendingCards' class="heading-primary"> <strong>Pending Cards Review</strong></h4>
+                <table ng-show='hasPendingCards' class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                                Merchant
+                            </th>
+                            <th>
+                                Card Number
+                            </th>
+                            <th>
+                                Card Pin
+                            </th>
+                            <th ng-show="isDealer">
+                                Card Dealer Code
+                            </th>
+                            <th>
+                                Your Offer
+                            </th>
+                            <th>
+                                Payout
+                            </th>
+                            <th>
+                                Pay By
+                            </th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="card in pendingCards.cards track by $index">
+                            <td>{{$index + 1}}</td>
+                            <td style="vertical-align: middle">
+                                <img height="30px" ng-src="/img/cards/{{card.store_name}}.jpg" alt="">
+                            </td>
+                            <td>
+                                {{card.store_name | storename | titlecase }} (${{card.value}})
+                            </td>
+                            <td>
+                                {{card.number}}
+                            </td>
+                            <td>
+                                {{card.pin}}
+                            </td>
+                            <td ng-show="isDealer">
+                                {{card.dealer_code}}
+                            </td>
+                            <td>
+                                {{card.bought_value | number:2}}
+                            </td>
+                            <td>
+                                {{card.payout | number:2}}%
+                            </td>
+                            <td>
+                                {{card.pay_by | titlecase}}
+                            </td>
+                            <td>
+                                <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- END OF PENDING CARDS -->
+
+                <hr>
+                <h4 ng-show='hasValidCards'  class="heading-primary"> <strong>Total Cards</strong></h4>
+                <table  ng-show='hasValidCards'  class="table">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Face Value  </strong>
+                            </td>
+                            <td>
+                                ${{totalFaceValue | number : 2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Cards For Sell  </strong>
+                            </td>
+                            <td>
+                                {{sellingCards.cards.length}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong> Average Payout </strong>
+                            </td>
+                            <td>
+                                {{averagePayout | number:2}}%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Selling Price  </strong>
+                            </td>
+                            <td>
+                                <h4 style="color : #08C">${{total | number:2}}</h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <h4  ng-show='hasPendingCards' class="heading-primary"> <strong>Total Pending Cards</strong></h4>
+                <table  ng-show='hasPendingCards' class="table">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Pending Face Value  </strong>
+                            </td>
+                            <td>
+                                ${{pendingTotalFaceValue | number : 2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Cards For Sell  </strong>
+                            </td>
+                            <td>
+                                {{pendingCards.cards.length}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong> Average Payout </strong>
+                            </td>
+                            <td>
+                                {{pendingAveragePayout | number:2}}%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <strong>Total Pending Selling Price  </strong>
+                            </td>
+                            <td>
+                                <h4 style="color : #08C">${{pendingTotal | number:2}}</h4>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                     
                     <div>
                         <input type="checkbox" ng-model="agreed" ng-required='true'> I hereby certify I have read <a href="/terms-and-conditions">terms and conditions</a>  and agree 

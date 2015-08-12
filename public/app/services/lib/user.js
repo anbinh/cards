@@ -59,6 +59,11 @@ module.exports = function(m) {
                     'url': '/api/users/sold-cards',
                     isArray: true
                 },
+                'pendingCards': {
+                    method: 'GET',
+                    'url': '/api/users/pending-cards',
+                    isArray: true
+                },
                 'forgetPassword': {
                     method: 'POST',
                     'url': '/api/users/forget-password',

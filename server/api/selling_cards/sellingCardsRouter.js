@@ -60,4 +60,36 @@ router.get('/:id', function(req, res, next) {
 
 });
 
+router.get('/put-to-inventory/:cardId/:storeId', function(req, res, next) {
+    req.getConnection(function(err, connection) {
+        if (err) return next(err);
+
+        // check inventory and limit
+        connection.query('select count(*) as inventory, stores.limit from sold_cards JOIN stores ON stores.id = sold_cards.store_id where sold = 0 and status = "ok" and store_id = ?', [req.params.storeId], function(err, rows) {
+            var currentInventory = rows[0].inventory;
+            var limit = rows[0].limit;
+
+            // check whether we can add the current pending card to inventory
+            if (currentInventory + 1 <= limit) {
+                // we can add the card to the inventory
+                connection.query('update sold_cards set status = "ok" where store_id = ? and id = ?', [req.params.storeId, req.params.cardId], function(err, rows) {
+                    res.json({
+                        status: 'ok'
+                    });
+                });
+            } else {
+                res.json({
+                    status: 'fail',
+                    message: 'The inventory is full for the current store'
+                });
+            }
+
+
+        });
+
+    });
+
+});
+
+
 module.exports = router;

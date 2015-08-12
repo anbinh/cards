@@ -9,6 +9,10 @@ module.exports = function(m) {
                 'get': {
                     method: 'GET',
                     'url': '/api/selling_cards/:id'
+                },
+                'putToInventory': {
+                    method: 'GET',
+                    'url': '/api/selling_cards/put-to-inventory/:cardId/:storeId'
                 }
 
             });

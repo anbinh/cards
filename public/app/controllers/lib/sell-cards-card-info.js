@@ -100,28 +100,30 @@ module.exports = function(m) {
                 console.log('current selling cards', $scope.allSellingCards);
 
 
-                var checkDealerCode = false;
-
-                for (var i = 0; i < $scope.allSellingCards.length; i = i + 1) {
-                    if ($scope.allSellingCards[i].dealer_code !== $scope.user.dealer_code) {
-                        checkDealerCode = true;
+                // check dealer code only
+                if ($scope.isDealer === true) {
+                    var checkDealerCode = false;
+                    for (var i = 0; i < $scope.allSellingCards.length; i = i + 1) {
+                        if ($scope.allSellingCards[i].dealer_code !== $scope.user.dealer_code) {
+                            checkDealerCode = true;
+                        }
+                    }
+                    if ((checkDealerCode === true) && ($scope.isDealer === true)) {
+                        swal({
+                            title: 'Dealer Code Not Match!',
+                            text: 'Dealer Code does not match. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
+                            type: 'error',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok',
+                            closeOnConfirm: false,
+                            closeOnCancel: false,
+                            animation: 'slide-from-top',
+                            html: true
+                        });
+                        return;
                     }
                 }
 
-                if ((checkDealerCode === true) && ($scope.isDealer === true)) {
-                    swal({
-                        title: 'Dealer Code Not Match!',
-                        text: 'Dealer Code does not match. Please contact admin to get the code. <a href="mailto:admin@cardslyce.com?Subject=Need%20A%20Dealer%20Code" target="_top">Request A Dealer Code Now!</a>',
-                        type: 'error',
-                        showCancelButton: false,
-                        confirmButtonText: 'Ok',
-                        closeOnConfirm: false,
-                        closeOnCancel: false,
-                        animation: 'slide-from-top',
-                        html: true
-                    });
-                    return;
-                }
 
                 store.set('selling_cards', angular.copy($scope.allSellingCards));
 

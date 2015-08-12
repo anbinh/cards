@@ -194,7 +194,8 @@ router.get('/stats', function(req, res, next) {
     var result = {
 
         cards: {
-
+            available: 0,
+            sold: 0
         },
         guests: {
 
@@ -203,12 +204,16 @@ router.get('/stats', function(req, res, next) {
 
     req.getConnection(function(err, connection) {
         if (err) return next(err);
-        connection.query('select count(sold) as count,sold from sold_cards group by sold', [], function(err, rows) {
+        connection.query('select count(sold) as count,sold,status from sold_cards group by sold , status', [], function(err, rows) {
             if (err) return next(err);
 
             for (var i = 0; i < rows.length; i++) {
                 if (rows[i].sold === 0) {
-                    result.cards.available = rows[i].count
+                    result.cards.available += rows[i].count;
+
+                    if (rows[i].status === 'pending') {
+                        result.cards.pending = rows[i].count;
+                    }
                 }
 
                 if (rows[i].sold === 1) {

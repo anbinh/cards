@@ -107,6 +107,18 @@ angular.module('app')
                         }
                     ]
                 }
+            }).when('/pending-cards', {
+                templateUrl: 'admin/pending_cards.html',
+                controller: 'AdminPendingCardsController',
+                resolve: {
+                    CardList: ['userService', '$route',
+                        function(userService, $route) {
+                            return userService.pendingCards({}).$promise.then(function(cards) {
+                                return cards;
+                            });
+                        }
+                    ]
+                }
             }).when('/inventory', {
                 templateUrl: 'admin/inventory_by_retailer.html',
                 controller: 'AdminInventoryRetailerController',

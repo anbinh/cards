@@ -1,0 +1,85 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>All Available Cards</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Cards</span></li>
+            <li><span>All Cards</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <!-- start: page -->
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">Cards Information</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th></th>
+                     <th>Merchant</th>
+                     <th>Offer</th>
+                     <th>Number</th>
+                     <th>Pin</th>
+                     <th>Dealer Code</th>
+                     
+                     <th>Receipts</th>
+
+                     <th>Pay By</th>
+
+                     <th>Status</th>
+                     
+                     <th>Date Joined</th>
+
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="card in cards track by $index">
+                     <td>{{card.id}}</td>
+                     <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
+
+                     <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
+                     <td>${{card.bought_value | number:2}} </td>
+                     <td>{{card.number}}  </td>
+                     <td>{{card.pin}} </td>
+                     <td>{{card.dealer_code}} </td>
+                    
+                     <td class="center"> 
+                        <a href="/dashboard/#/receipts/{{card.receipt_id}}">
+                           #{{card.receipt_id}}
+                        </a> 
+                     </td>
+                     
+                     <td>{{card.pay_by | titlecase}}</td>
+                     <td>
+                        <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                     </td>
+                     <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
+                     <td>
+                        <div ng-show="card.canAddToInventory" ng-click="addToInventory($index)" class="btn btn-success">{{card.status === 'pending' ? 'Add to Inventory' : 'Added'}}</div>
+                     </td>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>

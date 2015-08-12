@@ -125,39 +125,38 @@ module.exports = function(m) {
 
             $scope.sellCards = function() {
 
+                var user, bilingUser, store_list, i;
+
                 if ($scope.agreed === false) {
                     swal('Warning', 'You have to agree the terms and conditions', 'warnning');
                     return;
                 }
 
 
-
-
-
                 if ($scope.hasValidCards === true) {
-                    var user = ($scope.isGuest) ? guest : store.get('user');
-                    var bilingUser = $scope.sellingCards.billingUser;
+                    user = ($scope.isGuest) ? guest : store.get('user');
+                    bilingUser = $scope.sellingCards.billingUser;
                     if ($scope.isGuest === true) {
-                        if (($scope.sellingCards.cards[0].pay_by === 'online') && (bilingUser.email !== bilingUser.email2)) {
+                        if (bilingUser.email !== bilingUser.email2) {
                             swal('Error!', 'Email does not match', 'error');
                             return;
                         }
 
-                        if (($scope.sellingCards.cards[0].pay_by === 'online') && (bilingUser.password !== bilingUser.password2)) {
+                        if (bilingUser.password !== bilingUser.password2) {
                             swal('Error!', 'Password does not match', 'error');
                             return;
                         }
                     }
 
                     // find store list
-                    var store_list = [];
-                    for (var i = 0; i < $scope.sellingCards.cards.length; i = i + 1) {
-                        var card = $scope.sellingCards.cards[i];
+                    store_list = [];
+                    for (i = 0; i < $scope.sellingCards.cards.length; i = i + 1) {
+                        var currentCard = $scope.sellingCards.cards[i];
                         // console.log('card', card);
 
 
-                        if (store_list.indexOf(card.store_name) === -1) {
-                            store_list.push(card.store_name);
+                        if (store_list.indexOf(currentCard.store_name) === -1) {
+                            store_list.push(currentCard.store_name);
                         }
                     }
 
@@ -205,22 +204,22 @@ module.exports = function(m) {
 
                 // save pending cards
                 if ($scope.hasPendingCards === true) {
-                    var user = ($scope.isGuest) ? guest : store.get('user');
-                    var bilingUser = $scope.pendingCards.billingUser;
+                    user = ($scope.isGuest) ? guest : store.get('user');
+                    bilingUser = $scope.pendingCards.billingUser;
                     if ($scope.isGuest === true) {
-                        if (($scope.pendingCards.cards[0].pay_by === 'online') && (bilingUser.email !== bilingUser.email2)) {
+                        if (bilingUser.email !== bilingUser.email2) {
                             swal('Error!', 'Email does not match', 'error');
                             return;
                         }
 
-                        if (($scope.pendingCards.cards[0].pay_by === 'online') && (bilingUser.password !== bilingUser.password2)) {
+                        if (bilingUser.password !== bilingUser.password2) {
                             swal('Error!', 'Password does not match', 'error');
                             return;
                         }
                     }
                     // find store list
-                    var store_list = [];
-                    for (var i = 0; i < $scope.pendingCards.cards.length; i = i + 1) {
+                    store_list = [];
+                    for (i = 0; i < $scope.pendingCards.cards.length; i = i + 1) {
                         var card = $scope.pendingCards.cards[i];
                         // console.log('card', card);
 

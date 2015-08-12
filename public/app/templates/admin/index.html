@@ -81,6 +81,30 @@
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
+                                        <h4 class="title">Total Cards Pending</h4>
+                                        <div class="info">
+                                            <strong class="amount">{{stats.cards.pending/range | number:0}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">&nbsp;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <section class="panel panel-featured-left panel-featured-primary">
+                        <div class="panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-primary">
+                                        <i class="fa fa-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
                                         <h4 class="title">Total Cards Sold To Users</h4>
                                         <div class="info">
                                             <strong class="amount">{{stats.cards.sold/range | number:0}}</strong>
@@ -111,7 +135,11 @@
                                             <strong class="amount">{{(stats.guests.buy_cards + stats.guests.sell_cards)/range | number:0}}</strong>
                                         </div>
                                     </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">&nbsp;</a>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </section>
@@ -330,6 +358,7 @@
                                     <div class="summary-footer">
                                         <a class="text-muted text-uppercase">&nbsp;</a>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -351,6 +380,10 @@
                                             <strong class="amount">${{stats.expense/range | number : 2}}</strong>
                                         </div>
                                     </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">&nbsp;</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -372,6 +405,10 @@
                                             <strong class="amount">${{stats.profit/range | number : 2}}</strong>
                                         </div>
                                     </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">&nbsp;</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -393,6 +430,10 @@
                                             <strong class="amount">${{stats.average_profit/range | number : 2}}</strong>
                                         </div>
                                     </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">&nbsp;</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -414,6 +455,10 @@
                                             <strong class="amount">{{stats.average_margin/range | number : 2}}%</strong>
                                         </div>
                                     </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">&nbsp;</a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
