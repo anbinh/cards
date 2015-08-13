@@ -679,8 +679,19 @@
 <h3 style="line-height: 20.7999992370605px;">Dear <%=billingUser.username%></h3>
 &nbsp;
 
+
+<%if (payment === "mail") {%>
+
+<p class="p1"><span class="s1">Our System is not Processing "Mail In" Orders Right Now<br>
+Please enter your Gift Card information online, using our "Enter Online" option</span></p>
+
+<% } else { %>
+
+<p class="p1">Congratulations!</p>
 <p class="p1"><span class="s1">Our System&nbsp;is Processing&nbsp;your payment Right Now.&nbsp;<br>
 See your Sell Order details below:</span></p>
+
+<%}%>
 
 <p class="p1"><span class="s1">Your items Sold:</span></p>
 
@@ -715,10 +726,10 @@ See your Sell Order details below:</span></p>
 			<p class="p2"><span class="s1">$<%=cards[i].value%></span></p>
 			</td>
 			<td class="td9" valign="middle">
-			<p class="p2"><span class="s1"><%=cards[i].gogo_buy%>%</span></p>
+			<p class="p2"><span class="s1"><%=cards[i].payout.toFixed(2)%>%</span></p>
 			</td>
 			<td class="td10" valign="middle">
-			<p class="p2"><span class="s1">$<%=cards[i].gogo_buy*cards[i].value/100%></span></p>
+			<p class="p2"><span class="s1">$<%=cards[i].bought_value.toFixed(2)%></span></p>
 			</td>
 		</tr>
 <% } %>

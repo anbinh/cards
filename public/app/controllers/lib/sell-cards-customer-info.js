@@ -54,14 +54,23 @@ module.exports = function(m) {
             $scope.hasPendingCards = false;
             $scope.hasValidCards = false;
             for (i = 0; i < cards.length; i = i + 1) {
-                if (availAmounts[cards[i].store_id] > 0) {
-                    cards[i].status = 'ok';
-                    availAmounts[cards[i].store_id] -= 1;
-                    $scope.hasValidCards = true;
-                } else {
+
+                // Set pending receipts for mail option
+                if (cards[i].pay_by === 'mail') {
                     cards[i].status = 'pending';
                     $scope.hasPendingCards = true;
+                } else {
+                    if (availAmounts[cards[i].store_id] > 0) {
+                        cards[i].status = 'ok';
+                        availAmounts[cards[i].store_id] -= 1;
+                        $scope.hasValidCards = true;
+                    } else {
+                        cards[i].status = 'pending';
+                        $scope.hasPendingCards = true;
+                    }
                 }
+
+
             }
 
 
@@ -78,7 +87,10 @@ module.exports = function(m) {
             }
 
 
-
+            $scope.sellingCards = {
+                billingUser: ($scope.isGuest) ? guest : store.get('user'),
+                cards: []
+            }
             if ($scope.hasValidCards === true) {
                 // init selling cards
                 $scope.sellingCards = {
@@ -117,7 +129,7 @@ module.exports = function(m) {
                 }
                 $scope.pendingTotal = ($scope.pendingCards.cards[0].pay_by === 'mail') ? utilService.totalOfferMailCard($scope.pendingCards.cards) : utilService.totalOfferOnline($scope.pendingCards.cards);
                 $scope.pendingTotalFaceValue = utilService.totalFaceValue($scope.pendingCards.cards);
-                $scope.pendingAveragePayout = $scope.pendingTotal / $scope.totalFaceValue * 100;
+                $scope.pendingAveragePayout = $scope.pendingTotal / $scope.pendingTotalFaceValue * 100;
 
 
             }
@@ -125,7 +137,7 @@ module.exports = function(m) {
 
             $scope.sellCards = function() {
 
-                var user, bilingUser, store_list, i;
+                var user, billingUser, store_list, i;
 
                 if ($scope.agreed === false) {
                     swal('Warning', 'You have to agree the terms and conditions', 'warnning');
@@ -135,17 +147,19 @@ module.exports = function(m) {
 
                 if ($scope.hasValidCards === true) {
                     user = ($scope.isGuest) ? guest : store.get('user');
-                    bilingUser = $scope.sellingCards.billingUser;
+                    billingUser = $scope.sellingCards.billingUser;
                     if ($scope.isGuest === true) {
-                        if (bilingUser.email !== bilingUser.email2) {
+                        if (billingUser.email !== billingUser.email2) {
                             swal('Error!', 'Email does not match', 'error');
                             return;
                         }
 
-                        if (bilingUser.password !== bilingUser.password2) {
+                        if (billingUser.password !== billingUser.password2) {
                             swal('Error!', 'Password does not match', 'error');
                             return;
                         }
+
+                        billingUser.username = billingUser.first_name + ' ' + billingUser.last_name;
                     }
 
                     // find store list
@@ -162,7 +176,7 @@ module.exports = function(m) {
 
                     var selling_cards = {
                         user_id: user.id,
-                        billing_user: $scope.sellingCards.billingUser,
+                        billing_user: ($scope.isGuest) ? billingUser : store.get('user'),
                         cards: $scope.sellingCards.cards,
                         total_amount: $scope.total,
                         total_cards: $scope.sellingCards.cards.length,
@@ -205,17 +219,19 @@ module.exports = function(m) {
                 // save pending cards
                 if ($scope.hasPendingCards === true) {
                     user = ($scope.isGuest) ? guest : store.get('user');
-                    bilingUser = $scope.pendingCards.billingUser;
+                    billingUser = $scope.sellingCards.billingUser;
                     if ($scope.isGuest === true) {
-                        if (bilingUser.email !== bilingUser.email2) {
+                        if (billingUser.email !== billingUser.email2) {
                             swal('Error!', 'Email does not match', 'error');
                             return;
                         }
 
-                        if (bilingUser.password !== bilingUser.password2) {
+                        if (billingUser.password !== billingUser.password2) {
                             swal('Error!', 'Password does not match', 'error');
                             return;
                         }
+
+                        billingUser.username = billingUser.first_name + ' ' + billingUser.last_name;
                     }
                     // find store list
                     store_list = [];
@@ -232,7 +248,7 @@ module.exports = function(m) {
 
                     var my_pending_cards = {
                         user_id: user.id,
-                        billing_user: $scope.pendingCards.billingUser,
+                        billing_user: ($scope.isGuest) ? billingUser : store.get('user'), // get billingUser from selling cards
                         cards: $scope.pendingCards.cards,
                         total_amount: $scope.pendingTotal,
                         total_cards: $scope.pendingCards.cards.length,

@@ -832,7 +832,8 @@ router.post('/sell-cards', function(req, res, next) {
                         total_face_value: rows[0].total_face_value,
                         average_percentage: rows[0].average_percentage,
                         created_date: rows[0].created_date,
-                        status: rows[0].status
+                        status: rows[0].status,
+                        payment: rows[0].payment
                     };
                     // 
                     var receiptId = rows[0].id;
