@@ -2,59 +2,49 @@
 
 
 module.exports = function(m) {
-    m.controller('AdminPendingCardsController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, CardList, sellingCardsService) {
+    m.controller('AdminPendingCardsController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, ReceiptList, sellingCardsService) {
 
 
         authService.adminAuthenticate();
 
         $rootScope.$broadcast('CHANGE_SIDEBAR_ITEM', 'cards', 'pending_cards');
 
-        $scope.cards = CardList;
 
 
-        var makePossibleCards = function() {
-            for (var i = 0; i < $scope.cards.length; i++) {
-                if ($scope.cards[i].store_limit > $scope.cards[i].store_inventory) {
-                    $scope.cards[i].canAddToInventory = true;
-                } else {
-                    $scope.cards[i].canAddToInventory = false;
-                }
-            };
-        }
+        $scope.receipts = ReceiptList;
 
-        makePossibleCards();
 
 
         $timeout(function() {
-            $('#datatable-default').dataTable();
+            $('#datatable-default').dataTable({
+                paging: false
+            });
         });
 
-        $scope.addToInventory = function(index) {
-
-            if ($scope.cards[index].status === 'pending') {
-                sellingCardsService.putToInventory({
-                    cardId: $scope.cards[index].id,
-                    storeId: $scope.cards[index].store_id
-                }, function(ret) {
-                    if (ret.status === 'fail') {
-                        swal('Error', 'Cannot add the card, the inventory is full for this store', 'error');
+        for (var i = 0; i < $scope.receipts.length; i = i + 1) {
+            if ($scope.receipts[i].billingUser.id === 0) {
+                $scope.receipts[i].billingUser.role = 'Guest';
+                $scope.receipts[i].billingUser.className = 'label-warning';
+            } else {
+                if ($scope.receipts[i].billingUser.role === '' || $scope.receipts[i].billingUser.role === undefined) {
+                    $scope.receipts[i].billingUser.role = 'User';
+                    $scope.receipts[i].billingUser.className = 'label-primary';
+                } else {
+                    if ($scope.receipts[i].billingUser.role === 'user') {
+                        $scope.receipts[i].billingUser.role = 'User';
+                        $scope.receipts[i].billingUser.className = 'label-primary';
                     } else {
-                        $scope.cards[index].status = 'ok';
-
-                        var storeId = $scope.cards[index].store_id;
-
-                        // update the inventory
-                        for (var i = 0; i < $scope.cards.length; i++) {
-                            if ($scope.cards[i].store_id === storeId) {
-                                $scope.cards[i].store_inventory += 1;
-                            }
+                        if ($scope.receipts[i].billingUser.role === 'dealer') {
+                            $scope.receipts[i].billingUser.role = 'Dealer';
+                            $scope.receipts[i].billingUser.className = 'label-success';
                         }
-
-                        makePossibleCards();
                     }
-                });
+                }
             }
+        }
 
+        $scope.receiptDetail = function(id) {
+            $location.url('receipts/' + id);
         };
 
     });

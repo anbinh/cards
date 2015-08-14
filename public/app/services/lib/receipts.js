@@ -8,6 +8,10 @@ module.exports = function(m) {
                 'get': {
                     method: 'GET',
                     'url': '/api/receipts/:id'
+                },
+                'putToInventory': {
+                    method: 'GET',
+                    'url': '/api/receipts/put-to-inventory/:id'
                 }
 
             });

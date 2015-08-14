@@ -111,9 +111,11 @@ angular.module('app')
                 templateUrl: 'admin/pending_cards.html',
                 controller: 'AdminPendingCardsController',
                 resolve: {
-                    CardList: ['userService', '$route',
-                        function(userService, $route) {
-                            return userService.pendingCards({}).$promise.then(function(cards) {
+                    ReceiptList: ['receiptService', '$route',
+                        function(receiptService, $route) {
+                            return receiptService.query({
+                                status: 'pending'
+                            }).$promise.then(function(cards) {
                                 return cards;
                             });
                         }

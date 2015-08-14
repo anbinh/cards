@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
    <header class="page-header">
-      <h2>All Available Cards</h2>
+      <h2>All Purchased Pending Cards</h2>
    
       <div class="right-wrapper pull-right">
          <ol class="breadcrumbs">
@@ -10,7 +10,7 @@
                </a>
             </li>
             <li><span>Cards</span></li>
-            <li><span>All Cards</span></li>
+            <li><span>Purchased Pending Cards</span></li>
          </ol>
    
          <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
@@ -22,56 +22,63 @@
          <header class="panel-heading">
             
       
-            <h2 class="panel-title">Cards Information</h2>
+            <h2 class="panel-title">Purchased Cards Information</h2>
          </header>
          <div class="panel-body">
-            <table class="table table-bordered table-striped mb-none" id="datatable-default">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
                <thead>
                   <tr> 
                      <th></th>
-                     <th></th>
-                     <th>Merchant</th>
-                     <th>Offer</th>
-                     <th>Number</th>
-                     <th>Pin</th>
-                     <th>Dealer Code</th>
-                     
-                     <th>Receipts</th>
-
-                     <th>Pay By</th>
-
+                     <th>Number Of Cards</th>
+                     <th>Total Face Value</th>
+                     <th>Total Amount</th>
+                     <th>Average Payout</th>
+                     <th>Total Stores</th>
+                     <th>User Name</th>
+                     <th>User Type</th>
+                     <th>Retailers</th>
+                     <th>Payment</th>
                      <th>Status</th>
-                     
-                     <th>Date Joined</th>
-
-                     <th>Action</th>
+                     <th>Datetime</th>
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="card in cards track by $index">
-                     <td>{{card.id}}</td>
-                     <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
-
-                     <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
-                     <td>${{card.bought_value | number:2}} </td>
-                     <td>{{card.number}}  </td>
-                     <td>{{card.pin}} </td>
-                     <td>{{card.dealer_code}} </td>
-                    
-                     <td class="center"> 
-                        <a href="/dashboard/#/receipts/{{card.receipt_id}}">
-                           #{{card.receipt_id}}
-                        </a> 
-                     </td>
+                  <tr ng-repeat="receipt in receipts track by $index"  style="cursor : pointer" ng-click="receiptDetail(receipt.id)">
+                     <td>{{receipt.id}}</td>
                      
-                     <td>{{card.pay_by | titlecase}}</td>
-                     <td>
-                        <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                     <td class="center">{{receipt.total_cards}}  </td>
+                     <td>${{receipt.total_face_value| number:2}} </td>
+                     <td>${{receipt.total_amount| number:2}} </td>
+                     <td>{{receipt.average_payout| number:2}}% </td>
+                  
+                     <td class="center">{{receipt.store_list.split(',').length}} </td>
+
+                     <td ng-switch on="receipt.billingUser.role">
+                        <a ng-switch-when="User" href="{{receipt.billingUser | dashboardProfile}}">{{receipt.billingUser | fullname}} </a>
+
+                        <a ng-switch-when="Dealer" href="{{receipt.billingUser | dashboardDealerProfile}}">{{receipt.billingUser | fullname}} </a>
+
+                      
+                        <span ng-switch-when="Guest">{{receipt.billingUser | fullname}} </span>
                      </td>
-                     <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
+
+                     <td> <span class="label {{receipt.billingUser.className}}">{{receipt.billingUser.role}}</span></td>
                      <td>
-                        <div ng-show="card.canAddToInventory" ng-click="addToInventory($index)" class="btn btn-success">{{card.status === 'pending' ? 'Add to Inventory' : 'Added'}}</div>
+                        
+                        <ul>
+                           <li ng-repeat="retailer in receipt.store_list.split(',')">
+                              {{retailer | storename | titlecase}}
+                           </li>
+                        </ul>
                      </td>
+                     <td>
+                        <span class="label label-info">{{(receipt.payment === 'online') ? 'Online' : 'Mail'}}</span>
+                        
+                     </td>
+                     <td>
+                        <div class="label {{(receipt.status == 'ok') ? 'label-success' : 'label-danger'}}">{{receipt.status | titlecase}}</div>
+                     </td>
+                     <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   
                   

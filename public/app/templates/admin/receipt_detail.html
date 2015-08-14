@@ -35,9 +35,19 @@
                      <li class="user-li"><strong>Total Amount:</strong> ${{receipt.total_amount}}</li>
                      <li class="user-li"><strong>The Number Of Cards:</strong> {{receipt.total_cards}}</li>
                      <li class="user-li"><strong>Average Payout:</strong> {{receipt.average_payout | number:2}}%</li>
-                     <li class="user-li"><strong>Status:</strong> {{receipt.status | titlecase}}</li>
+                     <li class="user-li">
+                        <strong>Status: </strong> 
+                        <div class="label {{(receipt.status === 'ok') ? 'label-success' : 'label-danger'}}">
+                             {{receipt.status | titlecase}}
+                        </div>
+   
+                     </li>
                      <li class="user-li"><strong>Datetime:</strong> {{receipt.created_date | date: 'MM/dd/yyyy'}}</li>
                   </ul>
+               </p>
+
+               <p>
+                  <div ng-show="receipt.status === 'pending'" ng-click="addToInventory()" class="btn btn-lg btn-success">Add To Inventory</div>
                </p>
 
             </div>

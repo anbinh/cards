@@ -2,7 +2,7 @@
 
 
 module.exports = function(m) {
-    m.controller('AdminReceiptDetailController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, ReceiptDetail) {
+    m.controller('AdminReceiptDetailController', function($scope, $rootScope, store, $location, storeService, authService, $timeout, ReceiptDetail, receiptService) {
 
         authService.adminAuthenticate();
 
@@ -34,7 +34,24 @@ module.exports = function(m) {
         }
 
 
+        $scope.addToInventory = function() {
+            if ($scope.receipt.status === 'pending') {
+                receiptService.putToInventory({
+                    id: $scope.receipt.id
+                }, function(ret) {
+                    if (ret.status === 'fail') {
+                        swal('Error', ret.message, 'error');
+                    } else {
+                        $scope.receipt.status = 'ok';
 
+                        for (var i = 0; i < $scope.receipt.cards.length; i++) {
+                            $scope.receipt.cards[i].status = 'ok';
+                        };
+                    }
+                });
+            }
+
+        }
 
         $timeout(function() {
             $('#datatable-default').dataTable();

@@ -32,6 +32,7 @@
                      <th></th>
                      <th>Merchant</th>
                      <th>Offer</th>
+                     <th>Payout</th>
                      <th>Number</th>
                      <th>Pin</th>
                      <th>Dealer Code</th>
@@ -39,9 +40,10 @@
                      
                      <th>Receipts</th>
 
+                     <th>Pay By</th>
                      <th>Status</th>
                      
-                     <th>Date Joined</th>
+                     <th>Date Bought</th>
                   </tr>
                </thead>
                <tbody>
@@ -50,7 +52,8 @@
                      <td> <a href="/dashboard/#/inventory/{{card.store_id}}"><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></a> </td>
 
                      <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
-                     <td>${{card.gogo_buy * card.value / 100 | number:2}} </td>
+                     <td>${{card.bought_value | number:2}} </td>
+                     <td>{{card.payout | number:2}}%</td>
                      <td>{{card.number}}  </td>
                      <td>{{card.pin}} </td>
                      <td>{{card.dealer_code}} </td>
@@ -60,6 +63,7 @@
                            #{{card.receipt_id}}
                         </a> 
                      </td>
+                     <td><div class="label label-info">{{card.pay_by | titlecase}}</div></td>
 
                      <td>
                         <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>

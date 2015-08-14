@@ -50,7 +50,7 @@
 
                      <th>Pay By</th>
                      
-                     <th>Date Joined</th>
+                     <th>Date Bought</th>
                   </tr>
                </thead>
                <tbody>
@@ -95,7 +95,7 @@
                         </a> 
                      </td>
                      
-                     <td>{{card.pay_by | titlecase}}</td>
+                     <td><div class="label label-info">{{card.pay_by | titlecase}}</div></td>
                      
                      <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>

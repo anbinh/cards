@@ -220,7 +220,7 @@ module.exports = function(m) {
                         inventory: parseInt(values[4])
                     };
 
-                    if (ret.limit <= ret.inventory) {
+                    if (ret.limit < ret.inventory) {
                         swal('Error', 'You cannot update the limit. The limit has to be greater than the number of cards in current inventory', 'error');
                     } else {
 
@@ -237,6 +237,13 @@ module.exports = function(m) {
                             id: ret.id
                         }, ret, function(ret) {
                             console.log('STORE HAS BEEN UPDATED', ret);
+
+                            // update the $scope.retailers
+                            for (var i = 0; i < $scope.retailers.length; i++) {
+                                if ($scope.retailers[i].id === ret.id) {
+                                    $scope.retailers[i].limit = ret.limit;
+                                }
+                            };
 
                         }, function(err) {
                             swal('Error', err.data.message, 'error');

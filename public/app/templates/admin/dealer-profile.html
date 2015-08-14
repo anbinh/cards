@@ -68,6 +68,8 @@
                      <th>Total Face Value</th>
                      <th>Total Amount</th>
                      <th>Average Discount</th>
+
+                     <th>Payment</th>
                    
                      <th>Datetime</th>
                   </tr>
@@ -79,6 +81,10 @@
                      <td>${{order.total_face_value | number:2}}  </td>
                      <td>${{order.total_amount}} </td>
                      <td>{{order.average_percentage | number:2}}% </td>
+
+                     <td>
+                        <div class="label label-info">{{(order.payment === 'ach') ? 'ACH' : 'CC Terminal' }}</div>
+                     </td>
                      
                      <td>{{order.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
@@ -106,6 +112,7 @@
                      <th>Total Amount</th>
                      <th>Average Payout</th>
                      <th>Total Stores</th>
+                     <th>Pay by</th>
                      <th>Status</th>
                      <th>Datetime</th>
                   </tr>
@@ -120,6 +127,9 @@
                      <td>{{receipt.average_payout| number:2}}% </td>
                   
                      <td class="center">{{receipt.store_list.split(',').length}} </td>
+                     <td>
+                        <div class="label label-info">{{receipt.payment | titlecase}}</div>
+                     </td>
                      <td>
                         <div class="label {{(receipt.status == 'ok') ? 'label-success' : 'label-danger'}}">{{receipt.status | titlecase}}</div>
                      </td>

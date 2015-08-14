@@ -43,7 +43,7 @@
 
                      <th>Status</th>
                      
-                     <th>Date Joined</th>
+                     <th>Date Bought</th>
                   </tr>
                </thead>
                <tbody>
@@ -65,7 +65,7 @@
                         </a> 
                      </td>
                      
-                     <td>{{card.pay_by | titlecase}}</td>
+                     <td><div class="label label-info">{{card.pay_by | titlecase}}</div></td>
                      <td>
                         <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
                      </td>
