@@ -35,21 +35,34 @@ module.exports = function(m) {
 
 
         $scope.addToInventory = function() {
-            if ($scope.receipt.status === 'pending') {
-                receiptService.putToInventory({
-                    id: $scope.receipt.id
-                }, function(ret) {
-                    if (ret.status === 'fail') {
-                        swal('Error', ret.message, 'error');
-                    } else {
-                        $scope.receipt.status = 'ok';
 
-                        for (var i = 0; i < $scope.receipt.cards.length; i++) {
-                            $scope.receipt.cards[i].status = 'ok';
-                        };
+            swal({
+                    title: "Are you sure?",
+                    text: "Do you want to add all these cards to the inventory",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#47A447",
+                    confirmButtonText: "Yes, Add These Cards",
+                    closeOnConfirm: false
+                },
+                function() {
+                    if ($scope.receipt.status === 'pending') {
+                        receiptService.putToInventory({
+                            id: $scope.receipt.id
+                        }, function(ret) {
+                            if (ret.status === 'fail') {
+                                swal('Error', ret.message, 'error');
+                            } else {
+                                $scope.receipt.status = 'ok';
+
+                                for (var i = 0; i < $scope.receipt.cards.length; i++) {
+                                    $scope.receipt.cards[i].status = 'ok';
+                                };
+                            }
+                        });
                     }
                 });
-            }
+
 
         }
 
