@@ -4,6 +4,19 @@ var express = require('express');
 var router = express.Router();
 
 
+
+var nodemailer = require('nodemailer');
+
+var mandrillTransport = require('nodemailer-mandrill-transport');
+
+var transporter = nodemailer.createTransport(mandrillTransport({
+    auth: {
+        apiKey: 'vlLsAGje1Fx4XBS4pckTSQ'
+    }
+}));
+
+var ADMIN_EMAIL = 'admin@cardslyce.com';
+
 // get all orders
 router.get('/', function(req, res, next) {
 
@@ -77,8 +90,18 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
                 return;
             }
 
-            var receipt = rows[0];
-
+            var receipt = {
+                id: rows[0].id,
+                user_id: rows[0].user_id,
+                total_amount: rows[0].total_amount,
+                total_cards: rows[0].total_cards,
+                billingUser: JSON.parse(rows[0].billing_user),
+                total_face_value: rows[0].total_face_value,
+                average_percentage: rows[0].average_percentage,
+                created_date: rows[0].created_date,
+                status: rows[0].status,
+                payment: rows[0].payment
+            };
 
 
             if (receipt.status !== 'pending') {
@@ -91,23 +114,34 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
                 // 
 
 
+
+
+
+
                 // getting store list
-                connection.query('select * from sold_cards where receipt_id = ? and status = "pending"', [receipt.id], function(err, rows) {
+                connection.query('select * from sold_cards where receipt_id = ? ', [receipt.id], function(err, rows) {
                     if (err) return next(err);
+
+
+                    receipt.cards = JSON.parse(JSON.stringify(rows));
 
                     var receiptStores = {};
                     var storeList = [];
                     for (var i = 0; i < rows.length; i++) {
                         var card = rows[i];
-                        if (receiptStores[card.store_id]) {
-                            receiptStores[card.store_id] += 1;
-                        } else {
-                            receiptStores[card.store_id] = 1;
+                        // only select pending cards
+                        if (card.status === 'pending') {
+                            if (receiptStores[card.store_id]) {
+                                receiptStores[card.store_id] += 1;
+                            } else {
+                                receiptStores[card.store_id] = 1;
+                            }
+
+                            if (storeList.indexOf(card.store_id) === -1) {
+                                storeList.push(card.store_id);
+                            }
                         }
 
-                        if (storeList.indexOf(card.store_id) === -1) {
-                            storeList.push(card.store_id);
-                        }
                     };
 
                     if (storeList.length > 0) {
@@ -189,8 +223,39 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
                                         connection.query('update receipts set status = "ok" where id = ?', [receipt.id], function(err, rows) {
                                             if (err) return next(err);
 
-                                            res.json({
-                                                status: 'ok'
+
+                                            receipt.status = 'ok';
+                                            res.render('emails/sell-order', receipt, function(err, final_html) {
+                                                if (err) throw err;
+
+                                                var title;
+                                                if (receipt.status === 'ok') {
+                                                    title = 'Your Sell Order';
+                                                } else {
+                                                    title = 'Your Pending Sell Order';
+                                                }
+
+                                                // setup e-mail data with unicode symbols
+                                                var mailOptions = {
+                                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                                    to: receipt.billingUser.email, // list of receivers
+                                                    subject: title, // Subject line
+                                                    text: title, // plaintext body
+                                                    html: final_html // html body
+                                                };
+
+                                                transporter.sendMail(mailOptions, function(error, info) {
+                                                    if (error) {
+                                                        return console.log(error);
+                                                    }
+                                                    console.log('Message sent: ', info);
+
+                                                });
+
+                                                res.json({
+                                                    status: 'ok'
+                                                });
+
                                             });
                                         });
                                     });
@@ -207,8 +272,38 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
                         connection.query('update receipts set status = "ok" where id = ?', [receipt.id], function(err, rows) {
                             if (err) return next(err);
 
-                            res.json({
-                                status: 'ok'
+                            receipt.status = 'ok';
+                            res.render('emails/sell-order', receipt, function(err, final_html) {
+                                if (err) throw err;
+
+                                var title;
+                                if (receipt.status === 'ok') {
+                                    title = 'Your Sell Order';
+                                } else {
+                                    title = 'Your Pending Sell Order';
+                                }
+
+                                // setup e-mail data with unicode symbols
+                                var mailOptions = {
+                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                    to: receipt.billingUser.email, // list of receivers
+                                    subject: title, // Subject line
+                                    text: title, // plaintext body
+                                    html: final_html // html body
+                                };
+
+                                transporter.sendMail(mailOptions, function(error, info) {
+                                    if (error) {
+                                        return console.log(error);
+                                    }
+                                    console.log('Message sent: ', info);
+
+                                });
+
+                                res.json({
+                                    status: 'ok'
+                                });
+
                             });
                         });
                     }
