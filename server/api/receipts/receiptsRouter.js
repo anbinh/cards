@@ -217,46 +217,66 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
 
                                     // we can add all pending cards of the receipt
 
-                                    connection.query('update sold_cards set status = "ok" where receipt_id = ?', [receipt.id], function(err, rows) {
+                                    connection.query('update sold_cards set status = "ok", bought_value = gogo_buy*(1-0.0575), payout= gogo_buy*(1-0.0575)/sold_cards.value*100, pay_by="online" where receipt_id = ?', [receipt.id], function(err, rows) {
                                         if (err) return next(err);
 
-                                        connection.query('update receipts set status = "ok" where id = ?', [receipt.id], function(err, rows) {
+                                        connection.query('update receipts set status = "ok", payment="online", total_amount=total_amount*(1 - 0.0575), average_payout=total_amount/total_face_value*100 where id = ?', [receipt.id], function(err, rows) {
                                             if (err) return next(err);
 
+                                            connection.query('select * from receipts where id = ?', [req.params.id], function(err, rows) {
+                                                if (err) return next(err);
 
-                                            receipt.status = 'ok';
-                                            res.render('emails/sell-order', receipt, function(err, final_html) {
-                                                if (err) throw err;
-
-                                                var title;
-                                                if (receipt.status === 'ok') {
-                                                    title = 'Your Sell Order';
-                                                } else {
-                                                    title = 'Your Pending Sell Order';
-                                                }
-
-                                                // setup e-mail data with unicode symbols
-                                                var mailOptions = {
-                                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
-                                                    to: receipt.billingUser.email, // list of receivers
-                                                    subject: title, // Subject line
-                                                    text: title, // plaintext body
-                                                    html: final_html // html body
+                                                var updatedReceipt = {
+                                                    id: rows[0].id,
+                                                    user_id: rows[0].user_id,
+                                                    total_amount: rows[0].total_amount,
+                                                    total_cards: rows[0].total_cards,
+                                                    billingUser: JSON.parse(rows[0].billing_user),
+                                                    total_face_value: rows[0].total_face_value,
+                                                    average_percentage: rows[0].average_percentage,
+                                                    created_date: rows[0].created_date,
+                                                    status: rows[0].status,
+                                                    payment: rows[0].payment,
+                                                    cards: receipt.cards
                                                 };
 
-                                                transporter.sendMail(mailOptions, function(error, info) {
-                                                    if (error) {
-                                                        return console.log(error);
+
+                                                res.render('emails/sell-order', updatedReceipt, function(err, final_html) {
+                                                    if (err) throw err;
+
+                                                    var title;
+                                                    if (updatedReceipt.status === 'ok') {
+                                                        title = 'Your Sell Order';
+                                                    } else {
+                                                        title = 'Your Pending Sell Order';
                                                     }
-                                                    console.log('Message sent: ', info);
+
+                                                    // setup e-mail data with unicode symbols
+                                                    var mailOptions = {
+                                                        from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                                        to: updatedReceipt.billingUser.email, // list of receivers
+                                                        subject: title, // Subject line
+                                                        text: title, // plaintext body
+                                                        html: final_html // html body
+                                                    };
+
+                                                    transporter.sendMail(mailOptions, function(error, info) {
+                                                        if (error) {
+                                                            return console.log(error);
+                                                        }
+                                                        console.log('Message sent: ', info);
+
+                                                    });
+
+                                                    res.json({
+                                                        status: 'ok'
+                                                    });
 
                                                 });
-
-                                                res.json({
-                                                    status: 'ok'
-                                                });
-
                                             });
+
+
+
                                         });
                                     });
                                 }
@@ -269,7 +289,7 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
                         });
                     } else {
                         // all the cards of the receipt has the status of OK
-                        connection.query('update receipts set status = "ok" where id = ?', [receipt.id], function(err, rows) {
+                        connection.query('update sold_cards set status = "ok", bought_value = gogo_buy*(1-0.0575), payout= gogo_buy*(1-0.0575)/sold_cards.value*100, pay_by="online" where receipt_id = ?', [receipt.id], function(err, rows) {
                             if (err) return next(err);
 
                             receipt.status = 'ok';

@@ -43,7 +43,7 @@ module.exports = function(m) {
                     showCancelButton: true,
                     confirmButtonColor: "#47A447",
                     confirmButtonText: "Yes, Add These Cards",
-                    closeOnConfirm: false
+                    closeOnConfirm: true
                 },
                 function() {
                     if ($scope.receipt.status === 'pending') {
@@ -53,11 +53,12 @@ module.exports = function(m) {
                             if (ret.status === 'fail') {
                                 swal('Error', ret.message, 'error');
                             } else {
-                                $scope.receipt.status = 'ok';
+                                // $scope.receipt.status = 'ok';
 
-                                for (var i = 0; i < $scope.receipt.cards.length; i++) {
-                                    $scope.receipt.cards[i].status = 'ok';
-                                };
+                                // for (var i = 0; i < $scope.receipt.cards.length; i++) {
+                                //     $scope.receipt.cards[i].status = 'ok';
+                                // };
+                                window.location.reload(true);
                             }
                         });
                     }

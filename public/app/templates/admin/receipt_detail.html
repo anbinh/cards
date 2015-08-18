@@ -32,7 +32,7 @@
                <p>
                   <ul style="  padding-left : 20px; bottom-margin : 10px">
                      <li class="user-li"> <strong>Total Face Value:</strong> <span>${{receipt.total_face_value}}</span></li>
-                     <li class="user-li"><strong>Total Amount:</strong> ${{receipt.total_amount}}</li>
+                     <li class="user-li"><strong>Total Amount:</strong> ${{receipt.total_amount | number:2}}</li>
                      <li class="user-li"><strong>The Number Of Cards:</strong> {{receipt.total_cards}}</li>
                      <li class="user-li"><strong>Average Payout:</strong> {{receipt.average_payout | number:2}}%</li>
                      <li class="user-li">
