@@ -37,12 +37,12 @@ module.exports = function(m) {
         $scope.addToInventory = function() {
 
             swal({
-                    title: "Are you sure?",
-                    text: "Do you want to add all these cards to the inventory",
-                    type: "warning",
+                    title: 'Are you sure?',
+                    text: 'Do you want to add all these cards to the inventory',
+                    type: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: "#47A447",
-                    confirmButtonText: "Yes, Add These Cards",
+                    confirmButtonColor: '#47A447',
+                    confirmButtonText: 'Yes, Add These Cards',
                     closeOnConfirm: true
                 },
                 function() {
@@ -65,7 +65,7 @@ module.exports = function(m) {
                 });
 
 
-        }
+        };
 
         $timeout(function() {
             $('#datatable-default').dataTable();

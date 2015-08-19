@@ -90,7 +90,7 @@ module.exports = function(m) {
             $scope.sellingCards = {
                 billingUser: ($scope.isGuest) ? guest : store.get('user'),
                 cards: []
-            }
+            };
             if ($scope.hasValidCards === true) {
                 // init selling cards
                 $scope.sellingCards = {

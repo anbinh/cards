@@ -39,6 +39,8 @@
                         <strong>Payment:</strong> {{(order.payment === 'ach') ? 'ACH' : 'CC Terminal'}}
                      </li>
                      <li class="user-li"><strong>Datetime:</strong> {{order.created_date | date: 'MM/dd/yyyy'}}</li>
+
+                     <div ng-click="sendGiftCards()" class="btn btn-success btn-lg">Send Gift Cards</div>
                   </ul>
                </p>
 

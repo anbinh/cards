@@ -15,6 +15,10 @@ module.exports = function(m) {
                     isArray: true,
                     'url': '/api/orders'
                 },
+                'sendGiftCards': {
+                    method: 'GET',
+                    'url': '/api/orders/giftcards/:id'
+                }
 
             });
         }

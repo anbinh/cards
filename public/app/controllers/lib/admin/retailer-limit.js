@@ -239,11 +239,11 @@ module.exports = function(m) {
                             console.log('STORE HAS BEEN UPDATED', ret);
 
                             // update the $scope.retailers
-                            for (var i = 0; i < $scope.retailers.length; i++) {
+                            for (var i = 0; i < $scope.retailers.length; i = i + 1) {
                                 if ($scope.retailers[i].id === ret.id) {
                                     $scope.retailers[i].limit = ret.limit;
                                 }
-                            };
+                            }
 
                         }, function(err) {
                             swal('Error', err.data.message, 'error');
