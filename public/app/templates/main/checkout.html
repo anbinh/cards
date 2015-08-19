@@ -119,7 +119,7 @@
                                             <span class="amount">${{card.value}}</span>
                                         </td>
                                         <td class="product-quantity">
-                                            <span class="amount">{{card.pay/card.value*100 | number: 2}}%</span>
+                                            <span class="amount">{{100 - card.pay/card.value*100 | number: 2}}%</span>
                                         </td>
                                         <td class="product-subtotal">
                                             <span class="amount">${{card.pay | number:2}}</span>
