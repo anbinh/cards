@@ -236,43 +236,50 @@ router.get('/put-to-inventory/:id', function(req, res, next) {
                                                     average_percentage: rows[0].average_percentage,
                                                     created_date: rows[0].created_date,
                                                     status: rows[0].status,
-                                                    payment: rows[0].payment,
-                                                    cards: receipt.cards
+                                                    payment: rows[0].payment
                                                 };
 
+                                                connection.query('select * from sold_cards where receipt_id = ? ', [receipt.id], function(err, rows) {
+                                                    if (err) return next(err);
 
-                                                res.render('emails/sell-order', updatedReceipt, function(err, final_html) {
-                                                    if (err) throw err;
+                                                    updatedReceipt.cards = JSON.parse(JSON.stringify(rows));
 
-                                                    var title;
-                                                    if (updatedReceipt.status === 'ok') {
-                                                        title = 'Your Sell Order';
-                                                    } else {
-                                                        title = 'Your Pending Sell Order';
-                                                    }
+                                                    res.render('emails/sell-order', updatedReceipt, function(err, final_html) {
+                                                        if (err) throw err;
 
-                                                    // setup e-mail data with unicode symbols
-                                                    var mailOptions = {
-                                                        from: 'Cardslyce <admin@cardslyce.com>', // sender address
-                                                        to: updatedReceipt.billingUser.email, // list of receivers
-                                                        subject: title, // Subject line
-                                                        text: title, // plaintext body
-                                                        html: final_html // html body
-                                                    };
-
-                                                    transporter.sendMail(mailOptions, function(error, info) {
-                                                        if (error) {
-                                                            return console.log(error);
+                                                        var title;
+                                                        if (updatedReceipt.status === 'ok') {
+                                                            title = 'Your Sell Order';
+                                                        } else {
+                                                            title = 'Your Pending Sell Order';
                                                         }
-                                                        console.log('Message sent: ', info);
+
+                                                        // setup e-mail data with unicode symbols
+                                                        var mailOptions = {
+                                                            from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                                            to: updatedReceipt.billingUser.email, // list of receivers
+                                                            subject: title, // Subject line
+                                                            text: title, // plaintext body
+                                                            html: final_html // html body
+                                                        };
+
+                                                        transporter.sendMail(mailOptions, function(error, info) {
+                                                            if (error) {
+                                                                return console.log(error);
+                                                            }
+                                                            console.log('Message sent: ', info);
+
+                                                        });
+
+                                                        res.json({
+                                                            status: 'ok'
+                                                        });
 
                                                     });
-
-                                                    res.json({
-                                                        status: 'ok'
-                                                    });
-
                                                 });
+
+
+
                                             });
 
 
