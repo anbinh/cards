@@ -554,6 +554,7 @@ router.get('/:name', function(req, res, next) {
                             var stopLoss = false;
                             if (pay < minimum_pay) {
                                 pay = minimum_pay;
+                                discount = 100 - pay / val * 100;
                                 stopLoss = true;
                             }
 
