@@ -32,6 +32,7 @@
                      <th></th>
                      <th>Merchant</th>
                      <th>Offer</th>
+                     <th>Min Price</th>
                      
                      <th>Selling Price</th>
                
@@ -63,6 +64,9 @@
 
                      <!-- OFFER -->
                      <td>${{card.bought_value | number:2}} </td>
+
+                     <!-- MIN PRICE -->
+                     <td>${{card.bought_value*1.061 | number:2}} </td>
                      
                      <!-- SELLING PRICE -->
                      <td>${{card.purchase.pay}}</td>

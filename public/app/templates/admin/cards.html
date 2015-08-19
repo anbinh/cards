@@ -32,6 +32,7 @@
                      <th></th>
                      <th>Merchant</th>
                      <th>Offer</th>
+                     <th>Min Price</th>
                      <th>Number</th>
                      <th>Pin</th>
                      <th>Dealer Code</th>
@@ -52,7 +53,13 @@
                      <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
 
                      <td>{{card.store_name | storename | titlecase}} (${{card.value}}) </td>
+
+                     <!-- OFFER -->
                      <td>${{card.bought_value | number:2}} </td>
+
+                     <!-- MIN PRICE -->
+                     <td>${{card.bought_value*1.061 | number:2}} </td>
+
                      <td>{{card.number}}  </td>
                      <td>{{card.pin}} </td>
                      <td>{{card.dealer_code}} </td>
