@@ -69,7 +69,7 @@
                      <td>${{card.bought_value*1.061 | number:2}} </td>
                      
                      <!-- SELLING PRICE -->
-                     <td>${{card.purchase.pay}}</td>
+                     <td>${{card.purchase.pay | number:2}}</td>
                      
                      <!-- PROFIT -->
                      <td>${{card.purchase.pay - card.bought_value | number:2}}</td>
