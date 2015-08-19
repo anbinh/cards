@@ -550,7 +550,7 @@ router.get('/:name', function(req, res, next) {
                             var pay = (100 - discount) * val / 100;
 
                             // 6% above the original bought value
-                            var minimum_pay = rows[i].bought_value * 1.06;
+                            var minimum_pay = rows[i].bought_value * 1.061;
                             var stopLoss = false;
                             if (pay < minimum_pay) {
                                 pay = minimum_pay;
