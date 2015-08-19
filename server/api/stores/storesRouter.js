@@ -548,6 +548,15 @@ router.get('/:name', function(req, res, next) {
                             var val = rows[i].value;
                             var discount = store.gogo_discount;
                             var pay = (100 - discount) * val / 100;
+
+                            // 6% above the original bought value
+                            var minimum_pay = rows[i].bought_value * 1.06;
+                            var stopLoss = false;
+                            if (pay < minimum_pay) {
+                                pay = minimum_pay;
+                                stopLoss = true;
+                            }
+
                             var item = {
                                 "id": rows[i].id,
                                 "store_id": store.id,
@@ -555,7 +564,8 @@ router.get('/:name', function(req, res, next) {
                                 "type": "Physical",
                                 "value": val,
                                 "pay": pay,
-                                "save": discount
+                                "save": discount,
+                                "stop_loss": stopLoss
                             }
 
                             data.push(item)
