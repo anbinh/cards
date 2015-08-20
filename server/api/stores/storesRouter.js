@@ -556,6 +556,12 @@ router.get('/:name', function(req, res, next) {
                                 pay = minimum_pay;
                                 discount = 100 - pay / val * 100;
                                 stopLoss = true;
+
+                                connection.query('update stores set stop_loss = 1 where id = ?', [storeId], function(err, rows) {
+                                    if (err) return next(err);
+
+                                    console.log("store has been updated", rows);
+                                });
                             }
 
                             var item = {
