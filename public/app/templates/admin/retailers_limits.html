@@ -23,6 +23,35 @@
       
             <h2 class="panel-title">Retailers Table</h2>
          </header>
+
+         <div class="panel-body">
+            
+
+            <div class="row">
+               <div class="col-xs-12 col-sm-12 col-md-6">
+                  <table class="table " >
+                     
+                     <tbody>
+                        <tr > 
+                           <th class="danger" style="border-top : none"><div ></div></th>
+                           <th  style="border-top : none">Store has a stop-loss</th>
+                        </tr>
+                        <tr>
+                           <th style="border-top : none"></th>
+                           <th style="border-top : none"></th>
+                        </tr>
+                        <tr > 
+                           <th class="success" style="border-top : none"><div ></div></th>
+                           <th  style="border-top : none">Store is full</th>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-6">
+                  
+               </div>
+            </div>
+         </div>
          <div class="panel-body">
             <table class="table table-bordered table-striped mb-none" id="datatable-default">
                <thead>
@@ -36,7 +65,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr ng-repeat="retailer in retailers track by $index" class="{{(retailer.limit === retailer.inventory) ? 'success'  :''}}">
+                  <tr ng-repeat="retailer in retailers track by $index" class="{{(retailer.limit === retailer.inventory) ? 'success'  :''}} {{(retailer.stop_loss == 1) ? 'danger' : ''}}">
                      <td  class="actions">{{retailer.id}}</td>
                      <td  class="actions">
                         <a href="/dashboard/#/inventory/{{retailer.id}}">
