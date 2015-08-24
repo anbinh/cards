@@ -538,49 +538,66 @@ router.get('/:name', function(req, res, next) {
 
                     var store = stores[0];
 
+                    var stopLoss = 6.1; // default stoploss
 
-                    connection.query('select * from sold_cards where store_id = ? and sold = 0 and status = "ok" ', [storeId], function(err, rows) {
+                    // getting stoploss setting
+                    connection.query('select * from settings where name = "stoploss" ', function(err, rows) {
                         if (err) return next(err);
 
-                        var data = [];
+                        if (rows[0] && rows[0].value) {
+                            stopLoss = parseFloat(rows[0].value);
+                        }
 
-                        for (var i = rows.length - 1; i >= 0; i--) {
-                            var val = rows[i].value;
-                            var discount = store.gogo_discount;
-                            var pay = (100 - discount) * val / 100;
+                        console.log("stoploss", stopLoss);
 
-                            // 6% above the original bought value
-                            var minimum_pay = rows[i].bought_value * 1.061;
-                            var stopLoss = false;
-                            if (pay < minimum_pay) {
-                                pay = minimum_pay;
-                                discount = 100 - pay / val * 100;
-                                stopLoss = true;
+                        connection.query('select * from sold_cards where store_id = ? and sold = 0 and status = "ok" ', [storeId], function(err, rows) {
+                            if (err) return next(err);
 
-                                connection.query('update stores set stop_loss = 1 where id = ?', [storeId], function(err, rows) {
-                                    if (err) return next(err);
+                            var data = [];
 
-                                    console.log("store has been updated", rows);
-                                });
-                            }
+                            for (var i = rows.length - 1; i >= 0; i--) {
+                                var val = rows[i].value;
+                                var discount = store.gogo_discount;
+                                var pay = (100 - discount) * val / 100;
 
-                            var item = {
-                                "id": rows[i].id,
-                                "store_id": store.id,
-                                "name": store.name,
-                                "type": "Physical",
-                                "value": val,
-                                "pay": pay,
-                                "save": discount,
-                                "stop_loss": stopLoss
-                            }
+                                // 6% above the original bought value
+                                var minimum_pay = rows[i].bought_value * (1 + stopLoss / 100);
+                                var hasStopLoss = false;
+                                if (pay < minimum_pay) {
+                                    pay = minimum_pay;
+                                    discount = 100 - pay / val * 100;
+                                    hasStopLoss = true;
 
-                            data.push(item)
-                        };
+                                    // console.log("has stop loss", minimum_pay);
 
-                        res.json(data);
+                                    // connection.query('update stores set stop_loss = 1 where id = ?', [storeId], function(err, rows) {
+                                    //     if (err) return next(err);
 
+                                    //     console.log("store has been updated", rows);
+                                    // });
+                                }
+
+                                var item = {
+                                    "id": rows[i].id,
+                                    "store_id": store.id,
+                                    "name": store.name,
+                                    "type": "Physical",
+                                    "value": val,
+                                    "pay": pay,
+                                    "save": discount,
+                                    "stop_loss": hasStopLoss
+                                }
+
+                                data.push(item)
+                            };
+
+                            res.json(data);
+
+                        });
                     });
+
+
+
 
 
                 });

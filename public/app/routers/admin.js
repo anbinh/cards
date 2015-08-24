@@ -244,6 +244,18 @@ angular.module('app')
                         }
                     ]
                 }
+            }).when('/settings', {
+                templateUrl: 'admin/settings.html',
+                controller: 'AdminSettingsController',
+                resolve: {
+                    Settings: ['settingService', '$route',
+                        function(settingService, $route) {
+                            return settingService.query({}).$promise.then(function(settings) {
+                                return settings;
+                            });
+                        }
+                    ]
+                }
             });
         }
     ]);

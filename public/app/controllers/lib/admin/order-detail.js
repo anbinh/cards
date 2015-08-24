@@ -49,7 +49,7 @@ module.exports = function(m) {
                     }, function(ret) {
 
                         if (ret.status === 'error') {
-                            swal('Error', ret.message, 'error')
+                            swal('Error', ret.message, 'error');
                         } else {
                             swal('Success', 'The gift cards have been sent to the email: ' + $scope.order.billingUser.email, 'success');
                         }

@@ -10,5 +10,6 @@ require('./lib/order')(m);
 require('./lib/receipts')(m);
 require('./lib/selling_cards')(m);
 require('./lib/utils')(m);
+require('./lib/setting')(m);
 
 module.exports = m;
