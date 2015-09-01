@@ -11,5 +11,6 @@ require('./lib/receipts')(m);
 require('./lib/selling_cards')(m);
 require('./lib/utils')(m);
 require('./lib/setting')(m);
+require('./lib/card')(m);
 
 module.exports = m;

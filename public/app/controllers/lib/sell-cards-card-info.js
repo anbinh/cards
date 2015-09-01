@@ -2,8 +2,8 @@
 
 
 module.exports = function(m) {
-    m.controller('SellCardInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService',
-        function($scope, $location, $routeParams, authService, store, userService) {
+    m.controller('SellCardInfoController', ['$scope', '$location', '$routeParams', 'authService', 'store', 'userService', 'cardService',
+        function($scope, $location, $routeParams, authService, store, userService, cardService) {
 
             //discount by "enter online" method to 5.75%
             $scope.ENTER_ONLINE_DISCOUNT = 0.0575;
@@ -86,9 +86,10 @@ module.exports = function(m) {
                 }
             }
 
-
-
-
+            // check cards statuses
+            for (var k = 0; k < $scope.allSellingCards.length; k = k + 1) {
+                $scope.allSellingCards[k].status = 'unchecked';
+            }
 
             console.log('selling stores xxx', store.get('selling_cards'));
             $scope.goBack = function() {
@@ -149,6 +150,53 @@ module.exports = function(m) {
                     window.location = window.location.origin + '/sell-cards/#/customer-info';
                 }
             };
+
+
+            var checkCard = function(i) {
+                var cardDat = {
+                    'card_number': $scope.allSellingCards[i].number,
+                    'retailer_id': '114',
+                    'pin': $scope.allSellingCards[i].pin
+                };
+                var index = i;
+                $scope.allSellingCards[index].status = 'processing';
+                cardService.inquiry(cardDat, function(result) {
+                    console.log(result);
+
+                    if (result.response.responseCode === '000') {
+                        $scope.allSellingCards[index].status = "success";
+                    } else {
+                        if (result.response.responseCode === '010') {
+                            $scope.allSellingCards[index].status = "delayed";
+                        } else {
+                            if (result.response.responseCode === '900011') {
+                                $scope.allSellingCards[index].status = "invalid_retailer";
+                            } else {
+                                if (result.response.responseCode === '179') {
+                                    $scope.allSellingCards[index].status = "timeout";
+                                } else {
+                                    $scope.allSellingCards[index].status = "error";
+                                }
+                            }
+
+                        }
+                    }
+                });
+            };
+
+            $scope.checkCards = function() {
+
+                console.log('call check cards');
+                for (var i = 0; i < $scope.allSellingCards.length; i = i + 1) {
+                    if (($scope.allSellingCards[i].pin) && ($scope.allSellingCards[i].number)) {
+                        // testing card inquiry
+                        checkCard(i);
+                    }
+                }
+
+            };
+
+
         }
     ]);
 };

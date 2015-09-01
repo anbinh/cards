@@ -34,7 +34,7 @@ var email = require('./server/api/email/emailRouter');
 var stores = require('./server/api/stores/storesRouter');
 var sellingCards = require('./server/api/selling_cards/sellingCardsRouter');
 var settings = require('./server/api/settings/settingsRouter');
-
+var cards = require('./server/api/cards/cardsRouter');
 
 var app = express();
 
@@ -61,6 +61,7 @@ app.use('/api/email', email);
 app.use('/api/stores', stores);
 app.use('/api/selling_cards', sellingCards);
 app.use('/api/settings', settings);
+app.use('/api/cards', cards);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
