@@ -10,10 +10,6 @@ var child;
 router.post('/inquiry', function(req, res, next) {
     var dat = req.body;
 
-    // console.log('dat', dat);
-
-
-
     var commandLine = "php server/api/cards/inquiry.php " + dat.card_number + " ";
     commandLine += dat.retailer_id + " ";
     commandLine += dat.pin;

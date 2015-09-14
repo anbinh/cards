@@ -106,9 +106,9 @@
                                     <th ng-show="isDealer" class="card-info-header">
                                         Dealer Code
                                     </th>
-                                    <th class="card-info-header">
+                                    <!-- <th class="card-info-header">
                                         Status
-                                    </th>
+                                    </th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -131,17 +131,7 @@
                                         <input type="text" ng-model="card.dealer_code" class="input-lg card-number" placeholder="Card Dealer Code">
 
                                     </td>
-                                    <td class="card-info-input">
-                                        <div ng-switch on="card.status">
-                                            <div  ng-switch-when="unchecked" class="label label-default"> Unchecked</div>
-                                            <div ng-switch-when="processing" class="label label-info"> <i class="fa fa-spinner"></i> Processing</div>
-                                            <div ng-switch-when="success" class="label label-success"> <i class="fa fa-check"></i> Success</div>
-                                            <div ng-switch-when="delayed" class="label label-warning"> <i class="fa fa-exclamation"></i> Delayed</div>
-                                            <div ng-switch-when="invalid_retailer" class="label label-danger"> <i class="fa fa-credit-card"></i> Invalid Retailer</div>
-                                            <div ng-switch-when="timeout" class="label label-danger"> <i class="fa fa-clock-o"></i> Timeout</div>
-                                            <div ng-switch-when="error" class="label label-danger"> Error</div>
-                                        </div>
-                                    </td>
+                                    
 
                                 </tr>
                                 
@@ -150,8 +140,7 @@
                         </table>
                     </div>
 
-                    <button ng-click="checkCards()" type="input" class="btn btn-success btn-lg"><i class="fa fa-credit-card "></i> Check Cards</button>
-
+                    
                     <div class="row pull-right">
                         
                         <button ng-click="goBack()" type="input" class="btn btn-danger btn-add-card btn-lg">Back</button>

@@ -687,7 +687,7 @@ Please enter your Gift Card information online, using our "Enter Online" option<
 
 <% } else { %>
 
-<p class="p1">Congratulations!</p>
+
 <p class="p1"><span class="s1">Our System&nbsp;is Processing&nbsp;your payment Right Now.&nbsp;<br>
 See your Sell Order details below:</span></p>
 
@@ -742,22 +742,15 @@ See your Sell Order details below:</span></p>
 Payment you chose: ((check/ ACH / PayPal))&nbsp;<br>
 <br>
 
-<%if  (status == 'pending') {%>
-<p class="p2">
-<strong>We will process your payment once your order is confirmed </strong>
-</p>
-<br>
-Status: <%=status%>
-<br>
-<%}%>
 
 
-<%if  (status == 'processing') {%>
+
+<%if  (balance_status == 'processing') {%>
 <p class="p2">
 <strong>* We will process your payment once your Card Number, Pin and Balance is confirmed</strong>
 </p>
 <br>
-Status: <%=status%>
+Status: Processing
 <br>
 
 You will receive a confirmation email once your Balance is Confirmed

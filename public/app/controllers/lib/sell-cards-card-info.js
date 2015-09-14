@@ -164,18 +164,18 @@ module.exports = function(m) {
                     console.log(result);
 
                     if (result.response.responseCode === '000') {
-                        $scope.allSellingCards[index].status = "success";
+                        $scope.allSellingCards[index].status = 'success';
                     } else {
                         if (result.response.responseCode === '010') {
-                            $scope.allSellingCards[index].status = "delayed";
+                            $scope.allSellingCards[index].status = 'delayed';
                         } else {
                             if (result.response.responseCode === '900011') {
-                                $scope.allSellingCards[index].status = "invalid_retailer";
+                                $scope.allSellingCards[index].status = 'invalid_retailer';
                             } else {
                                 if (result.response.responseCode === '179') {
-                                    $scope.allSellingCards[index].status = "timeout";
+                                    $scope.allSellingCards[index].status = 'timeout';
                                 } else {
-                                    $scope.allSellingCards[index].status = "error";
+                                    $scope.allSellingCards[index].status = 'error';
                                 }
                             }
 
@@ -184,17 +184,17 @@ module.exports = function(m) {
                 });
             };
 
-            $scope.checkCards = function() {
+            // $scope.checkCards = function() {
 
-                console.log('call check cards');
-                for (var i = 0; i < $scope.allSellingCards.length; i = i + 1) {
-                    if (($scope.allSellingCards[i].pin) && ($scope.allSellingCards[i].number)) {
-                        // testing card inquiry
-                        checkCard(i);
-                    }
-                }
+            //     console.log('call check cards');
+            //     for (var i = 0; i < $scope.allSellingCards.length; i = i + 1) {
+            //         if (($scope.allSellingCards[i].pin) && ($scope.allSellingCards[i].number)) {
+            //             // testing card inquiry
+            //             checkCard(i);
+            //         }
+            //     }
 
-            };
+            // };
 
 
         }

@@ -39,6 +39,7 @@
                      <th>Retailers</th>
                      <th>Payment</th>
                      <th>Status</th>
+                     <th>Balance Status</th>
                      <th>Datetime</th>
                   </tr>
                </thead>
@@ -77,6 +78,10 @@
                      </td>
                      <td>
                         <div class="label {{(receipt.status == 'ok') ? 'label-success' : 'label-danger'}}">{{receipt.status | titlecase}}</div>
+                     </td>
+
+                     <td>
+                        <div class="label {{(receipt.balance_status == 'ok') ? 'label-success' : 'label-warning'}}">{{receipt.balance_status | titlecase}}</div>
                      </td>
                      <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>

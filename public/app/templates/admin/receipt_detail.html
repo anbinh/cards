@@ -108,6 +108,7 @@
                      <th>Payout</th>
                      <th>Pay By</th>
                      <th>Status</th>
+                     <th>Balance Status</th>
                   </tr>
                </thead>
                <tbody>
@@ -123,6 +124,9 @@
                      <td>{{card.pay_by | titlecase}}</td>
                      <td>
                         <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                     </td>
+                     <td>
+                        <div class="label {{(card.balance_status == 'ok') ? 'label-success' : 'label-warning'}}">{{card.balance_status | titlecase}}</div>
                      </td>
                   </tr>
                   

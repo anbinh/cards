@@ -25,6 +25,10 @@ var transporter = nodemailer.createTransport(mandrillTransport({
     }
 }));
 
+var sys = require('sys')
+var exec = require('child_process').exec;
+var child;
+
 var ADMIN_EMAIL = 'admin@cardslyce.com';
 // var ADMIN_EMAIL = 'tinhoc@outlook.com';
 
@@ -407,7 +411,6 @@ router.post('/admin-login', function(req, res, next) {
         res.json({
             message: 'Wrong admin'
         });
-
         return;
     }
 
@@ -794,6 +797,52 @@ router.post('/pay-order', function(req, res, next) {
 
 });
 
+
+var transformAPIBalance = function(balancedCards, cards) {
+
+    var finalCards = [];
+    for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+
+        for (var j = 0; j < balancedCards.length; j++) {
+            var request = balancedCards[j].request;
+            var response = balancedCards[j].response;
+
+            if (response == null) {
+                card.balance_status = 'error';
+            } else {
+                if ((request.card_number == card.number) && (request.pin == card.pin)) {
+                    if (response.responseCode === '000') {
+                        card.balance_status = 'success';
+                    } else {
+                        if (response.responseCode === '010') {
+                            card.balance_status = 'delayed';
+                        } else {
+                            if (response.responseCode === '900011') {
+                                card.balance_status = 'invalid_retailer';
+                            } else {
+                                if (response.responseCode === '179') {
+                                    card.balance_status = 'timeout';
+                                } else {
+                                    card.balance_status = 'error';
+                                }
+                            }
+
+                        }
+                    }
+
+
+                }
+            }
+
+        };
+
+        finalCards.push(card);
+    };
+
+    return finalCards;
+}
+
 /* POST /users/sell-cards */
 router.post('/sell-cards', function(req, res, next) {
 
@@ -813,89 +862,178 @@ router.post('/sell-cards', function(req, res, next) {
 
         delete dat.cards;
 
-        connection.query('INSERT INTO receipts SET ?', dat, function(err, result) {
+        var commandParams = '';
+        for (var i = 0; i < tempCards.length; i++) {
+            var card = tempCards[i];
+            var retailer_id = 11;
+            commandParams += card.number + " " + retailer_id + " " + card.pin + " ";
+        }
 
-            if (err) return next(err);
 
-            if (result.affectedRows === 1) {
-                var orderId = result.insertId;
-                connection.query('Select * from receipts where id = ' + orderId, [], function(err, rows) {
+        var commandLine = "php server/api/cards/inquiry.php " + commandParams;
+
+        console.log(" API Balance check ", commandLine);
+
+
+        // executes `pwd`
+        child = exec(commandLine, function(error, stdout, stderr) {
+            // sys.print('stdout: ' + stdout);
+            sys.print('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+
+                res.json({
+                    success: false,
+                    message: error
+                })
+            } else {
+                var ret = JSON.parse(stdout);
+                // res.json(ret);
+                // 
+                // console.log('API balance checking', ret);
+
+                tempCards = transformAPIBalance(ret, tempCards);
+
+                // console.log('final_cards', tempCards);
+
+                var successCardCount = 0;
+                for (var i = 0; i < tempCards.length; i++) {
+                    if (tempCards[i].balance_status === 'success') {
+                        successCardCount += 1;
+                    }
+                };
+
+                if (successCardCount === tempCards.length) {
+                    dat.balance_status = 'ok';
+                } else {
+                    dat.balance_status = 'processing';
+                }
+
+                connection.query('INSERT INTO receipts SET ?', dat, function(err, result) {
+
                     if (err) return next(err);
 
-                    var receipt = {
-                        id: rows[0].id,
-                        user_id: rows[0].user_id,
-                        total_amount: rows[0].total_amount,
-                        total_cards: rows[0].total_cards,
-                        billingUser: JSON.parse(rows[0].billing_user),
-                        cards: tempCards,
-                        total_face_value: rows[0].total_face_value,
-                        average_percentage: rows[0].average_percentage,
-                        created_date: rows[0].created_date,
-                        status: rows[0].status,
-                        payment: rows[0].payment
-                    };
-                    // 
-                    var receiptId = rows[0].id;
+                    if (result.affectedRows === 1) {
+                        var orderId = result.insertId;
+                        connection.query('Select * from receipts where id = ' + orderId, [], function(err, rows) {
+                            if (err) return next(err);
 
+                            var receipt = {
+                                id: rows[0].id,
+                                user_id: rows[0].user_id,
+                                total_amount: rows[0].total_amount,
+                                total_cards: rows[0].total_cards,
+                                billingUser: JSON.parse(rows[0].billing_user),
+                                cards: tempCards,
+                                total_face_value: rows[0].total_face_value,
+                                average_percentage: rows[0].average_percentage,
+                                created_date: rows[0].created_date,
+                                status: rows[0].status,
+                                balance_status: rows[0].balance_status,
+                                payment: rows[0].payment
+                            };
+                            // 
+                            var receiptId = rows[0].id;
 
-                    var insertedCard = [];
-                    for (var i = 0; i < receipt.cards.length; i++) {
-                        receipt.cards[i].receipt_id = receiptId;
-                        var card = receipt.cards[i];
-                        if (!card.dealer_code) {
-                            card.dealer_code = null;
-                        }
-                        var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout, card.status];
-                        insertedCard.push(item);
+                            var insertedCard = [];
+                            for (var i = 0; i < receipt.cards.length; i++) {
+                                receipt.cards[i].receipt_id = receiptId;
+                                var card = receipt.cards[i];
+                                if (!card.dealer_code) {
+                                    card.dealer_code = null;
+                                }
+                                var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout, card.status, card.balance_status];
+                                insertedCard.push(item);
 
-                    };
-
-                    // console.log('inserted cards', insertedCard);
-
-                    connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout,status) VALUES ?', [insertedCard], function(err, ret) {
-                        if (err) return next(err);
-
-                        res.render('emails/sell-order', receipt, function(err, final_html) {
-                            if (err) throw err;
-
-                            var title;
-                            if (receipt.status === 'ok') {
-                                title = 'Your Sell Order';
-                            } else {
-                                title = 'Your Pending Sell Order';
-                            }
-
-                            // setup e-mail data with unicode symbols
-                            var mailOptions = {
-                                from: 'Cardslyce <admin@cardslyce.com>', // sender address
-                                to: receipt.billingUser.email, // list of receivers
-                                subject: title, // Subject line
-                                text: title, // plaintext body
-                                html: final_html // html body
                             };
 
-                            transporter.sendMail(mailOptions, function(error, info) {
-                                if (error) {
-                                    return console.log(error);
+                            // console.log('inserted cards', insertedCard);
+
+                            connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout,status,balance_status) VALUES ?', [insertedCard], function(err, ret) {
+                                if (err) return next(err);
+
+                                if (receipt.balance_status == 'processing') {
+                                    res.render('emails/processing-order', receipt, function(err, final_html) {
+                                        if (err) throw err;
+
+                                        var title;
+                                        title = 'Your Processing Sell Order';
+
+                                        // setup e-mail data with unicode symbols
+                                        var mailOptions = {
+                                            from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                            to: receipt.billingUser.email, // list of receivers
+                                            subject: title, // Subject line
+                                            text: title, // plaintext body
+                                            html: final_html // html body
+                                        };
+
+                                        transporter.sendMail(mailOptions, function(error, info) {
+                                            if (error) {
+                                                return console.log(error);
+                                            }
+                                            console.log('Message sent: ', info);
+
+                                        });
+
+
+                                    });
                                 }
-                                console.log('Message sent: ', info);
+
+                                res.render('emails/sell-order', receipt, function(err, final_html) {
+                                    if (err) throw err;
+
+                                    var title;
+                                    if (receipt.status === 'ok') {
+                                        title = 'Your Sell Order';
+                                    } else {
+                                        title = 'Your Pending Sell Order';
+                                    }
+
+                                    // setup e-mail data with unicode symbols
+                                    var mailOptions = {
+                                        from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                        to: receipt.billingUser.email, // list of receivers
+                                        subject: title, // Subject line
+                                        text: title, // plaintext body
+                                        html: final_html // html body
+                                    };
+
+                                    // we only send the confirmation email if
+                                    // the order'status is ok
+                                    // and its balance_status is ok
+
+                                    if ((receipt.balance_status === 'ok') && (receipt.status == 'ok')) {
+                                        transporter.sendMail(mailOptions, function(error, info) {
+                                            if (error) {
+                                                return console.log(error);
+                                            }
+                                            console.log('Message sent: ', info);
+
+                                        });
+                                    }
+
+
+
+                                    res.json(receipt);
+
+                                });
+
 
                             });
 
-                            res.json(receipt);
-
-                        });
 
 
-                    });
+                        })
+                    }
 
-
-
-                })
+                });
             }
 
+
         });
+
+
 
 
 

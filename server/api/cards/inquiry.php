@@ -144,29 +144,48 @@ function get_delayed_balance($request_id) {
 // $pin = "1234"; // Enter test card pin number here
 // $version = '2';
 
-$card_number = $argv[1];
-$retailer_id = $argv[2];
-$pin = $argv[3];
+
 $version = '2';
 
-$result = get_balance($retailer_id, $card_number, trim($pin), $version);
 
-$ret = [
-	"request" => [
-		"card_number" => $card_number,
-		"retailer_id" => $retailer_id,
-		"pin" => $pin,
-		"version" => $version,
-	],
-	"response" => $result,
-];
 
-print_r(json_encode($ret));
+$argCount = count($argv) - 1;
 
-// echo "REQUEST ID " . $result["requestId"] . "\n";
+if ($argCount%3 != 0){
+	echo "wrong arguments";
+} else {
 
-// $delayedResult  = get_delayed_balance($result["requestId"]);
 
-// print_r($delayedResult);
+	$final = array();
+	for ($i=1; $i < $argCount; $i=$i+3) { 
+
+		$card_number = $argv[$i];
+		$retailer_id = $argv[$i+1];
+		$pin = $argv[$i+2];
+
+		$result = get_balance($retailer_id, $card_number, trim($pin), $version);
+
+		$ret = [
+			"request" => [
+				"card_number" => $card_number,
+				"retailer_id" => $retailer_id,
+				"pin" => $pin,
+				"version" => $version,
+			],
+			"response" => $result,
+		];
+
+
+		array_push($final, $ret);
+	}
+
+	
+
+
+	print_r(json_encode($final));
+};
+
+
+
 
 ?>
