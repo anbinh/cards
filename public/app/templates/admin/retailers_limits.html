@@ -61,6 +61,7 @@
                      <th>Name</th>
                      <th>Limit</th>
                      <th>Inventory</th>
+                     <th>Retailer ID</th>
                      <th>Actions</th>
                   </tr>
                </thead>
@@ -74,6 +75,11 @@
                      <td class="actions">{{retailer.name | storename | titlecase}} </td>
                      <td style="vertical-align : middle">{{retailer.limit}} </td>
                      <td class="actions">{{retailer.inventory}}</td>
+                     <td style="vertical-align : middle"> 
+
+                        {{(retailer.retailer_id == null) ? '' : retailer.retailer_id}}
+                        <div class="label label-danger">{{(retailer.retailer_id !== null) ? '' : 'NULL'}}</div>
+                     </td>
                      <td class="actions">
                         <a  class="hidden on-editing save-row">
                            <i class="fa fa-save"></i>

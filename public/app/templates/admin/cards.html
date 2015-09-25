@@ -43,6 +43,8 @@
                      <th>Pay By</th>
 
                      <th>Status</th>
+
+                     <th>Balance status</th>
                      
                      <th>Date Bought</th>
                   </tr>
@@ -75,6 +77,9 @@
                      <td><div class="label label-info">{{card.pay_by | titlecase}}</div></td>
                      <td>
                         <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                     </td>
+                     <td>
+                        <div class="label {{(card.balance_status == 'success') ? 'label-success' : 'label-warning'}}">{{card.balance_status | titlecase}}</div>
                      </td>
                      <td>{{card.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>

@@ -1,8 +1,23 @@
 <?php
-//error_reporting(0);
-define('API_USER','test');
-define('API_KEY','Test123');
-define('API_URL', 'https://api.cardquiry.com:8080');
+// //error_reporting(0);
+// 
+define('TESTING_MODE',true);
+
+if (TESTING_MODE == true) {
+  define('API_USER','test');
+  define('API_KEY','Test123');
+  define('API_URL', 'https://api.cardquiry.com:8080');
+} else {
+  define('API_USER','JUNKOoDEfR');
+  define('API_KEY','KE8MatT9BbW0AznVS6GzdceELTCAVFzB6hZmNdAgMBAAGjggG5MIIBtTAfBgN');
+  define('API_URL', 'https://api.cardquiry.com:8080');
+}
+
+echo 'Testing mode:' . TESTING_MODE . ' API_USER: ' . API_USER . "\n";
+// define('API_USER','test');
+// define('API_KEY','Test123');
+// define('API_URL', 'https://api.cardquiry.com:8080');
+
 
 function authenticate($method, $content_type, $canonicalized_resource, $canonicalized_POST_Variables)
 {
@@ -147,9 +162,9 @@ function get_delayed_balance($request_id)
 
 //////////////////////////////////////////////////////////////////////////////////////
         
-$card_number = "111111111111111xx";// Enter the test card number here
-$retailer_id = '114';// Retailer ID will be provided by CardQuiry for all supported retailers. 
-$pin = "1234"; // Enter test card pin number here
+$card_number = "6080326095843643";// Enter the test card number here
+$retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
+$pin = "20723803"; // Enter test card pin number here
 $version='2';
 
 $result = get_balance($retailer_id,$card_number,trim($pin),$version);

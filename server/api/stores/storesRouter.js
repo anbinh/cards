@@ -114,7 +114,7 @@ router.get('/', function(req, res, next) {
 
             // console.log(ids);
 
-            connection.query('select stores.id, stores.name as name, stores.limit as store_limit, cards.discount, stats.gcg_buy,stats.gogo_discount_extra, stats.fixed_discount from cards LEFT JOIN stores ON stores.id = cards.store_id   LEFT JOIN stats ON stats.id=cards.store_id where cards.id in ( ' + ids + ' ) order by store_id DESC', [], function(err, rows) {
+            connection.query('select stores.id, stores.name as name,stores.retailer_id as retailer_id, stores.limit as store_limit, cards.discount, stats.gcg_buy,stats.gogo_discount_extra, stats.fixed_discount from cards LEFT JOIN stores ON stores.id = cards.store_id   LEFT JOIN stats ON stats.id=cards.store_id where cards.id in ( ' + ids + ' ) order by store_id DESC', [], function(err, rows) {
                 if (err) return next(err);
 
                 var stores = [];
@@ -550,7 +550,7 @@ router.get('/:name', function(req, res, next) {
 
                         console.log("stoploss", stopLoss);
 
-                        connection.query('select * from sold_cards where store_id = ? and sold = 0 and status = "ok" ', [storeId], function(err, rows) {
+                        connection.query('select * from sold_cards where store_id = ? and sold = 0 and status = "ok" and balance_status = "success" ', [storeId], function(err, rows) {
                             if (err) return next(err);
 
                             var data = [];
@@ -621,7 +621,8 @@ router.put('/:id', function(req, res, next) {
         if (err) return next(err);
 
         var updatedDat = {
-            limit: dat.limit
+            limit: dat.limit,
+            retailer_id: dat.retailer_id
         }
 
         connection.query('UPDATE stores SET  ? where id = ?', [updatedDat, req.params.id], function(err, rows) {

@@ -80,7 +80,7 @@ router.get('/inventory_by_retailer', function(req, res, next) {
     var query;
 
 
-    query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok" group by store_id ';
+    query = 'SELECT count(store_id) as count, store_name, store_id from sold_cards LEFT JOIN receipts ON receipts.id = sold_cards.receipt_id  where sold = 0 and sold_cards.status = "ok" and sold_cards.balance_status = "success" group by store_id ';
 
     req.getConnection(function(err, connection) {
         if (err) return next(err);
@@ -863,17 +863,30 @@ router.post('/sell-cards', function(req, res, next) {
         delete dat.cards;
 
         var commandParams = '';
+
+        // check if any retailer ID is empty
+        var containNullRetailerId = false;
         for (var i = 0; i < tempCards.length; i++) {
             var card = tempCards[i];
-            var retailer_id = 11;
-            commandParams += card.number + " " + retailer_id + " " + card.pin + " ";
+            if (card.retailer_id == null) {
+                containNullRetailerId = true;
+            }
+
+        };
+
+
+        var commandLine;
+        if (containNullRetailerId == false) {
+            for (var i = 0; i < tempCards.length; i++) {
+                var card = tempCards[i];
+                commandParams += card.number + " " + card.retailer_id + " " + card.pin + " ";
+            }
+            commandLine = "php server/api/cards/inquiry.php " + commandParams;
+        } else {
+            commandLine = 'pwd';
         }
 
-
-        var commandLine = "php server/api/cards/inquiry.php " + commandParams;
-
         console.log(" API Balance check ", commandLine);
-
 
         // executes `pwd`
         child = exec(commandLine, function(error, stdout, stderr) {
@@ -887,27 +900,38 @@ router.post('/sell-cards', function(req, res, next) {
                     message: error
                 })
             } else {
-                var ret = JSON.parse(stdout);
-                // res.json(ret);
-                // 
-                // console.log('API balance checking', ret);
 
-                tempCards = transformAPIBalance(ret, tempCards);
+                if (containNullRetailerId == false) {
+                    var ret = JSON.parse(stdout);
 
-                // console.log('final_cards', tempCards);
+                    tempCards = transformAPIBalance(ret, tempCards);
+                    var successCardCount = 0;
+                    for (var i = 0; i < tempCards.length; i++) {
+                        if (tempCards[i].balance_status === 'success') {
+                            successCardCount += 1;
+                        }
+                    };
 
-                var successCardCount = 0;
-                for (var i = 0; i < tempCards.length; i++) {
-                    if (tempCards[i].balance_status === 'success') {
-                        successCardCount += 1;
+                    if (successCardCount === tempCards.length) {
+                        dat.balance_status = 'ok';
+                    } else {
+                        dat.balance_status = 'processing';
                     }
-                };
-
-                if (successCardCount === tempCards.length) {
-                    dat.balance_status = 'ok';
                 } else {
+
+                    // this is case
+                    // one of the cards whose retailer_id is NULL
                     dat.balance_status = 'processing';
+                    for (var i = 0; i < tempCards.length; i++) {
+                        if (tempCards[i].retailer_id == null) {
+                            tempCards[i].balance_status = 'null_retailer';
+                        } else {
+                            tempCards[i].balance_status = 'unchecked';
+                        }
+
+                    };
                 }
+
 
                 connection.query('INSERT INTO receipts SET ?', dat, function(err, result) {
 

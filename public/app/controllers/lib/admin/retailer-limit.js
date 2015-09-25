@@ -217,7 +217,8 @@ module.exports = function(m) {
                         id: parseInt(values[0]),
                         name: values[2],
                         limit: parseInt(values[3]),
-                        inventory: parseInt(values[4])
+                        inventory: parseInt(values[4]),
+                        retailer_id: parseInt(values[5]),
                     };
 
                     if (ret.limit < ret.inventory) {

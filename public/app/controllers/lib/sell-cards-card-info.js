@@ -58,7 +58,8 @@ module.exports = function(m) {
                             amount: 1,
                             pay_by: currentStore.payBy,
                             bought_value: val * less,
-                            payout: (val * less) / currentStore.value * 100
+                            payout: (val * less) / currentStore.value * 100,
+                            retailer_id: currentStore.retailer_id
                         };
 
                         allCards.push(card);

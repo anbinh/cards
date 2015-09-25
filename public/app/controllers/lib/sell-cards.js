@@ -122,7 +122,8 @@ module.exports = function(m) {
                     name: $scope.store.brand.name,
                     originalName: $scope.store.brand.originalName,
                     id: $scope.store.brand.id,
-                    payBy: ($scope.payBy.mail === true) ? 'mail' : 'online'
+                    payBy: ($scope.payBy.mail === true) ? 'mail' : 'online',
+                    retailer_id: $scope.store.brand.retailer_id
                 };
 
                 $scope.store = {

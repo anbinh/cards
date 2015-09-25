@@ -1,8 +1,16 @@
 <?php
 //error_reporting(0);
-define('API_USER', 'test');
-define('API_KEY', 'Test123');
-define('API_URL', 'https://api.cardquiry.com:8080');
+define('TESTING_MODE',true);
+
+if (TESTING_MODE == true) {
+  define('API_USER','test');
+  define('API_KEY','Test123');
+  define('API_URL', 'https://api.cardquiry.com:8080');
+} else {
+  define('API_USER','JUNKOoDEfR');
+  define('API_KEY','KE8MatT9BbW0AznVS6GzdceELTCAVFzB6hZmNdAgMBAAGjggG5MIIBtTAfBgN');
+  define('API_URL', 'https://api.cardquiry.com:8080');
+}
 
 function authenticate($method, $content_type, $canonicalized_resource, $canonicalized_POST_Variables) {
 	$string_to_sign = "";
@@ -173,6 +181,7 @@ if ($argCount%3 != 0){
 				"version" => $version,
 			],
 			"response" => $result,
+			"API_USER" => API_USER
 		];
 
 

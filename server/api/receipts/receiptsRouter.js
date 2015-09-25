@@ -17,7 +17,7 @@ var transporter = nodemailer.createTransport(mandrillTransport({
 
 var ADMIN_EMAIL = 'admin@cardslyce.com';
 
-// get all orders
+// get all receipts
 router.get('/', function(req, res, next) {
 
     // console.log(req.query);
@@ -34,17 +34,36 @@ router.get('/', function(req, res, next) {
             query = 'SELECT * from receipts WHERE ? ORDER BY  created_date DESC';
         }
 
-        connection.query(query, [req.query], function(err, rows) {
-            if (err) return next(err);
+        // special cases if it only has 1 property name whose status is pending
+        if ((Object.getOwnPropertyNames(req.query).length === 1) && (req.query.status === 'pending')) {
+            query = 'SELECT * from receipts WHERE status = "pending" or balance_status = "processing" ORDER BY  created_date DESC';
+            connection.query(query, [], function(err, rows) {
+                if (err) return next(err);
 
-            for (var i = 0; i < rows.length; i++) {
-                rows[i].billingUser = JSON.parse(rows[i].billing_user);
-                delete rows[i].billing_user;
-            };
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].billingUser = JSON.parse(rows[i].billing_user);
+                    delete rows[i].billing_user;
+                };
 
 
-            res.json(rows)
-        });
+                res.json(rows)
+            });
+
+        } else {
+            connection.query(query, [req.query], function(err, rows) {
+                if (err) return next(err);
+
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].billingUser = JSON.parse(rows[i].billing_user);
+                    delete rows[i].billing_user;
+                };
+
+
+                res.json(rows)
+            });
+        }
+
+
 
     });
 
