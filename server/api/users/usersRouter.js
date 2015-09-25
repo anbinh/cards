@@ -808,12 +808,18 @@ var transformAPIBalance = function(balancedCards, cards) {
             var request = balancedCards[j].request;
             var response = balancedCards[j].response;
 
+            card.balance = -1;
+
             if (response == null) {
                 card.balance_status = 'error';
             } else {
                 if ((request.card_number == card.number) && (request.pin == card.pin)) {
                     if (response.responseCode === '000') {
                         card.balance_status = 'success';
+                        card.balance = response.balance;
+                        if (parseFloat(card.value) !== parseFloat(card.balance)) {
+                            card.balance_status = 'unmatched_balance';
+                        }
                     } else {
                         if (response.responseCode === '010') {
                             card.balance_status = 'delayed';
@@ -906,14 +912,24 @@ router.post('/sell-cards', function(req, res, next) {
 
                     tempCards = transformAPIBalance(ret, tempCards);
                     var successCardCount = 0;
+                    var containUnMatchedBalance = false;
                     for (var i = 0; i < tempCards.length; i++) {
                         if (tempCards[i].balance_status === 'success') {
                             successCardCount += 1;
                         }
+
+                        if (tempCards[i].balance_status === 'unmatched_balance') {
+                            containUnMatchedBalance = true;
+                        }
                     };
 
                     if (successCardCount === tempCards.length) {
-                        dat.balance_status = 'ok';
+                        if (containUnMatchedBalance == true) {
+                            dat.balance_status = 'processing';
+                        } else {
+                            dat.balance_status = 'ok';
+                        }
+
                     } else {
                         dat.balance_status = 'processing';
                     }
@@ -928,6 +944,8 @@ router.post('/sell-cards', function(req, res, next) {
                         } else {
                             tempCards[i].balance_status = 'unchecked';
                         }
+
+                        tempCards[i].balance = -1;
 
                     };
                 }
@@ -966,14 +984,14 @@ router.post('/sell-cards', function(req, res, next) {
                                 if (!card.dealer_code) {
                                     card.dealer_code = null;
                                 }
-                                var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout, card.status, card.balance_status];
+                                var item = [card.receipt_id, card.gogo_buy, card.number, card.pin, card.dealer_code, card.store_id, card.store_name, card.value, receipt.user_id, 0, null, null, card.pay_by, card.bought_value, card.payout, card.status, card.balance_status, card.balance];
                                 insertedCard.push(item);
 
                             };
 
                             // console.log('inserted cards', insertedCard);
 
-                            connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout,status,balance_status) VALUES ?', [insertedCard], function(err, ret) {
+                            connection.query('INSERT INTO sold_cards (receipt_id,gogo_buy,number,pin,dealer_code,store_id,store_name,value,user_id,sold,sold_to_user,order_id,pay_by,bought_value,payout,status,balance_status,balance) VALUES ?', [insertedCard], function(err, ret) {
                                 if (err) return next(err);
 
                                 if (receipt.balance_status == 'processing') {

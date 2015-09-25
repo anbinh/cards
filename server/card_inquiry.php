@@ -161,10 +161,17 @@ function get_delayed_balance($request_id)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-        
-$card_number = "6080326095843643";// Enter the test card number here
-$retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
-$pin = "20723803"; // Enter test card pin number here
+
+if (TESTING_MODE == true) {
+  $card_number = "111111111111111";// Enter the test card number here
+  $retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
+  $pin = "20723803"; // Enter test card pin number here
+}  else {
+  $card_number = "6080326095843643";// Enter the test card number here
+  $retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
+  $pin = "20723803"; // Enter test card pin number here
+}       
+
 $version='2';
 
 $result = get_balance($retailer_id,$card_number,trim($pin),$version);
