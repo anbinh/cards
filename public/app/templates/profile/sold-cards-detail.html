@@ -78,8 +78,8 @@
                                 Payout
                             </th>
                             <th>Pay by</th>
-                            <td>Status</td>
-                            
+                            <th>Status</th>
+                            <th>Checked Balance</th>
                             
                             
                         </tr>
@@ -115,8 +115,7 @@
                             <td>
                                 <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
                             </td>
-                            
-                            
+                            <td>{{card.balance | number:2}}</td>
                         </tr>
                     </tbody>
                 </table>

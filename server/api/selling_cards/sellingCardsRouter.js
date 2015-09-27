@@ -44,7 +44,8 @@ router.get('/:id', function(req, res, next) {
                     pay_by: rows[i].pay_by,
                     bought_value: rows[i].bought_value,
                     payout: rows[i].payout,
-                    status: rows[i].status
+                    status: rows[i].status,
+                    balance: rows[i].balance
 
                 };
                 cards.push(card);

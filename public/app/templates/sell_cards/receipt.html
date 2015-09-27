@@ -126,6 +126,9 @@
                                 Pay By
                             </th>
 
+                            <th>Checked Balance</th>
+                            
+
                             
                             
                             
@@ -155,6 +158,9 @@
                             </td>
                             <td>
                                 {{card.pay_by | titlecase}}
+                            </td>
+                            <td>
+                                {{card.balance |number:2}}%
                             </td>
                             
                             

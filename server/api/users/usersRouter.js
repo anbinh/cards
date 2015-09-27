@@ -808,7 +808,7 @@ var transformAPIBalance = function(balancedCards, cards) {
             var request = balancedCards[j].request;
             var response = balancedCards[j].response;
 
-            card.balance = -1;
+            card.balance = 0;
 
             if (response == null) {
                 card.balance_status = 'error';
@@ -816,9 +816,16 @@ var transformAPIBalance = function(balancedCards, cards) {
                 if ((request.card_number == card.number) && (request.pin == card.pin)) {
                     if (response.responseCode === '000') {
                         card.balance_status = 'success';
-                        card.balance = response.balance;
-                        if (parseFloat(card.value) !== parseFloat(card.balance)) {
-                            card.balance_status = 'unmatched_balance';
+                        card.balance = parseFloat(response.balance);
+                        // if (parseFloat(card.value) !== parseFloat(card.balance)) {
+                        //     card.balance_status = 'unmatched_balance';
+                        // }
+                        if (card.pay_by == 'online') {
+                            card.bought_value = card.balance * card.gogo_buy / 100 * (1 - 0.0575);
+                            card.payout = card.bought_value / card.value;
+                        } else {
+                            card.bought_value = card.balance * card.gogo_buy / 100;
+                            card.payout = card.bought_value / card.value;
                         }
                     } else {
                         if (response.responseCode === '010') {
@@ -912,23 +919,27 @@ router.post('/sell-cards', function(req, res, next) {
 
                     tempCards = transformAPIBalance(ret, tempCards);
                     var successCardCount = 0;
-                    var containUnMatchedBalance = false;
+                    var containSuccessBalance = false;
+                    var totalAmount = 0;
                     for (var i = 0; i < tempCards.length; i++) {
                         if (tempCards[i].balance_status === 'success') {
                             successCardCount += 1;
+                            containSuccessBalance = true;
                         }
 
-                        if (tempCards[i].balance_status === 'unmatched_balance') {
-                            containUnMatchedBalance = true;
-                        }
+                        totalAmount += tempCards[i].bought_value;
+
+
                     };
+                    dat.total_amount = totalAmount;
+                    dat.average_payout = dat.total_amount / dat.total_face_value;
+
+
 
                     if (successCardCount === tempCards.length) {
-                        if (containUnMatchedBalance == true) {
-                            dat.balance_status = 'processing';
-                        } else {
-                            dat.balance_status = 'ok';
-                        }
+
+                        dat.balance_status = 'ok';
+
 
                     } else {
                         dat.balance_status = 'processing';

@@ -40,6 +40,7 @@
                      <th>Payment</th>
                      <th>Status</th>
                      <th>Balance Status</th>
+                     <th>Balance </th>
                      <th>Datetime</th>
                   </tr>
                </thead>
@@ -82,6 +83,7 @@
                      <td>
                         <div class="label {{(receipt.balance_status == 'success') ? 'label-success' : 'label-warning'}}">{{receipt.balance_status | titlecase}}</div>
                      </td>
+                     <td>${{card.balance| number:2}}</td>
                      <td>{{receipt.created_date | date: 'MM/dd/yyyy'}} </td>
                   </tr>
                   
