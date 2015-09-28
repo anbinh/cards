@@ -7,7 +7,9 @@ $params = "action=ns_quicksale_cc" . "&" .
         "ccname=TonyTest" . "&" .
         "ccnum=4111111111111111" . "&" .
         "expmon=09" . "&" .
-        "expyear=2017";
+        "expyear=2017" ."&" .
+        "accepturl=http://cardslyce.com/api/payment/accepted" . "&" .
+        "declineurl=http://cardslyce.com/api/payment/declined";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_POST,1);
 curl_setopt($ch, CURLOPT_POSTFIELDS,$params);
