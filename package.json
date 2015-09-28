@@ -24,7 +24,8 @@
         "serve-favicon": "~2.1.3",
         "mysql": "latest",
         "express-myconnection": "latest",
-        "nodemailer-mandrill-transport": "latest"
+        "nodemailer-mandrill-transport": "latest",
+        "request": "latest"
     },
     "devDependencies": {
         "grunt-concurrent": "^1.0.0",

@@ -37,22 +37,19 @@ var request = require('request');
 /* GET /accepted . */
 router.get('/accepted', function(req, res, next) {
 
-    console.log(req.query);
     res.json({
-        name: 'payment accepted',
         type: 'accepted',
-        query: req.query
+        result: req.query
     });
 
 });
 
 /* GET /declined . */
 router.get('/declined', function(req, res, next) {
-    console.log(req.query);
+
     res.json({
-        name: 'payment declined',
         type: 'declined',
-        query: req.query
+        result: req.query
     });
 
 });
