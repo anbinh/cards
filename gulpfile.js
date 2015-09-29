@@ -115,7 +115,8 @@ gulp.task('deps', function() {
         "./public/vendor/angular-sweetalert/SweetAlert.min.js",
         "./public/vendor/nouislider/jquery.nouislider.js",
         "./public/vendor/nouislider/Link.js",
-        "./public/vendor/angular-nouislider/src/nouislider.js"
+        "./public/vendor/angular-nouislider/src/nouislider.js",
+        "./public/vendor/angular-credit-cards/release/angular-credit-cards.js"
 
 
     ])
