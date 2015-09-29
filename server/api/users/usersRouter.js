@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
+var request = require('request');
 
 // var nodemailer = require('nodemailer');
 
@@ -708,84 +709,127 @@ router.post('/pay-order', function(req, res, next) {
                 return;
             };
 
-
-
             var myLocalCards = JSON.parse(JSON.stringify(dat.cards));
 
-            dat.billing_user = JSON.stringify(dat.billing_user);
-            dat.cards = JSON.stringify(dat.cards);
+            var paymentForm = {
+                action: 'ns_quicksale_cc',
+                acctid: 'PAB66',
+                merchantpin: 'ZLWTH2IPZ8WBVYBZ2HH4MLVP7706PY0I',
+                amount: dat.total_amount + '',
+                ccname: dat.billing_user.card_name,
+                ccnum: dat.billing_user.card_number,
+                expmon: dat.billing_user.card_exp_month,
+                expyear: dat.billing_user.card_exp_year,
+                cvv2: dat.billing_user.card_cvc,
+                accepturl: 'http://cardslyce.com/api/payment/accepted',
+                declineurl: 'http://cardslyce.com/api/payment/declined'
+            };
+            console.log('payment form', paymentForm);
+            request({
+                url: 'https://trans.pacepayment.com/cgi-bin/process.cgi', //URL to hit
+                method: 'POST',
+                //Lets post the following key/values as form
+                form: paymentForm
+            }, function(error, response, body) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(response.statusCode, body);
 
-            connection.query('INSERT INTO orders SET ?', dat, function(err, result) {
+                    var paymentRet = JSON.parse(body);
 
-                if (err) return next(err);
+                    if (paymentRet.type == 'accepted') {
 
-                if (result.affectedRows === 1) {
-                    var orderId = result.insertId;
-                    connection.query('Select * from orders where id = ' + orderId, [], function(err, rows) {
-                        if (err) return next(err);
+                        // payment is done. UPdate orders
+                        dat.billing_user = JSON.stringify(dat.billing_user);
+                        dat.cards = JSON.stringify(dat.cards);
 
-                        var order = {
-                            id: rows[0].id,
-                            user_id: rows[0].user_id,
-                            total_amount: rows[0].total_amount,
-                            total_cards: rows[0].total_cards,
-                            billingUser: JSON.parse(rows[0].billing_user),
-                            cards: JSON.parse(rows[0].cards),
-                            total_face_value: rows[0].total_face_value,
-                            average_percentage: rows[0].average_percentage,
-                            created_date: rows[0].created_date,
-                        };
+                        connection.query('INSERT INTO orders SET ?', dat, function(err, result) {
 
-
-
-                        var cardSql = '';
-
-                        for (var i = 0; i < myLocalCards.length; i++) {
-                            var cardId = myLocalCards[i].id;
-                            var sql = "Update sold_cards set sold = 1, sold_to_user = " + dat.user_id + " , order_id = " + orderId + " WHERE id = " + cardId + ";";
-                            cardSql += sql;
-                        };
-
-                        // console.log(cardSql);
-
-
-                        connection.query(cardSql, [], function(err, rows) {
                             if (err) return next(err);
 
+                            if (result.affectedRows === 1) {
+                                var orderId = result.insertId;
+                                connection.query('Select * from orders where id = ' + orderId, [], function(err, rows) {
+                                    if (err) return next(err);
+
+                                    var order = {
+                                        id: rows[0].id,
+                                        user_id: rows[0].user_id,
+                                        total_amount: rows[0].total_amount,
+                                        total_cards: rows[0].total_cards,
+                                        billingUser: JSON.parse(rows[0].billing_user),
+                                        cards: JSON.parse(rows[0].cards),
+                                        total_face_value: rows[0].total_face_value,
+                                        average_percentage: rows[0].average_percentage,
+                                        created_date: rows[0].created_date,
+                                    };
 
 
-                            res.render('emails/buy-order', order, function(err, final_html) {
-                                if (err) throw err;
 
-                                // setup e-mail data with unicode symbols
-                                var mailOptions = {
-                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
-                                    to: order.billingUser.email, // list of receivers
-                                    subject: 'Your New Order!', // Subject line
-                                    text: 'Your New Order!', // plaintext body
-                                    html: final_html // html body
-                                };
+                                    var cardSql = '';
 
-                                transporter.sendMail(mailOptions, function(error, info) {
-                                    if (error) {
-                                        return console.log(error);
-                                    }
-                                    console.log('Message sent: ', info);
+                                    for (var i = 0; i < myLocalCards.length; i++) {
+                                        var cardId = myLocalCards[i].id;
+                                        var sql = "Update sold_cards set sold = 1, sold_to_user = " + dat.user_id + " , order_id = " + orderId + " WHERE id = " + cardId + ";";
+                                        cardSql += sql;
+                                    };
 
-                                });
+                                    // console.log(cardSql);
 
-                                res.json(order);
 
-                            });
+                                    connection.query(cardSql, [], function(err, rows) {
+                                        if (err) return next(err);
+
+
+
+                                        res.render('emails/buy-order', order, function(err, final_html) {
+                                            if (err) throw err;
+
+                                            // setup e-mail data with unicode symbols
+                                            var mailOptions = {
+                                                from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                                to: order.billingUser.email, // list of receivers
+                                                subject: 'Your New Order!', // Subject line
+                                                text: 'Your New Order!', // plaintext body
+                                                html: final_html // html body
+                                            };
+
+                                            transporter.sendMail(mailOptions, function(error, info) {
+                                                if (error) {
+                                                    return console.log(error);
+                                                }
+                                                console.log('Message sent: ', info);
+
+                                            });
+
+                                            res.json(order);
+
+                                        });
+                                    });
+
+
+
+
+                                })
+                            }
+
                         });
+                    } else {
+                        console.log('cannot checkout payment');
+                        res.status(503);
+                        res.json({
+                            status: 'failed',
+                            message: 'Error while processing your payment',
+                            result: paymentRet.result
+                        })
+                    }
 
 
-
-
-                    })
                 }
-
             });
+
+
 
         });
 
@@ -1105,6 +1149,8 @@ router.put('/:id', function(req, res, next) {
 
 
         console.log("find this info", dat);
+
+        delete dat.wallet;
 
         // check if user is unique
         connection.query('update  users SET  ? where id  = ?', [dat, req.params.id], function(err, result) {

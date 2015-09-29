@@ -1,5 +1,4 @@
 <div role="main" class="main">
-
     <section class="page-header page-header-light page-header-more-padding">
         <div class="container">
             <div class="row">
@@ -12,61 +11,64 @@
                             <a href="/profile/#/sold-cards-history" >Sold Cards History</a> 
                         </span>
                     </h1>
-
                     <ul class="breadcrumb breadcrumb-valign-mid">
-                                    <li><a href="/">Home</a></li>
-                                    <li class="active">Profile</li>
-                                </ul>
+                        <li><a href="/">Home</a></li>
+                        <li class="active">Profile</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
-
     <div class="container">
         <div class="row">
-
             <div class="col-md-2">
             </div>
-            
             <div class="col-md-8">
-
                 <h2 class="mb-none"> <strong>{{user.username}}</strong></h2>
                 <h4 class="heading-primary">{{user.email}}</h4>
-
                 <hr class="solid">
-                
-
                 <h4 class="heading-primary mt-lg">Your <strong>Fullname</strong></h4>
                 <p>{{ ( (user.first_name !== null) && (user.last_name !== null) ? user.first_name + ' ' + user.last_name : 'NOT SET' )}}</p>
-
-                <hr  ng-show="isDealer"  >
+                <hr ng-show="isDealer">
                 <h4 ng-show="isDealer" class="heading-primary">Business <strong>Info</strong></h4>
-                <ul  ng-show="isDealer"  class="list list-icons list-icons-style-3 mt-xlg">
+                <ul ng-show="isDealer" class="list list-icons list-icons-style-3 mt-xlg">
                     <li><i class="fa fa-briefcase"></i> <strong>Business Name:</strong> {{ (user.business_name ? user.business_name : 'NOT SET')}}</li>
                     <li><i class="fa fa-compass"></i> <strong>Business Address</strong> {{ (user.business_address ? user.business_address : 'NOT SET')}}</li>
-                    
                 </ul>
                 <hr>
-
                 <h4 class="heading-primary">Basic <strong>Info</strong></h4>
                 <ul class="list list-icons list-icons-style-3 mt-xlg">
                     <li><i class="fa fa-map-marker"></i> <strong>Address:</strong> {{ (user.address ? user.address : 'NOT SET')}}</li>
                     <li><i class="fa fa-home"></i> <strong>City</strong> {{ (user.city ? user.city : 'NOT SET')}}</li>
                     <li><i class="fa fa-globe"></i> <strong>State:</strong> {{ (user.state ? user.state : 'NOT SET')}}</li>
-
                     <li><i class="fa fa-barcode"></i> <strong>Zipcode:</strong> {{ (user.zipcode ? user.zipcode : 'NOT SET')}}</li>
                 </ul>
-
                 <hr>
-   
+                <h4 class="heading-primary">Credit Cards <strong>Info</strong></h4>
+                <form name="paymentForm">
+                    <div class="media">
+                        <div class="media-left" style="vertical-align : middle">
+                            <a>
+                                <img width="100px" class="media-object" ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType}}.png" src='/img/credit-cards/undefined.png' >
+                                <input type="hidden" ng-model="user.card_number" name="cardNumber" cc-number cc-eager-type />
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <ul class="list list-icons list-icons-style-3 mt-xlg">
+                                <li><strong>Cardholder's Name:</strong> {{ (user.card_name ? user.card_name : 'NOT SET')}}</li>
+                                <li>
+                                    <strong>Card Number:</strong> {{user.card_number | hiddenCC}}
+                                </li>
+                                <li><strong>Card CVC:</strong> {{ (user.card_cvc ? user.card_cvc : 'NOT SET')}}</li>
+                                <li><strong>Expiration Date:</strong> {{ (user.card_exp_month ? user.card_exp_month : 'NOT SET')}} / {{ (user.card_exp_year ? user.card_exp_year : 'NOT SET')}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+                <hr>
             </div>
-
             <div class="col-md-2">
             </div>
         </div>
-      
     </div>
-
-    
-
 </div>

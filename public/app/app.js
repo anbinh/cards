@@ -17,5 +17,6 @@ angular.module('app', [
     'angular-storage',
     'oitozero.ngSweetAlert',
     'ui.bootstrap',
-    'nouislider'
+    'nouislider',
+    'credit-cards'
 ]);

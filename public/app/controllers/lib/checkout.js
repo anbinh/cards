@@ -16,12 +16,16 @@ module.exports = function(m) {
             } else {
                 $scope.isGuest = false;
                 $scope.user = store.get('user');
+
             }
 
 
             $scope.payment = {
                 name: 'cc_terminal'
             };
+
+
+
 
 
 
@@ -41,7 +45,7 @@ module.exports = function(m) {
             $scope.averagePercentage = 100 - totalPercentage / $scope.selectedCards.length;
 
 
-            $scope.placeOrder = function() {
+            $scope.placeOrder = function(paymentForm) {
 
                 if ($scope.agreed === false) {
                     swal('Warning', 'You have to agree the terms and conditions', 'warnning');
@@ -54,8 +58,19 @@ module.exports = function(m) {
                     payment: $scope.payment.name
                 };
 
-                // console.log('this order', order);
 
+                if ($scope.payment.name == 'ach') {
+                    swal('Error', 'No payment support', 'error');
+                    return;
+                }
+
+                if (paymentForm.cardNumber.$valid == false) {
+                    swal('Error', 'The card number is not valid', 'error');
+                    return;
+                }
+
+
+                console.log('payment', $scope.payment.name);
                 // return;
 
                 store.set('order', order);

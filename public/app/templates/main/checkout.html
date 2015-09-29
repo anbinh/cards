@@ -13,14 +13,13 @@
         </div>
     </section>
     <div class="container">
-        <form role="form" ng-submit="placeOrder()">
+        <form role="form" ng-submit="placeOrder(paymentForm)" name="paymentForm">
             <div class="col-md-9">
                 <div class="row">
                     <accordion close-others="oneAtATime" class="panel-group panel-group-primary">
                         <accordion-group heading="Billing Address" is-open="true" is-disabled="status.isFirstDisabled">
                             <div class="row">
                                 <div class="form-group">
-                                    
                                     <div class="col-md-12">
                                         <label>Email</label>
                                         <input ng-model="user.email" type="email" value="" class="form-control" ng-required="true">
@@ -72,7 +71,129 @@
                                 </div>
                             </div>
                         </accordion-group>
-                        <accordion-group heading="Merchant Info & Payment" is-open="true">
+                        <accordion-group heading="Payment Method" is-open="true">
+                            <h4 class="heading-primary">Payment</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="remember-box checkbox">
+                                        <label>
+                                            <input type="radio" ng-model="payment.name" value="cc_terminal"> CC Terminal
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span class="remember-box checkbox">
+                                        <label>
+                                            <input type="radio" ng-model="payment.name" value="ach"> ACH
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <hr class="tall">
+                            <div class="row">
+                                <div class="animate-switch-container" ng-switch on="payment.name">
+                                    <div class="animate-switch" ng-switch-when="cc_terminal">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputSuccess">Cardholder's Name</label>
+                                            <div class="col-md-6">
+                                                <input ng-model="user.card_name" class="form-control mb-md" type="text" placeholder="Cardholder's name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputSuccess">Card Number</label>
+                                            <div class="col-md-6">
+                                                <div class="media">
+                                                    <div class="media-left">
+                                                        <a>
+                                                            <img ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType}}.png" src='/img/credit-cards/undefined.png' class="pull-left" width="50px">
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <input ng-model="user.card_number" class="form-control mb-md" type="text" placeholder="Card number" name="cardNumber" cc-number cc-eager-type cc-type="cardType" ng-required="true">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="inputSuccess">CVC</label>
+                                            <div class="col-md-2">
+                                                <input class="form-control" type="text" ng-model="user.card_cvc" cc-cvc placeholder='CVC' ng-required="true" />
+                                            </div>
+                                            <div class="col-md-4">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" cc-exp>
+                                            <label class="col-md-3 control-label" for="inputSuccess">Expiration Date</label>
+                                            <div class="col-md-2">
+                                                <select class="form-control" name="expmon" ng-model="user.card_exp_month" cc-exp-month ng-required="true">
+                                                    <option value="1">January
+                                                    </option>
+                                                    <option value="2">February
+                                                    </option>
+                                                    <option value="3">March
+                                                    </option>
+                                                    <option value="4">April
+                                                    </option>
+                                                    <option value="5">May
+                                                    </option>
+                                                    <option value="6">June
+                                                    </option>
+                                                    <option value="7">July
+                                                    </option>
+                                                    <option value="8">August
+                                                    </option>
+                                                    <option value="9">September
+                                                    </option>
+                                                    <option value="10">October
+                                                    </option>
+                                                    <option value="11">November
+                                                    </option>
+                                                    <option value="12">December
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select class="form-control" name="expyear" ng-model="user.card_exp_year" cc-exp-year ng-required="true">
+                                                    </option>
+                                                    <option value="15">2015
+                                                    </option>
+                                                    <option value="16">2016
+                                                    </option>
+                                                    <option value="17">2017
+                                                    </option>
+                                                    <option value="18">2018
+                                                    </option>
+                                                    <option value="19">2019
+                                                    </option>
+                                                    <option value="20">2020
+                                                    </option>
+                                                    <option value="21">2021
+                                                    </option>
+                                                    <option value="22">2022
+                                                    </option>
+                                                    <option value="23">2023
+                                                    </option>
+                                                    <option value="24">2024
+                                                    </option>
+                                                    <option value="25">2025
+                                                    </option>
+                                                    <option value="26">2026
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="animate-switch" ng-switch-when="ach">
+                                        <div class="form-group center">
+                                            No payment supported
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </accordion-group>
+                        <accordion-group heading="Merchant Info" is-open="true">
                             <table class="shop_table cart">
                                 <thead>
                                     <tr>
@@ -174,71 +295,48 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <hr class="tall">
-                            <h4 class="heading-primary">Payment</h4>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <span class="remember-box checkbox">
-                                                            <label>
-                                                                <input type="radio" ng-model="payment.name" value="cc_terminal"> CC Terminal
-                                                            </label>
-                                                        </span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <span class="remember-box checkbox">
-                                                            <label>
-                                                                <input type="radio" ng-model="payment.name" value="ach"> ACH
-                                                            </label>
-                                                        </span>
-                                </div>
-                            </div>
                         </accordion-group>
                     </accordion>
                     <div>
-                        <input type="checkbox" ng-model="agreed" ng-required='true'> I hereby certify I have read <a href="/terms-and-conditions">terms and conditions</a>  and agree 
+                        <input type="checkbox" ng-model="agreed" ng-required='true'> I hereby certify I have read <a href="/terms-and-conditions">terms and conditions</a> and agree
                     </div>
-
                     <div class="actions-continue">
-
                         <input type="submit" value="Place Order" name="proceed" class="btn btn-lg btn-primary mt-xl">
                     </div>
                 </div>
-                
             </div>
             <div class="col-md-3">
-                    <h4 class="heading-primary">Cart Totals</h4>
-                    <table class="cart-totals">
-                        <tbody>
-                            <tr class="cart-subtotal">
-                                <th>
-                                    <strong>Cart Subtotal</strong>
-                                </th>
-                                <td>
-                                    <strong><span class="amount">${{total | number:2}}</span></strong>
-                                </td>
-                            </tr>
-                            <tr class="shipping">
-                                <th>
-                                    Shipping
-                                </th>
-                                <td>
-                                    Free Shipping
-                                    <input type="hidden" value="free_shipping" id="shipping_method" name="shipping_method">
-                                </td>
-                            </tr>
-                            <tr class="total">
-                                <th>
-                                    <strong>Order Total</strong>
-                                </th>
-                                <td>
-                                    <strong><span class="amount">${{total | number:2}}</span></strong>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <h4 class="heading-primary">Cart Totals</h4>
+                <table class="cart-totals">
+                    <tbody>
+                        <tr class="cart-subtotal">
+                            <th>
+                                <strong>Cart Subtotal</strong>
+                            </th>
+                            <td>
+                                <strong><span class="amount">${{total | number:2}}</span></strong>
+                            </td>
+                        </tr>
+                        <tr class="shipping">
+                            <th>
+                                Shipping
+                            </th>
+                            <td>
+                                Free Shipping
+                                <input type="hidden" value="free_shipping" id="shipping_method" name="shipping_method">
+                            </td>
+                        </tr>
+                        <tr class="total">
+                            <th>
+                                <strong>Order Total</strong>
+                            </th>
+                            <td>
+                                <strong><span class="amount">${{total | number:2}}</span></strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </form>
     </div>
 </div>

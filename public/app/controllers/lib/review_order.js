@@ -66,6 +66,7 @@ module.exports = function(m) {
 
                 console.log('order', order);
 
+                $scope.isPaid = true;
 
 
                 userService.pay(order, function(result) {
@@ -89,15 +90,19 @@ module.exports = function(m) {
                         });
 
                     } else {
-                        $scope.isPaid = true;
+
                         swal('Congratulations!', 'Your Order has been paid', 'success');
                         $rootScope.$broadcast('CHANGE_CART', {});
                     }
 
 
                 }, function(err) {
-                    // console.log("ERRR", err);
-                    swal('Error', err.data.message, 'error');
+                    console.log("ERRR", err);
+                    store.set('cart', []);
+
+                    store.set('order', {});
+                    // swal('Error', err.data.message, 'error');
+                    window.location = '/payment-declined';
                 });
             };
 

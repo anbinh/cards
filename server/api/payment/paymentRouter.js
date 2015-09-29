@@ -65,11 +65,12 @@ router.get('/test', function(req, res, next) {
             action: 'ns_quicksale_cc',
             acctid: 'PAB66',
             merchantpin: 'ZLWTH2IPZ8WBVYBZ2HH4MLVP7706PY0I',
-            amount: '1.00',
-            ccname: 'TonyTest',
+            amount: '93.97',
+            ccname: 'Tony Test',
             ccnum: '4111111111111111',
-            expmon: '09',
+            expmon: '5',
             expyear: '2017',
+            cvv2: '345',
             accepturl: 'http://cardslyce.com/api/payment/accepted',
             declineurl: 'http://cardslyce.com/api/payment/declined'
         }

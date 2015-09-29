@@ -103,5 +103,11 @@ router.get('/admin-login', function(req, res) {
     });
 });
 
+router.get('/payment-declined', function(req, res) {
+    res.render('payment-declined', {
+
+    });
+});
+
 
 module.exports = router;

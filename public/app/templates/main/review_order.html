@@ -53,6 +53,30 @@
                 </ul>
 
                 <hr>
+                
+                <h4 class="heading-primary"><strong>Credit Cards  Info</strong></h4>
+                <form name="paymentForm">
+                    <div class="media">
+                        <div class="media-left" style="vertical-align : middle">
+                            <a>
+                                <img width="100px" class="media-object" ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType}}.png" src='/img/credit-cards/undefined.png' >
+                                <input type="hidden" ng-model="order.billingUser.card_number" name="cardNumber" cc-number cc-eager-type />
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <ul class="list list-icons list-icons-style-3 mt-xlg">
+                                <li><strong>Cardholder's Name:</strong> {{ (order.billingUser.card_name ? order.billingUser.card_name : 'NOT SET')}}</li>
+                                <li>
+                                    <strong>Card Number:</strong> {{order.billingUser.card_number | hiddenCC}}
+                                </li>
+                                <li><strong>Card CVC:</strong> {{ (order.billingUser.card_cvc ? order.billingUser.card_cvc : 'NOT SET')}}</li>
+                                <li><strong>Expiration Date:</strong> {{ (order.billingUser.card_exp_month ? order.billingUser.card_exp_month : 'NOT SET')}} / {{ (order.billingUser.card_exp_year ? order.billingUser.card_exp_year : 'NOT SET')}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
 
                 <h4 class="heading-primary"> <strong>Cards review</strong></h4>
                 
@@ -185,7 +209,7 @@
                 </table>
 
 
-
+                <a ng-show="isPaid" class="btn btn-primary btn-lg pull-right">Submitting...</a>
                 <a ng-show="!isPaid" ng-click='pay()' class="btn btn-primary btn-lg pull-right">Place order</a>
    
             </div>

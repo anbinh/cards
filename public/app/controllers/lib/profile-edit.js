@@ -12,8 +12,16 @@ module.exports = function(m) {
             $scope.user = store.get('user');
             console.log($scope.user, 'edit user');
 
-            $scope.update = function() {
+
+            $scope.update = function(paymentForm) {
                 console.log('user', $scope.user);
+
+                console.log('payment', paymentForm);
+
+                if (paymentForm.cardNumber.$valid == false) {
+                    swal('Error', 'The card number is not valid', 'error');
+                    return;
+                }
 
                 userService.update({
                     id: $scope.user.id

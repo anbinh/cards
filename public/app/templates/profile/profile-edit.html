@@ -1,5 +1,4 @@
 <div role="main" class="main">
-
     <section class="page-header page-header-light page-header-more-padding">
         <div class="container">
             <div class="row">
@@ -12,126 +11,195 @@
                             <a href="/profile/#/sold-cards-history" >Sold Cards History</a> 
                         </span>
                     </h1>
-
                     <ul class="breadcrumb breadcrumb-valign-mid">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="/profile/#/">Profile</a></li>
-                                    <li class="active">Edit</li>
-                                </ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/profile/#/">Profile</a></li>
+                        <li class="active">Edit</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
-
     <div class="container">
         <div class="row">
-
             <section role="main" class="content-body">
-                   
-                    <!-- start: page -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                
-                        
-                                <section class="panel">
-                                    
-                                    <div class="panel-body">
-                                        <form class="form-horizontal form-bordered" method="post" ng-submit="update()">
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Username</label>
-                                                <div class="col-md-6">
-                                                    <input ng-model="user.username" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Email</label>
-                                                <div class="col-md-6">
-                                                    <input ng-model="user.email" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">First Name</label>
-                                                <div class="col-md-6">
-                                                    <input ng-model="user.first_name" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Last Name</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.last_name" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Business Name</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.business_name" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Business Address</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.business_address" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-                        
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Address</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.address" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">City</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.city" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">State</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.state" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label" for="inputSuccess">Zipcode</label>
-                                                <div class="col-md-6">
-                                                    <input  ng-model="user.zipcode" class="form-control mb-md" type="text" placeholder="">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-3"></div>
-                                                <div class="col-md-6">
-                                                    <input type="submit" value="Update" class="btn btn-primary pull-right mb-xl" data-loading-text="Loading...">
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                        </form>
+                <!-- start: page -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <div class="panel-body">
+                                <form class="form-horizontal form-bordered" name="paymentForm" method="post" ng-submit="update(paymentForm)" >
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <h4 class="heading-primary">1. Basic <strong>Info</strong></h4>
                                     </div>
-                                </section>
-                                
-                        
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Username</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.username" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Email</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.email" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">First Name</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.first_name" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Last Name</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.last_name" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Business Name</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.business_name" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Business Address</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.business_address" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Address</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.address" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">City</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.city" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">State</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.state" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Zipcode</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.zipcode" class="form-control mb-md" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                    <!-- CREDIT CARDS -->
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-10">
+                                        <h4 class="heading-primary">2. Credit Card <strong>Info</strong></h4>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Cardholder's Name</label>
+                                        <div class="col-md-6">
+                                            <input ng-model="user.card_name" class="form-control mb-md" type="text" placeholder="Cardholder's name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">Card Number</label>
+                                        <div class="col-md-6">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a>
+                                                        <img ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType}}.png" src='/img/credit-cards/undefined.png' class="pull-left" width="50px">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <input ng-model="user.card_number" class="form-control mb-md" type="text" placeholder="Card number" name="cardNumber" cc-number cc-eager-type cc-type="cardType" ng-required="true" ng-value="string" ng-value="{{user.card_number | hiddenCC}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="inputSuccess">CVC</label>
+                                        <div class="col-md-2">
+                                            <input class="form-control" type="text" ng-model="user.card_cvc" cc-cvc  placeholder='CVC' ng-required="true"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" cc-exp>
+                                        <label class="col-md-3 control-label" for="inputSuccess">Expiration Date</label>
+                                        <div class="col-md-2" >
+                                            <select class="form-control" name="expmon" ng-model="user.card_exp_month" cc-exp-month ng-required="true">
+                                                <option value="1">January
+                                                </option>
+                                                <option value="2">February
+                                                </option>
+                                                <option value="3">March
+                                                </option>
+                                                <option value="4">April
+                                                </option>
+                                                <option value="5">May
+                                                </option>
+                                                <option value="6">June
+                                                </option>
+                                                <option value="7">July
+                                                </option>
+                                                <option value="8">August
+                                                </option>
+                                                <option value="9">September
+                                                </option>
+                                                <option value="10">October
+                                                </option>
+                                                <option value="11">November
+                                                </option>
+                                                <option value="12">December
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-control" name="expyear" ng-model="user.card_exp_year" cc-exp-year ng-required="true">
+                                                </option>
+                                                <option value="15">2015
+                                                </option>
+                                                <option value="16">2016
+                                                </option>
+                                                <option value="17">2017
+                                                </option>
+                                                <option value="18">2018
+                                                </option>
+                                                <option value="19">2019
+                                                </option>
+                                                <option value="20">2020
+                                                </option>
+                                                <option value="21">2021
+                                                </option>
+                                                <option value="22">2022
+                                                </option>
+                                                <option value="23">2023
+                                                </option>
+                                                <option value="24">2024
+                                                </option>
+                                                <option value="25">2025
+                                                </option>
+                                                <option value="26">2026
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <input type="submit" value="Update" class="btn btn-primary pull-right mb-xl" data-loading-text="Loading...">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        
-                      
-                    <!-- end: page -->
-                </section>         
-   
+                        </section>
+                    </div>
+                </div>
+                <!-- end: page -->
+            </section>
         </div>
-      
     </div>
-
-    
-
 </div>

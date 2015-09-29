@@ -51,5 +51,28 @@ module.exports = function(m) {
             return '/dashboard/#/dealer-profile/' + user.id;
 
         };
+    }).filter('hiddenCC', function() {
+        return function(cc) {
+
+            if (cc) {
+                var digits = cc.split('');
+                var obsuredCc = [];
+
+                for (var i = 0; i < digits.length; i = i + 1) {
+                    if ((i > digits.length - 1 - 4) && (i < digits.length)) {
+                        obsuredCc.push(digits[i]);
+                    } else {
+                        obsuredCc.push('*');
+                    }
+                };
+
+                return obsuredCc.join('');
+            } else {
+                return 'NOT SET';
+            }
+
+
+
+        };
     });
 };
