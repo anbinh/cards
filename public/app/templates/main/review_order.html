@@ -59,7 +59,7 @@
                     <div class="media">
                         <div class="media-left" style="vertical-align : middle">
                             <a>
-                                <img width="100px" class="media-object" ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType}}.png" src='/img/credit-cards/undefined.png' >
+                                <img width="100px" class="media-object" ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType| lowercase}}.png" src='/img/credit-cards/undefined.png' >
                                 <input type="hidden" ng-model="order.billingUser.card_number" name="cardNumber" cc-number cc-eager-type />
                             </a>
                         </div>
