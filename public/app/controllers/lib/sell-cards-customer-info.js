@@ -134,14 +134,40 @@ module.exports = function(m) {
 
             }
 
+            // check if the credit cards is available
+            if (!$scope.isGuest) {
+                var tempUser = store.get('user');
+                if ((tempUser.card_number != null) &&
+                    (tempUser.card_name != null) &&
+                    (tempUser.card_exp_month != null) &&
+                    (tempUser.card_exp_year != null) &&
+                    (tempUser.card_cvc != null)
+                ) {
+                    $scope.emptyCC = false;
+                } else {
+                    $scope.emptyCC = true;
+                }
+            }
 
-            $scope.sellCards = function() {
+
+            $scope.isLoading = false;
+
+            $scope.sellCards = function(paymentForm) {
+
+
 
                 var user, billingUser, store_list, i;
 
                 if ($scope.agreed === false) {
                     swal('Warning', 'You have to agree the terms and conditions', 'warnning');
                     return;
+                }
+
+                if ($scope.isGuest) {
+                    if (paymentForm.cardNumber.$valid == false) {
+                        swal('Error', 'The card number is not valid', 'error');
+                        return;
+                    }
                 }
 
 
@@ -201,6 +227,10 @@ module.exports = function(m) {
                         confirmButtonColor: '#08C',
                         html: true
                     }, function() {
+
+                        swal.close();
+                        $scope.isLoading = true;
+                        $scope.$apply();
                         userService.sellCards(selling_cards, function(result) {
 
                             console.log(result);
@@ -215,13 +245,13 @@ module.exports = function(m) {
                                 $location.url('receipt/' + result.id);
                             }
 
-
                             console.log('RECEIPT', result);
                         }, function(err) {
-                            // console.log("ERRR", err);
-                            swal('Error', err.data.message, 'error');
+                            console.log("ERRR", err);
+                            window.location = '/payment-declined';
+                            // swal('Error', err.data.message, 'error');
                         });
-                        swal.close();
+
                     });
 
 
@@ -287,6 +317,11 @@ module.exports = function(m) {
                         confirmButtonColor: '#08C',
                         html: true
                     }, function() {
+
+                        swal.close();
+                        $scope.isLoading = true;
+                        $scope.$apply();
+
                         userService.sellCards(my_pending_cards, function(result) {
                             console.log(result);
                             console.log('PENDING RECEIPT', result);
@@ -303,9 +338,9 @@ module.exports = function(m) {
                             }
                         }, function(err) {
                             // console.log("ERRR", err);
-                            swal('Error', err.data.message, 'error');
+                            // swal('Error', err.data.message, 'error');
+                            window.location = '/payment-declined';
                         });
-                        swal.close();
                     });
 
 
