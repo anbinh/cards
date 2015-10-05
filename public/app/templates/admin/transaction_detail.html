@@ -27,8 +27,10 @@
                     <h3 class="text-weight-semibold mt-sm">Transaction Info - {{transaction.transaction_id}} - 
                         <span ng-switch on="transaction.type">
                            <span  ng-switch-when="order" class="label label-info">Sold</span>
-                           <span  ng-switch-when="receipt" class="label label-info">Purchased</span>
+                           <span  ng-switch-when="card_balance_fee" class="label label-info">Card Balance Verification Fee</span>
                         </span>
+
+                        <span class="label label-success">${{transaction.amount | number:2}}</span>
                     </h3>
                     <p>
                         <ul style="  padding-left : 20px; bottom-margin : 10px" ng-repeat="(key, value) in transaction.response">

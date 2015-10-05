@@ -32,6 +32,7 @@
                      <th>Trans ID</th>
                      <th>Type</th>
                      <th>Status</th>
+                     <th>Amount</th>
                      <th>Response</th>
                      <th>User Name</th>
                      <th>User Type</th>
@@ -47,12 +48,13 @@
                      <td class="center">{{transaction.transaction_id}}  </td>
                      <td ng-switch on="transaction.type">
                         <span  ng-switch-when="order" class="label label-info">Sold</span>
-                        <span  ng-switch-when="receipt" class="label label-info">Purchased</span>
+                        <span  ng-switch-when="card_balance_fee" class="label label-info">Card Balance Verification Fee</span>
                      </td>
                      <td ng-switch on="transaction.status">
                         <span  ng-switch-when="declined" class="label label-danger">{{transaction.status | titlecase}}</span>
                         <span  ng-switch-when="accepted" class="label label-success">{{transaction.status | titlecase}}</span>
                      </td>
+                     <td>${{transaction.amount | number:2}}</td>
                      <td> 
                         <p ng-repeat="(key, value) in transaction.response">
                            {{key | titlecase}} : {{value}}

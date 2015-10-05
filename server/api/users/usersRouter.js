@@ -669,7 +669,7 @@ router.post('/reset-password', function(req, res, next) {
 
 });
 
-var saveTransaction = function(connection, transDat, sourceId, billingUser, cards, type) {
+var saveTransaction = function(connection, transDat, sourceId, billingUser, cards, type, amount) {
     // billingUser,cards is JSON object
     var transaction = {
         transaction_id: (transDat.result.orderid) ? transDat.result.orderid : null,
@@ -679,6 +679,7 @@ var saveTransaction = function(connection, transDat, sourceId, billingUser, card
         billing_user: JSON.stringify(billingUser),
         cards: JSON.stringify(cards),
         source_id: sourceId,
+        amount: amount,
         created_date: new Date()
     }
     connection.query('INSERT INTO transactions SET ?', transaction, function(err, result) {
@@ -789,7 +790,7 @@ router.post('/pay-order', function(req, res, next) {
                                     };
 
                                     // save transactions
-                                    saveTransaction(connection, paymentRet, order.id, order.billingUser, order.cards, 'order');
+                                    saveTransaction(connection, paymentRet, order.id, order.billingUser, order.cards, 'order', order.total_amount);
 
 
 
@@ -846,7 +847,7 @@ router.post('/pay-order', function(req, res, next) {
                         console.log('cannot checkout payment');
 
                         // save transactions
-                        saveTransaction(connection, paymentRet, null, dat.billing_user, dat.cards, 'order');
+                        saveTransaction(connection, paymentRet, null, dat.billing_user, dat.cards, 'order', dat.total_amount);
 
                         res.status(503);
                         res.json({
@@ -940,12 +941,13 @@ router.post('/sell-cards', function(req, res, next) {
     req.getConnection(function(err, connection) {
         if (err) return next(err);
 
+        var CHARGE_AMOUNT = '1.00';
 
         var paymentForm = {
             action: 'ns_quicksale_cc',
             acctid: 'PAB66',
             merchantpin: 'ZLWTH2IPZ8WBVYBZ2HH4MLVP7706PY0I',
-            amount: '1.00',
+            amount: CHARGE_AMOUNT,
             ccname: dat.billing_user.card_name,
             ccnum: dat.billing_user.card_number,
             expmon: dat.billing_user.card_exp_month,
@@ -976,6 +978,9 @@ router.post('/sell-cards', function(req, res, next) {
                 var tempCards = JSON.parse(JSON.stringify(dat.cards));
 
                 delete dat.cards;
+
+
+
 
                 var commandParams = '';
 
@@ -1091,7 +1096,7 @@ router.post('/sell-cards', function(req, res, next) {
                                     var receiptId = rows[0].id;
 
                                     // save transactions
-                                    saveTransaction(connection, paymentRet, receipt.id, receipt.billingUser, receipt.cards, 'receipt');
+                                    saveTransaction(connection, paymentRet, receipt.id, receipt.billingUser, receipt.cards, 'card_balance_fee', CHARGE_AMOUNT);
 
 
                                     var insertedCard = [];
@@ -1194,7 +1199,7 @@ router.post('/sell-cards', function(req, res, next) {
             } else {
                 console.log('cannot checkout payment');
                 // save transactions
-                saveTransaction(connection, paymentRet, null, dat.billing_user, dat.cards, 'receipt');
+                saveTransaction(connection, paymentRet, null, dat.billing_user, dat.cards, 'card_balance_fee', CHARGE_AMOUNT);
                 res.status(503);
                 res.json({
                     status: 'failed',
