@@ -33,7 +33,6 @@
                      <th>Type</th>
                      <th>Status</th>
                      <th>Amount</th>
-                     <th>Response</th>
                      <th>User Name</th>
                      <th>User Type</th>
                      <th># Cards</th>
@@ -55,11 +54,7 @@
                         <span  ng-switch-when="accepted" class="label label-success">{{transaction.status | titlecase}}</span>
                      </td>
                      <td>${{transaction.amount | number:2}}</td>
-                     <td> 
-                        <p ng-repeat="(key, value) in transaction.response">
-                           {{key | titlecase}} : {{value}}
-                        </p>
-                     </td>
+                     
                   
                      
                      <td ng-switch on="transaction.billingUser.role">
