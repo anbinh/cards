@@ -256,6 +256,33 @@ angular.module('app')
                         }
                     ]
                 }
+            }).when('/transactions', {
+                templateUrl: 'admin/transactions.html',
+                controller: 'AdminTransactionsController',
+                resolve: {
+                    Transactions: ['transactionService', '$route',
+                        function(transactionService, $route) {
+                            return transactionService.query({}).$promise.then(function(transactions) {
+                                return transactions;
+                            });
+                        }
+                    ]
+                }
+            }).when('/transactions/:id', {
+                templateUrl: 'admin/transaction_detail.html',
+                controller: 'AdminTransactionDetailController',
+                resolve: {
+                    TransactionDetail: ['transactionService', '$route',
+                        function(transactionService, $route) {
+                            var id = $route.current.params.id;
+                            return transactionService.get({
+                                id: id
+                            }).$promise.then(function(orders) {
+                                return orders;
+                            });
+                        }
+                    ]
+                }
             });
         }
     ]);

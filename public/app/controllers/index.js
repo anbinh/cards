@@ -46,5 +46,7 @@ require('./lib/admin/dealer-profile')(m);
 require('./lib/admin/retailer-limit')(m);
 require('./lib/admin/pending_cards')(m);
 require('./lib/admin/settings')(m);
+require('./lib/admin/transactions')(m);
+require('./lib/admin/transaction-detail')(m);
 
 module.exports = m;

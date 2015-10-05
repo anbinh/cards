@@ -137,11 +137,11 @@ module.exports = function(m) {
             // check if the credit cards is available
             if (!$scope.isGuest) {
                 var tempUser = store.get('user');
-                if ((tempUser.card_number != null) &&
-                    (tempUser.card_name != null) &&
-                    (tempUser.card_exp_month != null) &&
-                    (tempUser.card_exp_year != null) &&
-                    (tempUser.card_cvc != null)
+                if ((tempUser.card_number !== null) &&
+                    (tempUser.card_name !== null) &&
+                    (tempUser.card_exp_month !== null) &&
+                    (tempUser.card_exp_year !== null) &&
+                    (tempUser.card_cvc !== null)
                 ) {
                     $scope.emptyCC = false;
                 } else {
@@ -164,7 +164,7 @@ module.exports = function(m) {
                 }
 
                 if ($scope.isGuest) {
-                    if (paymentForm.cardNumber.$valid == false) {
+                    if (paymentForm.cardNumber.$valid === false) {
                         swal('Error', 'The card number is not valid', 'error');
                         return;
                     }
@@ -247,7 +247,7 @@ module.exports = function(m) {
 
                             console.log('RECEIPT', result);
                         }, function(err) {
-                            console.log("ERRR", err);
+                            console.log('ERRR', err);
                             window.location = '/payment-declined';
                             // swal('Error', err.data.message, 'error');
                         });

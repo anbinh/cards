@@ -97,7 +97,7 @@ module.exports = function(m) {
 
 
                 }, function(err) {
-                    console.log("ERRR", err);
+                    console.log('ERRR', err);
                     store.set('cart', []);
 
                     store.set('order', {});

@@ -669,6 +669,29 @@ router.post('/reset-password', function(req, res, next) {
 
 });
 
+var saveTransaction = function(connection, transDat, sourceId, billingUser, cards, type) {
+    // billingUser,cards is JSON object
+    var transaction = {
+        transaction_id: (transDat.result.orderid) ? transDat.result.orderid : null,
+        status: transDat.type,
+        type: type,
+        response: JSON.stringify(transDat.result),
+        billing_user: JSON.stringify(billingUser),
+        cards: JSON.stringify(cards),
+        source_id: sourceId,
+        created_date: new Date()
+    }
+    connection.query('INSERT INTO transactions SET ?', transaction, function(err, result) {
+        if (err) {
+            console.log('error while saving transaction', err);
+        } else {
+            console.log('transaction saved', result);
+        }
+
+
+    })
+}
+
 /* POST /users/pay-order */
 router.post('/pay-order', function(req, res, next) {
 
@@ -765,6 +788,9 @@ router.post('/pay-order', function(req, res, next) {
                                         created_date: rows[0].created_date,
                                     };
 
+                                    // save transactions
+                                    saveTransaction(connection, paymentRet, order.id, order.billingUser, order.cards, 'order');
+
 
 
                                     var cardSql = '';
@@ -776,6 +802,7 @@ router.post('/pay-order', function(req, res, next) {
                                     };
 
                                     // console.log(cardSql);
+
 
 
                                     connection.query(cardSql, [], function(err, rows) {
@@ -817,6 +844,10 @@ router.post('/pay-order', function(req, res, next) {
                         });
                     } else {
                         console.log('cannot checkout payment');
+
+                        // save transactions
+                        saveTransaction(connection, paymentRet, null, dat.billing_user, dat.cards, 'order');
+
                         res.status(503);
                         res.json({
                             status: 'failed',
@@ -1059,6 +1090,10 @@ router.post('/sell-cards', function(req, res, next) {
                                     // 
                                     var receiptId = rows[0].id;
 
+                                    // save transactions
+                                    saveTransaction(connection, paymentRet, receipt.id, receipt.billingUser, receipt.cards, 'receipt');
+
+
                                     var insertedCard = [];
                                     for (var i = 0; i < receipt.cards.length; i++) {
                                         receipt.cards[i].receipt_id = receiptId;
@@ -1158,6 +1193,8 @@ router.post('/sell-cards', function(req, res, next) {
                 });
             } else {
                 console.log('cannot checkout payment');
+                // save transactions
+                saveTransaction(connection, paymentRet, null, dat.billing_user, dat.cards, 'receipt');
                 res.status(503);
                 res.json({
                     status: 'failed',

@@ -64,7 +64,7 @@ module.exports = function(m) {
                     } else {
                         obsuredCc.push('*');
                     }
-                };
+                }
 
                 return obsuredCc.join('');
             } else {

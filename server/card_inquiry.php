@@ -1,7 +1,7 @@
 <?php
 // //error_reporting(0);
 // 
-define('TESTING_MODE',true);
+define('TESTING_MODE',false);
 
 if (TESTING_MODE == true) {
   define('API_USER','test');
@@ -167,9 +167,9 @@ if (TESTING_MODE == true) {
   $retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
   $pin = "20723803"; // Enter test card pin number here
 }  else {
-  $card_number = "6080326095843643";// Enter the test card number here
-  $retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
-  $pin = "20723803"; // Enter test card pin number here
+  $card_number = "833115390266223";// Enter the test card number here
+  $retailer_id = '25';// Retailer ID will be provided by CardQuiry for all supported retailers. 
+  $pin = "1896"; // Enter test card pin number here
 }       
 
 $version='2';

@@ -1,0 +1,92 @@
+<section role="main" class="content-body">
+   <header class="page-header">
+      <h2>All Purchased Cards</h2>
+   
+      <div class="right-wrapper pull-right">
+         <ol class="breadcrumbs">
+            <li>
+               <a href="index.html">
+                  <i class="fa fa-home"></i>
+               </a>
+            </li>
+            <li><span>Cards</span></li>
+            <li><span>Purchased Cards</span></li>
+         </ol>
+   
+         <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+      </div>
+   </header>
+
+   <!-- start: page -->
+      <section class="panel">
+         <header class="panel-heading">
+            
+      
+            <h2 class="panel-title">Purchased Cards Information</h2>
+         </header>
+         <div class="panel-body">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
+               <thead>
+                  <tr> 
+                     <th></th>
+                     <th>Trans ID</th>
+                     <th>Type</th>
+                     <th>Status</th>
+                     <th>Response</th>
+                     <th>User Name</th>
+                     <th>User Type</th>
+                     <th># Cards</th>
+                     <th>Source Id</th>
+                     <th>Created Date</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="transaction in transactions track by $index"  style="cursor : pointer" ng-click="transactionDetail(transaction.id)">
+                     <td>{{transaction.id}}</td>
+                     
+                     <td class="center">{{transaction.transaction_id}}  </td>
+                     <td ng-switch on="transaction.type">
+                        <span  ng-switch-when="order" class="label label-info">Sold</span>
+                        <span  ng-switch-when="receipt" class="label label-info">Purchased</span>
+                     </td>
+                     <td ng-switch on="transaction.status">
+                        <span  ng-switch-when="declined" class="label label-danger">{{transaction.status | titlecase}}</span>
+                        <span  ng-switch-when="accepted" class="label label-success">{{transaction.status | titlecase}}</span>
+                     </td>
+                     <td> 
+                        <p ng-repeat="(key, value) in transaction.response">
+                           {{key | titlecase}} : {{value}}
+                        </p>
+                     </td>
+                  
+                     
+                     <td ng-switch on="transaction.billingUser.role">
+                        <a ng-switch-when="User" href="{{transaction.billingUser | dashboardProfile}}">{{transaction.billingUser | fullname}} </a>
+
+                        <a ng-switch-when="Dealer" href="{{transaction.billingUser | dashboardDealerProfile}}">{{transaction.billingUser | fullname}} </a>
+
+                      
+                        <span ng-switch-when="Guest">{{transaction.billingUser | fullname}} </span>
+                     </td>
+
+                     <td> <span class="label {{transaction.billingUser.className}}">{{transaction.billingUser.role}}</span></td>
+                     <td>
+                        {{transaction.cards.length}}
+                     </td>
+                     <td>
+                        {{transaction.source_id}}
+                        
+                     </td>
+                     
+                     <td>{{transaction.created_date | date: 'MM/dd/yyyy'}} </td>
+                  </tr>
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+      </section>
+      
+      
+   <!-- end: page -->
+</section>

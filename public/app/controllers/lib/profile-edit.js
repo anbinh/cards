@@ -18,7 +18,7 @@ module.exports = function(m) {
 
                 console.log('payment', paymentForm);
 
-                if (paymentForm.cardNumber.$valid == false) {
+                if (paymentForm.cardNumber.$valid === false) {
                     swal('Error', 'The card number is not valid', 'error');
                     return;
                 }

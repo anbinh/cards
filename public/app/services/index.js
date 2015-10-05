@@ -12,5 +12,6 @@ require('./lib/selling_cards')(m);
 require('./lib/utils')(m);
 require('./lib/setting')(m);
 require('./lib/card')(m);
+require('./lib/transactions')(m);
 
 module.exports = m;

@@ -1,0 +1,155 @@
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>Transaction Detail</h2>
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li><span>Cards</span></li>
+                <li><span>Transactions</span></li>
+                <li><span>Transaction #{{transaction.id}}</span></li>
+            </ol>
+            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-horizontal">
+                <header class="panel-heading bg-white" style="width : 150px;vertical-align: top;">
+                    <div class="panel-heading-icon bg-primary mt-sm">
+                        <i class="fa fa-credit-card"></i>
+                    </div>
+                </header>
+                <div class="panel-body p-lg">
+                    <h3 class="text-weight-semibold mt-sm">Transaction Info - {{transaction.transaction_id}} - 
+                        <span ng-switch on="transaction.type">
+                           <span  ng-switch-when="order" class="label label-info">Sold</span>
+                           <span  ng-switch-when="receipt" class="label label-info">Purchased</span>
+                        </span>
+                    </h3>
+                    <p>
+                        <ul style="  padding-left : 20px; bottom-margin : 10px" ng-repeat="(key, value) in transaction.response">
+                            <li class="user-li"> <strong>{{key | titlecase}}:</strong> <span>{{value}}</span></li>
+                        </ul>
+                    </p>
+                    <p>
+                        <div ng-show="receipt.status === 'pending'" ng-click="addToInventory()" class="btn btn-lg btn-success">Add To Inventory</div>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <form name="paymentForm">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel panel-horizontal">
+                    <header class="panel-heading bg-white" style="width : 150px;vertical-align: top">
+                        <div class="panel-heading-icon bg-primary mt-sm">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        </br>
+                        </br>
+                        </br>
+                        </br>
+                        </br>
+                        </br>
+                        <img width="120px" class="media-object" ng-src="/img/credit-cards/{{paymentForm.cardNumber.$ccEagerType| lowercase}}.png" src='/img/credit-cards/undefined.png' style="padding-top : 16px">
+                        <input type="hidden" ng-model="transaction.billingUser.card_number" name="cardNumber" cc-number cc-eager-type />
+                    </header>
+                    <div class="panel-body p-lg">
+                        <h3 class="text-weight-semibold mt-sm">{{transaction.billingUser.role}} Info </h3>
+                        <p>
+                            <ul style="  padding-left : 20px; bottom-margin : 10px">
+                                <li class="user-li"> <strong>Fullname:</strong> {{transaction.billingUser |fullname}}</li>
+                                <li class="user-li"><strong>Email:</strong> {{transaction.billingUser.email}}</li>
+                                <li class="user-li"><strong>Address:</strong> {{transaction.billingUser.address}}</li>
+                                <li class="user-li"><strong>City:</strong> {{transaction.billingUser.city}}</li>
+                                <li class="user-li"><strong>State:</strong> {{transaction.billingUser.state}}</li>
+                                <li class="user-li"><strong>Zipcode:</strong> {{transaction.billingUser.zipcode}}</li>
+                            </ul>
+                        </p>
+                        <ul class="list list-icons list-icons-style-3 mt-xlg">
+                            <li><strong>Cardholder's Name:</strong> {{ (transaction.billingUser.card_name ? transaction.billingUser.card_name : 'NOT SET')}}</li>
+                            <li>
+                                <strong>Card Number:</strong> {{transaction.billingUser.card_number | hiddenCC}}
+                            </li>
+                            <li><strong>Card CVC:</strong> {{ (transaction.billingUser.card_cvc ? transaction.billingUser.card_cvc : 'NOT SET')}}</li>
+                            <li><strong>Expiration Date:</strong> {{ (transaction.billingUser.card_exp_month ? transaction.billingUser.card_exp_month : 'NOT SET')}} / {{ (transaction.billingUser.card_exp_year ? transaction.billingUser.card_exp_year : 'NOT SET')}}</li>
+                        </ul>
+                        <p class="pull-right"><a href="/dashboard/#/user-profile/{{transaction.billingUser.id}}">View Profile</a></p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
+    <!-- start: page -->
+    <section class="panel">
+        <header class="panel-heading">
+            <h2 class="panel-title">  All Cards</h2>
+        </header>
+        <div class="panel-body" ng-show="transaction.type == 'receipt' ">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Merchant</th>
+                        <th>Card Number</th>
+                        <th>Card Pin</th>
+                        <th ng-show="receipt.billingUser.role == 'Dealer' ">Dealer Code</th>
+                        <th>Your Offer</th>
+                        <th>Payout</th>
+                        <th>Pay By</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="card in transaction.cards">
+                        <td>{{card.id}}</td>
+                        <td><img height="50px" ng-src="/img/cards/{{card.store_name}}.jpg"></td>
+                        <td>{{card.store_name | storename | titlecase}} (${{card.value}})</td>
+                        <td>{{card.number }}</td>
+                        <td>{{card.pin}}</td>
+                        <td ng-show="receipt.billingUser.role == 'Dealer' ">{{card.dealer_code}}</td>
+                        <td>${{card.bought_value | number:2}}</td>
+                        <td>{{card.payout| number:2}}%</td>
+                        <td>{{card.pay_by | titlecase}}</td>
+                        <td>
+                            <div class="label {{(card.status == 'ok') ? 'label-success' : 'label-danger'}}">{{card.status | titlecase}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-body" ng-show="transaction.type == 'order'">
+            <table class="table table-bordered table-hover table-striped mb-none" id="datatable-default">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Merchant</th>
+                        <th>Card Value</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Discount</th>
+                        <th>Selling Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="card in transaction.cards">
+                        <td><img height="50px" ng-src="/img/cards/{{card.name}}.jpg"></td>
+                        <td>{{card.name | storename | titlecase}}</td>
+                        <td>${{card.value | number:2}}</td>
+                        <td>1</td>
+                        <td>${{card.value | number:2}}</td>
+                        <td>{{card.save| number:2}}%</td>
+                        <td>${{card.pay| number:2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- end: page -->
+</section>

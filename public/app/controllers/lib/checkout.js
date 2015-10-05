@@ -59,12 +59,12 @@ module.exports = function(m) {
                 };
 
 
-                if ($scope.payment.name == 'ach') {
+                if ($scope.payment.name === 'ach') {
                     swal('Error', 'No payment support', 'error');
                     return;
                 }
 
-                if (paymentForm.cardNumber.$valid == false) {
+                if (paymentForm.cardNumber.$valid === false) {
                     swal('Error', 'The card number is not valid', 'error');
                     return;
                 }

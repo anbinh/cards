@@ -153,37 +153,37 @@ module.exports = function(m) {
             };
 
 
-            var checkCard = function(i) {
-                var cardDat = {
-                    'card_number': $scope.allSellingCards[i].number,
-                    'retailer_id': '114',
-                    'pin': $scope.allSellingCards[i].pin
-                };
-                var index = i;
-                $scope.allSellingCards[index].status = 'processing';
-                cardService.inquiry(cardDat, function(result) {
-                    console.log(result);
+            // var checkCard = function(i) {
+            //     var cardDat = {
+            //         'card_number': $scope.allSellingCards[i].number,
+            //         'retailer_id': '114',
+            //         'pin': $scope.allSellingCards[i].pin
+            //     };
+            //     var index = i;
+            //     $scope.allSellingCards[index].status = 'processing';
+            //     cardService.inquiry(cardDat, function(result) {
+            //         console.log(result);
 
-                    if (result.response.responseCode === '000') {
-                        $scope.allSellingCards[index].status = 'success';
-                    } else {
-                        if (result.response.responseCode === '010') {
-                            $scope.allSellingCards[index].status = 'delayed';
-                        } else {
-                            if (result.response.responseCode === '900011') {
-                                $scope.allSellingCards[index].status = 'invalid_retailer';
-                            } else {
-                                if (result.response.responseCode === '179') {
-                                    $scope.allSellingCards[index].status = 'timeout';
-                                } else {
-                                    $scope.allSellingCards[index].status = 'error';
-                                }
-                            }
+            //         if (result.response.responseCode === '000') {
+            //             $scope.allSellingCards[index].status = 'success';
+            //         } else {
+            //             if (result.response.responseCode === '010') {
+            //                 $scope.allSellingCards[index].status = 'delayed';
+            //             } else {
+            //                 if (result.response.responseCode === '900011') {
+            //                     $scope.allSellingCards[index].status = 'invalid_retailer';
+            //                 } else {
+            //                     if (result.response.responseCode === '179') {
+            //                         $scope.allSellingCards[index].status = 'timeout';
+            //                     } else {
+            //                         $scope.allSellingCards[index].status = 'error';
+            //                     }
+            //                 }
 
-                        }
-                    }
-                });
-            };
+            //             }
+            //         }
+            //     });
+            // };
 
             // $scope.checkCards = function() {
 
