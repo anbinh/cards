@@ -1,6 +1,6 @@
 <?php
 //error_reporting(0);
-define('TESTING_MODE',true);
+define('TESTING_MODE',false);
 
 if (TESTING_MODE == true) {
   define('API_USER','test');

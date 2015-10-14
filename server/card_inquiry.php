@@ -10,7 +10,7 @@ if (TESTING_MODE == true) {
 } else {
   define('API_USER','JUNKOoDEfR');
   define('API_KEY','KE8MatT9BbW0AznVS6GzdceELTCAVFzB6hZmNdAgMBAAGjggG5MIIBtTAfBgN');
-  define('API_URL', 'https://api.cardquiry.com:8080');
+  define('API_URL', 'https://54.213.236.129:8080');
 }
 
 echo 'Testing mode:' . TESTING_MODE . ' API_USER: ' . API_USER . "\n";
@@ -167,9 +167,9 @@ if (TESTING_MODE == true) {
   $retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
   $pin = "20723803"; // Enter test card pin number here
 }  else {
-  $card_number = "833115390266223";// Enter the test card number here
-  $retailer_id = '25';// Retailer ID will be provided by CardQuiry for all supported retailers. 
-  $pin = "1896"; // Enter test card pin number here
+  $card_number = "6080326049539584";// Enter the test card number here
+  $retailer_id = '7';// Retailer ID will be provided by CardQuiry for all supported retailers. 
+  $pin = "3643"; // Enter test card pin number here
 }       
 
 $version='2';
