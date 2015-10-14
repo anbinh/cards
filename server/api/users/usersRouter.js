@@ -898,10 +898,15 @@ var transformAPIBalance = function(balancedCards, cards) {
                         // }
                         if (card.pay_by == 'online') {
                             card.bought_value = card.balance * card.gogo_buy / 100 * (1 - 0.0575);
-                            card.payout = card.bought_value / card.value;
                         } else {
                             card.bought_value = card.balance * card.gogo_buy / 100;
-                            card.payout = card.bought_value / card.value;
+                        }
+                        if (card.balance > 0) {
+                            card.payout = card.bought_value / card.balance;
+                            card.value = card.balance;
+                        } else {
+                            card.payout = 0;
+                            card.value = 0;
                         }
                     } else {
                         if (response.responseCode === '010') {
