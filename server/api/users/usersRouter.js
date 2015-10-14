@@ -1033,6 +1033,7 @@ router.post('/sell-cards', function(req, res, next) {
                             var successCardCount = 0;
                             var containSuccessBalance = false;
                             var totalAmount = 0;
+                            var totalFaceValue = 0;
                             for (var i = 0; i < tempCards.length; i++) {
                                 if (tempCards[i].balance_status === 'success') {
                                     successCardCount += 1;
@@ -1040,11 +1041,18 @@ router.post('/sell-cards', function(req, res, next) {
                                 }
 
                                 totalAmount += tempCards[i].bought_value;
+                                totalFaceValue += tempCards[i].value;
 
 
                             };
                             dat.total_amount = totalAmount;
-                            dat.average_payout = dat.total_amount / dat.total_face_value;
+                            dat.total_face_value = totalFaceValue;
+                            if (totalFaceValue > 0) {
+                                dat.average_payout = dat.total_amount / dat.total_face_value * 100;
+                            } else {
+                                dat.average_payout = 0;
+                            }
+
 
 
 
