@@ -902,7 +902,7 @@ var transformAPIBalance = function(balancedCards, cards) {
                             card.bought_value = card.balance * card.gogo_buy / 100;
                         }
                         if (card.balance > 0) {
-                            card.payout = card.bought_value / card.balance;
+                            card.payout = card.bought_value / card.balance * 100;
                             card.value = card.balance;
                         } else {
                             card.payout = 0;
