@@ -96,7 +96,7 @@
                 </ul>
                 <hr>
                 <h4 class="heading-primary"><strong>Credit Cards  Info</strong></h4>
-                <div class="alert alert-primary"><strong>Notifications!</strong> We will pre authorize the credit card 1$ to make sure your cards are valid. </div>
+                <div class="alert alert-primary"> We will pre authorize the credit card 1$ to make sure your cards are valid. </div>
                 <div ng-show='{{emptyCC}}' class="alert alert-secondary"><strong>Alert!</strong> Please update your credit in the profile. </div>
                 <form name="paymentForm">
                     <div class="media">
@@ -334,6 +334,7 @@
                 <a ng-show="isLoading" style="position : relative">
                         <div class="loading-overlay" style="visibility : visible; z-index: 99999; opacity : 1; position : fixed">
                             <div class="loader"></div>
+                            <div style="left: 50%;top: 60%;position: absolute;margin-left: -250px;">This may take a moment, please do not leave or refresh the page while loading</div>
                         </div>
                     </a>
                 <a ng-click='sellCards()' ng-show='{{(!emptyCC) && (!isLoading)}}' class="btn btn-primary btn-lg pull-right">Sell Cards</a>
@@ -715,6 +716,8 @@
                     <a ng-show="isLoading" style="position : relative">
                         <div class="loading-overlay" style="visibility : visible; z-index: 99999; opacity : 1; position : fixed">
                             <div class="loader"></div>
+
+                            <div style="left: 50%;top: 60%;position: absolute;margin-left: -250px;">This may take a moment, please do not leave or refresh the page while loading</div>
                         </div>
                     </a>
                     <input ng-show="!isLoading" type="submit" class="btn btn-primary btn-lg pull-right" value="Sell Cards">

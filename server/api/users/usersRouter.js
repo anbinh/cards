@@ -982,8 +982,11 @@ var transformAPIBalance = function(balancedCards, cards) {
     return finalCards;
 }
 
+
+
 /* POST /users/sell-cards */
 router.post('/sell-cards', function(req, res, next) {
+
 
     var dat = req.body;
 

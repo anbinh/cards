@@ -219,7 +219,7 @@ module.exports = function(m) {
 
                     swal({
                         title: 'Notice',
-                        text: 'The amount maybe be changed because we will verify the card balance. Please see the email verification',
+                        text: 'The amount may be changed because we will verify the card balance. Please see the email verification',
                         type: 'info',
                         showCancelButton: true,
                         confirmButtonText: 'I agree',
@@ -231,6 +231,7 @@ module.exports = function(m) {
                         swal.close();
                         $scope.isLoading = true;
                         $scope.$apply();
+
                         userService.sellCards(selling_cards, function(result) {
 
                             console.log(result);
@@ -251,6 +252,8 @@ module.exports = function(m) {
                             window.location = '/payment-declined';
                             // swal('Error', err.data.message, 'error');
                         });
+
+
 
                     });
 
@@ -309,7 +312,7 @@ module.exports = function(m) {
 
                     swal({
                         title: 'Notice',
-                        text: 'The amount will be changed because we will verify the card balance. Please see the email verification',
+                        text: 'The amount may be changed because we will verify the card balance. Please see the email verification',
                         type: 'info',
                         showCancelButton: true,
                         confirmButtonText: 'I agree',
