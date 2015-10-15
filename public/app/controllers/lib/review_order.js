@@ -91,7 +91,19 @@ module.exports = function(m) {
 
                     } else {
 
-                        swal('Congratulations!', 'Your Order has been paid', 'success');
+                        swal({
+                            title: 'Congratulations!',
+                            text: 'Your Order has been paid!',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok, Go To Homepage!',
+                            closeOnConfirm: false,
+                            closeOnCancel: false
+                        }, function() {
+                            window.location = '/';
+                        });
+
+                        // swal('Congratulations!', 'Your Order has been paid', 'success');
                         $rootScope.$broadcast('CHANGE_CART', {});
                     }
 

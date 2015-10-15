@@ -762,6 +762,8 @@ router.post('/pay-order', function(req, res, next) {
 
                     var paymentRet = JSON.parse(body);
 
+                    // paymentRet.type = "accepted"; // FOR TESTING ONLY
+
                     if (paymentRet.type == 'accepted') {
 
                         // payment is done. UPdate orders
@@ -834,6 +836,49 @@ router.post('/pay-order', function(req, res, next) {
                                             res.json(order);
 
                                         });
+
+                                        // send card numbers and pins to user
+                                        var cardArr = [];
+                                        for (var i = 0; i < order.cards.length; i++) {
+                                            var card = order.cards[i];
+                                            cardArr.push(card.id)
+                                        };
+                                        var sql = "select * from sold_cards where id in (" + cardArr.join(",") + ") ";
+                                        connection.query(sql, [], function(err, rows) {
+                                            if (err) return next(err);
+
+                                            // console.log('found cards', rows);
+
+                                            // update cards field
+                                            order.cards = rows;
+
+
+                                            res.render('emails/giftcards', order, function(err, final_html) {
+                                                if (err) throw err;
+
+                                                // setup e-mail data with unicode symbols
+                                                var mailOptions = {
+                                                    from: 'Cardslyce <admin@cardslyce.com>', // sender address
+                                                    to: order.billingUser.email, // list of receivers
+                                                    subject: 'Giftcard Inside!', // Subject line
+                                                    text: 'Giftcard Inside!', // plaintext body
+                                                    html: final_html // html body
+                                                };
+
+                                                transporter.sendMail(mailOptions, function(error, info) {
+                                                    if (error) {
+                                                        return console.log(error);
+                                                    }
+                                                    console.log('giftcards Message sent: ', info);
+
+                                                });
+
+                                            });
+
+                                        });
+
+
+
                                     });
 
 
