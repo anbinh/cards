@@ -249,7 +249,32 @@ module.exports = function(m) {
                             console.log('RECEIPT', result);
                         }, function(err) {
                             console.log('ERRR', err);
-                            window.location = '/payment-declined';
+
+                            if (err.data.message === 'duplicated-cards') {
+                                setTimeout(function() {
+                                    $scope.isLoading = false;
+                                    $scope.$apply();
+                                    swal({
+                                        title: 'Error!',
+                                        text: 'One or all your cards are already existed in the database',
+                                        type: 'error',
+                                        showCancelButton: false,
+                                        confirmButtonText: 'Ok, Retry!',
+                                        closeOnConfirm: false,
+                                        closeOnCancel: false
+                                    }, function() {
+                                        swal.close();
+                                        store.set('selling_cards', []);
+                                        store.set('selling_stores', []);
+                                        window.location = '/sell-cards/#/';
+
+                                    });
+
+                                }, 1000);
+                            } else {
+                                window.location = '/payment-declined';
+                            }
+
                             // swal('Error', err.data.message, 'error');
                         });
 
